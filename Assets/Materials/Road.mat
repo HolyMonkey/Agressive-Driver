@@ -111,7 +111,7 @@ Material:
     m_Floats:
     - _AlphaClip: 0
     - _BASE_COLOR_WEIGHT: 0.775
-    - _BUMP_MAP_STRENGTH: 0.36
+    - _BUMP_MAP_STRENGTH: 1
     - _Blend: 0
     - _BumpScale: 1
     - _ClearCoatMask: 0
@@ -121,19 +121,19 @@ Material:
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _EMISSION_WEIGHT: 0.115
+    - _EMISSION_WEIGHT: 0
     - _EnvironmentReflections: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _METALNESS: 0.011
+    - _METALNESS: 0.01
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _QueueOffset: 0
-    - _REFLECTIONS_IOR: 1.1
-    - _REFLECTIONS_ROUGHNESS: 0.009
+    - _REFLECTIONS_IOR: 1
+    - _REFLECTIONS_ROUGHNESS: 0.33
     - _REFLECTIONS_WEIGHT: 0.2
     - _ReceiveShadows: 1
     - _Smoothness: 0.5
