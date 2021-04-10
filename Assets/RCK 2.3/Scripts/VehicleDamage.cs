@@ -3,9 +3,6 @@ using System.Collections;
 
 public class VehicleDamage : MonoBehaviour
 {
-
-
-
     public float maxMoveDelta = 1.0f; // maximum distance one vertice moves per explosion (in meters)
     public float maxCollisionStrength = 50.0f;
     public float YforceDamp = 0.1f; // 0.0 - 1.0
@@ -14,11 +11,10 @@ public class VehicleDamage : MonoBehaviour
     public MeshFilter[] optionalMeshList;
     public AudioSource crashSound;
 
-
+    public GameObject sparkleEffect;
 
     private MeshFilter[] meshfilters;
     private float sqrDemRange;
-
 
     public void Start()
     {
@@ -31,8 +27,6 @@ public class VehicleDamage : MonoBehaviour
         sqrDemRange = demolutionRange * demolutionRange;
 
     }
-
-
 
     private Vector3 colPointToMe;
     private float colStrength;
@@ -59,6 +53,9 @@ public class VehicleDamage : MonoBehaviour
                 crashSound.volume = colStrength / 200;
 
                 OnMeshForce(collision.contacts[0].point, Mathf.Clamp01(colStrength / maxCollisionStrength));
+
+                Instantiate(sparkleEffect, collision.contacts[0].point, Quaternion.identity);
+
 
             }
         }

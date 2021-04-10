@@ -5,6 +5,17 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody), typeof(Enemy))]
 public class EnemyMover : MonoBehaviour
 {
+    public Transform wayDirection;
+    private Vector3 targetPoint;
+
+    public List<Vector3> waypoints;
+    private Vector3 waypointStart;
+    private Vector3 waypointEnd;
+    private Vector3 waypointDirection;
+    private int waypointIndex;
+    private float lastDistance;
+
+
     [SerializeField] private float _speed;
     [SerializeField] private float _turnSpeed;
     [SerializeField] private EnemyOvertakingArea _enemyOvertakingArea;
@@ -44,6 +55,34 @@ public class EnemyMover : MonoBehaviour
         m_WheelColliders[0].attachedRigidbody.centerOfMass = m_CentreOfMassOffset;
     }
 
+    public void SetWaypoint(int index)
+    {
+        waypointIndex = index;
+        waypointStart = waypoints[waypointIndex];
+        waypointIndex++;
+        if (waypointIndex == waypoints.Count)
+        {
+            enabled = false;
+            return;
+        }
+        waypointEnd = waypoints[waypointIndex];
+
+        waypointDirection = (waypointEnd - waypointStart).normalized;
+
+        lastDistance = Vector3.Distance(transform.position, waypointEnd);
+    }
+
+    private void CheckWaypointDestination()
+    {
+        var distance = Vector3.Distance(transform.position, waypointEnd);
+        if (distance > lastDistance)
+        {
+            SetWaypoint(waypointIndex);
+        }
+        else
+            lastDistance = distance;
+    }
+
     private void OnEnable()
     {
         _enemy.EnemyDied += OnEnemyDied;
@@ -58,13 +97,18 @@ public class EnemyMover : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _target.position = new Vector3(_targetLineX, transform.position.y, transform.position.z + _lengthFromVehicle);
+        CheckWaypointDestination();
 
-        Vector3 velocity = _rigidbody.velocity;
+        float length = Vector3.Distance(transform.position, waypointStart) + _lengthFromVehicle;
+        targetPoint = waypointStart + waypointDirection * length;
 
-        velocity.z = _speed;
+        targetPoint.y = 0;
+        var dir = (targetPoint - transform.position).normalized;
+
+        transform.forward = Vector3.Lerp(transform.forward , dir, Time.fixedDeltaTime * 2.4f);
+        Vector3 velocity = transform.forward * _speed;
+        velocity.y = _rigidbody.velocity.y;
         _rigidbody.velocity = velocity;
-
 
         if (_isEnemyDied)
         {

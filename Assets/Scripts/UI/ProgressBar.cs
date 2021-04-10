@@ -23,7 +23,7 @@ public class ProgressBar : MonoBehaviour
 
     private void Update()
     {
-        _progressSlider.value = _finishSpawner.Complete;
+        _progressSlider.value = (_finishSpawner.Complete - 0.325f) * 1.4f;
     }
 
     private void OnPlayerReaachedFinish()
