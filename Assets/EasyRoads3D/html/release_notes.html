@@ -1,7 +1,7 @@
 <html>
 <head>
 		<title>EasyRoads3D v3 Manual</title>
-<link rel="stylesheet" type="text/css" href="../style.css" />    
+<link rel="stylesheet" type="text/css" href="style.css" />    
 </head>
 
 	<body>
@@ -24,7 +24,7 @@
 	  <tr>
 	    <td colspan="2" class="style1"><p class="style1">&nbsp;</p>
 	      <p class="header1" style="color:#000">Release Notes 
-	      v3.1.9f4<hr>
+	      v3.2.0<hr>
 	      <p class="style21">&nbsp;</p>
 	      <p class="header2">Important</p>
 	      <p class="style21">&nbsp;</p>
@@ -50,22 +50,27 @@
           <p>&nbsp;</p>
           <p class="header1"><strong>Release Notes:</strong> </p>
           <p class="style1">Please visit our <a href="http://unityterraintools.com/v3beta.php" class="link">website</a> for beta release notes </p>
+          <p class="style1">&nbsp;</p>
 
-<p class="style1">&nbsp;</p>
 <p class="style1"><strong>New:</strong></p>
-<p class="style1">- Marker Road shape control through the scripting API: ERRoad.GetRoadShapeNodes(int markerIndex), ERRoad.SetRoadShapeNodes(int markerIndex, Vector2[] nodes) , ERRoad.SetRoadShapeNodes(int[] markerIndexes, Vector2[] nodes)</p>
-<p class="style1">&nbsp;</p>
-
-<p class="style1"><strong>Changed:</strong></p>
-<p>- Scripting API: Obsolete ERRoadNetwork.GetSourceConnectionByName(string name). This is replaced by ERRoadNetwork.GetConnectionPrefabByName(string name)</p>
+<p class="style1">- Auto generated side objects based on rules, the terrain shape and the road shape</p>
+<p>- Terrain hole support for tunnels, this is in preview status. The results depend on the terrain specifications. The provided tunnel examples are tested on terrains with the default settings, 500x500 and 1000x1000, heightmap resolution 512</p>
+<p>- Submesh support for procedural side objects</p>
+<p>- Direct scale option for Procedural and Shape Type of side objects in the General Settings</p>
+<p>- Automatic start, middle, end section extraction of source prefabs for procedural side objects by using a naming convention for each section in the model</p>
+<p>- Stepped side object support for Procedural side objects by including stepped sections in the source prefab. The new demo package includes an example </p>
 <p>&nbsp;</p>
 <p class="style1"><strong>Improved:</strong></p>
-<p class="style1">- The marker alignment options when 2 markers are selected can now also be used for two road object sections connected with an I Connector</p>
-<p class="style1">- Unity 2019.3, Inspector foldouts can now also be opened by clicking on the arrow just like in previous Unity versions</p>
+<p class="style1">- Inside the Unity editor side objects are now spawned using the original prefab through PrefabUtility</p>
+<p>- Sideways X Position control for side objects per marker </p>
+<p>- Normals calculation for Propcedural side objects</p>
+<p>- Procedural and shape type of side object sections can now clamp between marker sections. This gives better control over the side object shape on straight sections and corners near markers. </p>
+<p>- Optional start and end caps support for shape type of side objects. </p>
+<p>- A single side object can be used for both the right and left side of the road</p>
+<p>- Road shape scale option per marker using the default Unity scale tool</p>
 <p class="style1">&nbsp;</p>
-<p class="style1"><strong>Fixed:</strong></p>
-<p class="style1">- Scripting API: ERRoad.SplitRoad(int markerIndex)<br>
-  - Missing Category selection option for side objects in the Side Object Manager<br>
+<p class="style1"><strong>Fixed:</strong><br>
+  <br>
   - Miscellaneous other small bugs and improvements</p>
 <p class="style1">&nbsp;</p>
           <p class="header2">To Do / Current limitations:          </p>

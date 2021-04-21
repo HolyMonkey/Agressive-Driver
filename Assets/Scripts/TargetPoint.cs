@@ -5,8 +5,9 @@ using EasyRoads3Dv3;
 
 public class TargetPoint : MonoBehaviour
 {
-    [SerializeField] private Transform _wayDirection;
+    [SerializeField] private SwipeDetector _swipeDetector;
     [SerializeField] private PlayerMover _vehicleControl;
+    [SerializeField] private Player _player;
     [SerializeField] private float _maxRightTurn;
     [SerializeField] private float _maxLeftTurn;
     [SerializeField] private float _stepSize;
@@ -23,16 +24,42 @@ public class TargetPoint : MonoBehaviour
     private int waypointIndex = 2;
     private float lastDistance;
 
+    private float timeToLoose = 5;
+
+    private bool _isRightLine = true;
+
     private void Start()
     {
         transform.position = _vehicleControl.transform.position;
-
         _targetPosition = transform.position;
-        SetWaypoints(waypointIndex);
+        TryTurnRight();
     }
 
-    private void SetWaypoints(int index)
+    private void OnEnable()
     {
+        _swipeDetector.OnSwipe += OnSwipe;
+    }
+
+    private void OnDisable()
+    {
+        _swipeDetector.OnSwipe -= OnSwipe;
+    }
+
+    private void OnSwipe(SwipeData data)
+    {
+        if (data.Direction == SwipeDirection.Left)
+        {
+            _isRightLine = false;
+        }
+        if (data.Direction == SwipeDirection.Right)
+        {
+            _isRightLine = true;
+        }
+    }
+    
+    private void SetWaypoints()
+    {
+       
         waypointStart = eRoad.soSplinePoints[waypointIndex];
         waypointIndex++;
         if (waypointIndex == eRoad.soSplinePoints.Count)
@@ -47,41 +74,67 @@ public class TargetPoint : MonoBehaviour
         waypointRightDirection = Quaternion.AngleAxis(90, Vector3.up) * dir;
 
         lastDistance = Vector3.Distance(_vehicleControl.transform.position, waypointEnd);
+
+        timeToLoose = 5;
     }
 
     private void CheckWaypointDestination()
     {
-        var distance = Vector3.Distance(_vehicleControl.transform.position, waypointEnd);
-        if (distance > lastDistance)
-        {            
-            SetWaypoints(waypointIndex);
+       // var distance = Vector3.Distance(_vehicleControl.transform.position, waypointEnd);
+        //if (distance > lastDistance)
+        if (_vehicleControl.transform.position.z > waypointEnd.z)
+        {
+            SetWaypoints();
         }
         else
-            lastDistance = distance;
+        {
+            
+            timeToLoose -= Time.deltaTime;
+            if (timeToLoose < 0)
+                _player.TakeDamage(5000);
+                
+            //lastDistance = distance;
+        }
     }
 
+    
     private void Update()
     {
         CheckWaypointDestination();
 
+        //if (lastDistance > 100)
+        //    _player.TakeDamage(5000);
+
         float length = Vector3.Distance(_vehicleControl.transform.position, waypointStart) + _lengthFromVehicle;
         transform.position = waypointStart + waypointDirection * length;
+
+        if (_isRightLine)
+        {
+            TryTurnRight();
+        }
+        else
+        {
+            TryTurnLeft();
+        }
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            _isRightLine = false;
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            _isRightLine = true;
+        }
     }
 
     public void TryTurnRight()
     {
-        //if (_targetPosition.x < _maxRightTurn)
-        { //_stepSize
-            SetNextPosition(_stepSize);
-        }
+        SetNextPosition(_stepSize);
     }
 
     public void TryTurnLeft()
     {
-        //if (_targetPosition.x > _maxLeftTurn)
-        {
-            SetNextPosition(-_stepSize);
-        }
+        SetNextPosition(-_stepSize);        
     }
 
 
@@ -91,11 +144,6 @@ public class TargetPoint : MonoBehaviour
         transform.position = waypointStart + waypointDirection * length;
 
         transform.position = waypointStart + waypointDirection * length + waypointRightDirection * stepSize;
-        //_targetPosition = new Vector3(_targetPosition.x + stepSize, transform.position.y, transform.position.z);
     }
 
-    public void SetWayDirection(Transform wayDirection)
-    {
-        _wayDirection = wayDirection;
-    }
 }

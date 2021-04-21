@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.Events;
 
-public enum ControlMode { simple = 1, touch = 2 }
+public enum ControlMode { simple = 1, touch = 2, none = 0 }
 
 
 public class PlayerMover : MonoBehaviour
@@ -447,6 +447,11 @@ public class PlayerMover : MonoBehaviour
         _isPower = isPower;
     }
 
+    public void PressingBrake(bool isPress)
+    {
+        brake = isPress;
+    }
+
     private void FixedUpdate()
     {
         Speed = myRigidbody.velocity.magnitude;
@@ -467,17 +472,19 @@ public class PlayerMover : MonoBehaviour
         {
             if (controlMode == ControlMode.simple)
             {
-                brake = false;
+                //brake = false;
                 shift = false;
-
+                
                 if (carWheels.wheels.frontWheelDrive || carWheels.wheels.backWheelDrive)
                 {
                     Vector3 localTarget = transform.InverseTransformPoint(_targetPosition);
                     float targetAngle = Mathf.Atan2(localTarget.x, localTarget.z) * Mathf.Rad2Deg;
-                    steer = Mathf.Clamp(targetAngle * 0.05f, -1, 1) * 1f;
+                    steer = Mathf.Clamp(targetAngle * 0.05f, -1, 1) * 1.5f;
 
                     accel = 1f;
-                    brake = Input.GetButton("Jump");
+                    //brake = Input.GetMouseButton(0);
+                   
+                    //brake = Input.GetButton("Jump");
                     shift = Input.GetKey(KeyCode.LeftShift) | Input.GetKey(KeyCode.RightShift);
                 }
             }

@@ -1,7 +1,7 @@
 <html>
 <head>
 		<title>EasyRoads3D v3 Manual</title>
-<link rel="stylesheet" type="text/css" href="../style.css" />    
+<link rel="stylesheet" type="text/css" href="style.css" />    
 </head>
 
 	<body>
@@ -36,7 +36,7 @@
           <p class="styleAPIText">Removes the connection object</p>
           <p class="styleAPIText">&nbsp;</p>
           <p class="styleAPI">public int <span class="styleAPIBold">FindNearestConnectionIndex</span>(Vector3 position)</p>
-          <p class="styleAPIText">Returns the nearest connection index to the past Vector3 position</p>
+          <p class="styleAPIText">Returns the nearest free connection index to the past Vector3 position. Returns -1 if no connection is available</p>
           <p class="styleAPIText">&nbsp;</p>
           <p class="styleAPI">public ERConnectionData[] <span class="styleAPIBold">GetConnectionData</span>()</p>
           <p class="styleAPIText">Returns the currently available connection data of the connection object</p>

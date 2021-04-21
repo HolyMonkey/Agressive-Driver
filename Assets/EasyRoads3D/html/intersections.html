@@ -1,7 +1,7 @@
 <html>
 <head>
 		<title>EasyRoads3D v3 Manual</title>
-<link rel="stylesheet" type="text/css" href="../style.css" />    
+<link rel="stylesheet" type="text/css" href="style.css" />    
 </head>
 
 	<body>
@@ -31,14 +31,14 @@
 	      <p>&nbsp;</p>
 	      <p class="header2"><strong>HIERARCHY</strong><span class="style21"><a name="hierarchy" id="addmarkers3"></a></span></p>
           <p>In v3 all intersections are child objects of &quot;Connection Objects&quot; which is a child of the main Road Network game object.</p>
-          <p><img src="../images/hierarchy.jpg" width="296" height="287"></p>
+          <p><img src="../images/hierarchy.jpg" width="367" height="268"></p>
           <p>&nbsp;</p>
 <p class="header2"><strong>CREATING AN INTERSECTION IN THE SCENE</strong><span class="style21"><a name="create" id="addmarkers"></a></span></p>
 	      <p>There are three ways to add an intersection in the scene:</p>
-	      <p>1. Select any marker of a road and select the Crossing / Connection tab <img src="../images/prefabs_tab.jpg" alt="" width="53" height="29" style="vertical-align:middle"> In the Inspector. All matching dynamic and custom prefabs will be listed. Press one of these connection prefabs. The prefab will automatically connect to the selected marker.	      <br>
+	      <p>1. Select any marker of a road and select the Crossing / Connection tab <img src="../images/prefabs_tab.jpg" alt="" width="85" height="30" style="vertical-align:middle"> In the Inspector. All matching dynamic and custom prefabs will be listed. Press one of these connection prefabs. The prefab will automatically connect to the selected marker.	      <br>
 	        <br>
           <span class="propertyStyle">NOTE: </span>Depending on the sidewalk status and type of sidewalk if indeed sidewalks are involved, attaching the selected prefab may not work if the sidewalk setup is different. </p>
-	      <p>2. Select the same crossings tab <img src="../images/prefabs_tab.jpg" alt="" width="53" height="29" style="vertical-align:middle"> in the Inspector but without any road selected. This time all available crossing types will be listed. Select the type you want to add directly in the scene, it will be highlighted. SHIFT + click in the scene at the position where you want to place this crossing. The crossing will  be instantiated automatically at the mouse position.</p>
+	      <p>2. Select the same crossings tab <img src="../images/prefabs_tab.jpg" alt="" width="85" height="30" style="vertical-align:middle"> in the Inspector but without any road selected. This time all available crossing types will be listed. Select the type you want to add directly in the scene, it will be highlighted. SHIFT + click in the scene at the position where you want to place this crossing. The crossing will  be instantiated automatically at the mouse position.</p>
 <p>In the case a road is selected and only the matching prefabs are displayed while you actually want to add another prefab, you can press the &quot;Instantiate New Connection Prefab&quot; button near the top. This willd eselect the road and show all prefabs as described above.	      </p>
 <p>3. Intersections can be added by snapping markers to other road sections. This can be the same road or another and can be any marker. After moving the selected marker over another road section the snapping position will be highlighted in blue when a matching connection prefab exists. Different road types are supported, like the railroad crossing in the demo package, as long as a prefab exists with matching road types at positions matching the scene situation.	      </p>
 	      <p><span class="propertyStyle">NOTE: </span>The third snapping option will not work when custom sidewalk settings are involved not exactly matching the setup of the involved crossings. In that case the marker of the other road where the currently selected road should connect can be selected, insert the crossing at that point and connect the initially selected road.	      </p>

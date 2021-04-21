@@ -8,11 +8,11 @@ TerrainLayer:
   m_PrefabAsset: {fileID: 0}
   m_Name: layer_Sand (Beach2)Detailed texture 2ac38ab40aa2f41d5
   m_DiffuseTexture: {fileID: 2800000, guid: 7878d9c14eecba44a9c048484860dd09, type: 3}
-  m_NormalMapTexture: {fileID: 2800000, guid: d1fa4abb4907d0143807e624d23ce357, type: 3}
-  m_MaskMapTexture: {fileID: 2800000, guid: 0b6d2b41f9f403f4bb18abb5c8f8a2ad, type: 3}
+  m_NormalMapTexture: {fileID: 0}
+  m_MaskMapTexture: {fileID: 0}
   m_TileSize: {x: 1, y: 1}
   m_TileOffset: {x: 0, y: 0}
-  m_Specular: {r: 0, g: 0, b: 0, a: 0}
+  m_Specular: {r: 1, g: 1, b: 1, a: 1}
   m_Metallic: 0
   m_Smoothness: 0.37
   m_NormalScale: 1

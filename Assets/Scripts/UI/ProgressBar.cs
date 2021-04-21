@@ -5,30 +5,24 @@ using UnityEngine.UI;
 
 public class ProgressBar : MonoBehaviour
 {
-    [SerializeField] private CameraFollow _camera;
     [SerializeField] private Player _player;
-    [SerializeField] private Destroyer _destroyer;
-    [SerializeField] private FinishSpawner _finishSpawner;
+    [SerializeField] private Transform _finish;
     [SerializeField] private Slider _progressSlider;
+    private float distance;
+    private float lastProgress = 0;
 
-    private void OnEnable()
+    private void Start()
     {
-        _finishSpawner.PlayerReached += OnPlayerReaachedFinish;
-    }
 
-    private void OnDisable()
-    {
-        _finishSpawner.PlayerReached -= OnPlayerReaachedFinish;
+        distance = Vector3.Distance(_player.transform.position, _finish.transform.position);
     }
 
     private void Update()
     {
-        _progressSlider.value = (_finishSpawner.Complete - 0.325f) * 1.4f;
+        var progress = (1 - Vector3.Distance(_player.transform.position, _finish.transform.position) / distance);
+        if (progress > lastProgress)
+            lastProgress = progress;
+        _progressSlider.value = lastProgress;
     }
 
-    private void OnPlayerReaachedFinish()
-    {
-       // _camera.ShowFinish();
-        _destroyer.GetComponent<BoxCollider>().enabled = false;
-    }
 }

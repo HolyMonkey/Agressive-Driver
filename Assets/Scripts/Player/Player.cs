@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 public class Player : MonoBehaviour 
 {
+    public int Health => _currentHealth;
     [SerializeField] private int _health;
 
     private int _currentHealth;
@@ -14,6 +15,7 @@ public class Player : MonoBehaviour
     public event UnityAction PlayerDied;
     public event UnityAction PlayerOvertook;
     public event UnityAction<int, int> HealthChanged;
+    public event UnityAction<Enemy> Boarding;
 
     private void Start()
     {
@@ -33,7 +35,8 @@ public class Player : MonoBehaviour
 
     private void Die()
     {
-        PlayerDied?.Invoke();
+        if (enabled)
+            PlayerDied?.Invoke();
     }
 
     public void Overtook()
@@ -55,6 +58,9 @@ public class Player : MonoBehaviour
 
             PlayerHited?.Invoke(collisionDirection);
             TakeDamage(_damage);
+
+            if (_currentHealth > 0 && Mathf.Abs(collisionDirection.x) >= 0.85f)
+                Boarding?.Invoke(enemy);
         }
     }
 

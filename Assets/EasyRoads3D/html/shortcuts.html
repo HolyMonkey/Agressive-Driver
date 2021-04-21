@@ -1,7 +1,7 @@
 <html>
 <head>
 		<title>EasyRoads3D v3 Manual</title>
-<link rel="stylesheet" type="text/css" href="../style.css" />    
+<link rel="stylesheet" type="text/css" href="style.css" />    
 </head>
 
 	<body>
@@ -49,7 +49,7 @@ td{padding: 10px 0px}
             </tr>
             <tr>
               <td>F</td>
-              <td>Zoom in to the selected road marker, or to the mouse position when no marker is selected</td>
+              <td>Zoom in to the selected road marker, or to the mouse position when no marker is selected. When a road is selected in the hierarchy the F key will switch the selection the road network object zoomed in to the center of this road. The nearest marker will be auto selected..</td>
             </tr>
             <tr>
               <td valign="top">CTRL + Alt + Click</td>
@@ -57,7 +57,7 @@ td{padding: 10px 0px}
             </tr>
             <tr>
               <td>Shift + Z</td>
-              <td>Select all markers of the selected road. If currently two markers are selected all markers between those two will be selected</td>
+              <td>Select all markers of the selected road. If currently two markers are selected all markers between those two markers  will be selected. Transofrm changes in the scene or Inspector changes will affect all selected markers.</td>
             </tr>
             <tr>
               <td>P</td>
@@ -68,12 +68,28 @@ td{padding: 10px 0px}
               <td>This will attach the next matching connection on the crossing prefab attached to the selected marker</td>
             </tr>
             <tr>
-              <td>Space</td>
+              <td valign="top">J</td>
+              <td>Activates / deactivates Global Grid Display (see general Settings &gt; Scene Settings)</td>
+            </tr>
+            <tr>
+              <td valign="top">K</td>
+              <td>Activates / deactivates Local Grid Display (see general Settings &gt; Scene Settings)</td>
+            </tr>
+            <tr>
+              <td valign="top">Ctrl + K</td>
+              <td>Iterates through available Local Grids (see general Settings &gt; Scene Settings)</td>
+            </tr>
+            <tr>
+              <td valign="top">Space</td>
               <td>Toggles On/Off the display of the SceneView road, indent and surrounding highlight surfaces. This is useful to quickly get a clear view of the road and side objects without having to deactive these highlight surfaces in General Settings &gt; Scene Settings</td>
             </tr>
             <tr>
               <td>Shift + L</td>
               <td>Shortcut for: General Settings &gt; Scene Settings &gt; Exclude Locked Objects</td>
+            </tr>
+            <tr>
+              <td valign="top">Shift + V</td>
+              <td>Toggles off / on drawing terrain tree and foliage similar to Terrain Object &gt; Inspector &gt; Terrain Settings &gt; Tree &amp; Detail Objects &gt; Draw. Temporarily hiding trees and foliage can help visualize the road better in areas with dense vegetation.</td>
             </tr>
            
           </table>
@@ -91,6 +107,10 @@ td{padding: 10px 0px}
             <tr>
               <td valign="top">CTRL + Click </td>
               <td>This will start a new marker from the selected marker (first or last), this is useful for sci fi type of roads, bridges, etc. where the marker should not snap to the ground</td>
+            </tr>
+            <tr>
+              <td valign="top">Mouse Down + CTRL + Drag Marker</td>
+              <td>Road Network objects that generate  Side Objects only will instantly update the side object(s) after marker changes. When complex side objects are involved CTRL + Drag can be used. The side object(s) will update when the mouse button is released. Be careful  to first press the mouse button for the first and last marker otherwise the above CTRL + Click event will be triggered.</td>
             </tr>
             <tr>
               <td>I</td>
@@ -125,12 +145,20 @@ td{padding: 10px 0px}
               <td>Holding down the Shift key while moving a marker will keep the marker snapped to the terrain. When pressing the Shift key first the center of the gizmo changes to a flat square. This means the marker will move relative to the direction the Scene View Camera is facing. This generally works better when keeping the marker snapped to the terrain</td>
             </tr>
              <tr>
+               <td>Shift + A</td>
+               <td>Shift + Click adds and selects a new marker, the position handle will be visible. This position handle may interfere with adding more markers nearby. Shift + A will hide the  handle.</td>
+             </tr>
+             <tr>
                <td>CTRL + SHIFT + M</td>
                <td>Snap all markers to the terrain height at the specific marker position</td>
              </tr>
              <tr>
                <td>CTRL  + M</td>
                <td>Snap  the selected road marker to the terrain height at that position</td>
+             </tr>
+             <tr>
+               <td>X</td>
+               <td>Press the X key to position a marker of Road A below or above road B an avoid the roads snapping together. This is useful for maximum road shape control in bridge situations. Pressing the X key also prevents road markers from snapping together.</td>
              </tr>
              <tr>
                <td>Keypad Plus</td>
@@ -153,7 +181,9 @@ td{padding: 10px 0px}
               <td>Delete selected nodes</td>
             </tr>
           </table>
-          <p class="style1"></p>
+          <p class="style1"><br>
+            <strong>NOTE:</strong> The road network object must be selected in the hierarchy
+          and the Scene View window must have focus for sahortcuts to work.</p>
           <p class="style1">&nbsp;</p>
           <p class="style1"><span class="header2" style="color:#000">SCENE OPERATIONS</span></p>
           <p class="style21">&nbsp;</p>

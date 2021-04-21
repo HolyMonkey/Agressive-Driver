@@ -1,7 +1,7 @@
 <html>
 <head>
 		<title>EasyRoads3D v3 Manual</title>
-<link rel="stylesheet" type="text/css" href="../style.css" />    
+<link rel="stylesheet" type="text/css" href="style.css" />    
 </head>
 
 	<body>
@@ -34,6 +34,9 @@
 	      <p class="header2">Static Properties</p>
 	      <p>public static ERRoadNetwork.RoadUpdateCallback <span class="styleAPIBold">onRoadUpdate</span></p>
           <p class="styleAPIText">Callback triggered after changes to a road object, including a reference to the changed ERRoad instance</p>
+          <p>&nbsp;</p>
+          <p>public static ERRoadNetwork.SideObjectUpdate <span class="styleAPIBold">onSideObjectUpdate</span></p>
+          <p class="styleAPIText">Callback triggered after changes to a side object, including a reference to the changed ERSideObjectInstance  instance</p>
           
 	      <p>&nbsp;</p>
 	      <p>public static ERRoadNetwork.BuildModeCallback <span class="styleAPIBold">onBuildModeEnter</span></p>
@@ -126,6 +129,9 @@
 <p class="styleAPIText">&nbsp;</p>
 <p class="styleAPI">public void <span class="styleAPIBold">Translate</span>(Vector3 translation)</p>
 <p class="styleAPIText">This will move the entire road network according the Vector3 translation<span class="styleAPIValue"></span></p>
+<p class="styleAPIText">&nbsp;</p>
+<p class="styleAPI">public void <span class="styleAPIBold">UpdateTerrainInfo</span>()</p>
+<p class="styleAPIText">This will update the terrain data. Call this at runtime when new terrains are added to the scene<span class="styleAPIValue"></span> and when these terrains should be updated according the road network shape.</p>
 <p class="styleAPIText">&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>

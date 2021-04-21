@@ -1548,7 +1548,6 @@ MonoBehaviour:
     type: 3}
   _impulseForce: 8
   _diedTime: 1
-  _type: 0
   _diedEffect: {fileID: 2332435276109846029}
 --- !u!114 &8691299901511703541
 MonoBehaviour:
@@ -1562,6 +1561,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 330ba08f60004e149bfc7b6ea7a24bf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wayDirection: {fileID: 0}
+  waypoints: []
   _speed: 20
   _turnSpeed: 0
   _enemyOvertakingArea: {fileID: 8691299902058185995}

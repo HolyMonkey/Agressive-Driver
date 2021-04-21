@@ -5,7 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody), typeof(Enemy))]
 public class EnemyMover : MonoBehaviour
 {
-    public Transform wayDirection;
+    public int WaypointIndex => waypointIndex;
+
     private Vector3 targetPoint;
 
     public List<Vector3> waypoints;
@@ -57,14 +58,22 @@ public class EnemyMover : MonoBehaviour
 
     public void SetWaypoint(int index)
     {
+        if (waypointIndex+1 >= waypoints.Count)
+        {
+            enabled = false;
+            Destroy(gameObject);
+            return;
+        }
+
         waypointIndex = index;
         waypointStart = waypoints[waypointIndex];
         waypointIndex++;
-        if (waypointIndex == waypoints.Count)
+
+        /*if (waypointIndex == waypoints.Count)
         {
             enabled = false;
             return;
-        }
+        }*/
         waypointEnd = waypoints[waypointIndex];
 
         waypointDirection = (waypointEnd - waypointStart).normalized;
@@ -102,10 +111,11 @@ public class EnemyMover : MonoBehaviour
         float length = Vector3.Distance(transform.position, waypointStart) + _lengthFromVehicle;
         targetPoint = waypointStart + waypointDirection * length;
 
-        targetPoint.y = 0;
+        targetPoint.y = transform.position.y;
         var dir = (targetPoint - transform.position).normalized;
 
-        transform.forward = Vector3.Lerp(transform.forward , dir, Time.fixedDeltaTime * 2.4f);
+
+        transform.forward = Vector3.Lerp(transform.forward , dir, Time.fixedDeltaTime * 20.4f);
         Vector3 velocity = transform.forward * _speed;
         velocity.y = _rigidbody.velocity.y;
         _rigidbody.velocity = velocity;
