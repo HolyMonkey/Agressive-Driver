@@ -1,9 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.UI;
-using UnityEngine.Events;
-using UnityEngine.Events;
 
 public enum ControlMode { simple = 1, touch = 2, none = 0 }
 

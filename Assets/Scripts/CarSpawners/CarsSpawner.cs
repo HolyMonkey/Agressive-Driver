@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CarsSpawner : ObjectPool
+public class CarsSpawner : OldObjectPool
 {
     [SerializeField] private GameObject[] _carsPrefabs;
     [SerializeField] private Transform[] _spawnPoints;

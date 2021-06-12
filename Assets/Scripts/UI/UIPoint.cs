@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -7,7 +6,6 @@ public class UIPoint : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI typeText;
     [SerializeField] private TextMeshProUGUI pointsText;
-    // Start is called before the first frame update
 
     private void OnEnable()
     {
@@ -26,5 +24,4 @@ public class UIPoint : MonoBehaviour
         typeText.text = typePoint;
         pointsText.text = "+" + point.ToString();
     }
-
 }

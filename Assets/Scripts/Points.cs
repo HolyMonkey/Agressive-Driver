@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,6 @@ public class Points : MonoBehaviour
     public int NearMissCount => _nearMissCount;
     [SerializeField] private Player _player;
     [SerializeField] private NearMissChecker _checker;
-    [SerializeField] private UIPoint _uiPoint;
 
     private List<Enemy> _boarding = new List<Enemy>();
     private List<Enemy> _nearMiss = new List<Enemy>();
@@ -17,6 +17,9 @@ public class Points : MonoBehaviour
 
     private int _boardingCount = 0;
     private int _nearMissCount = 0;
+
+    public event Action<int> Collected;
+    public event Action<string, int> CollectedWithText;
 
     private void OnEnable()
     {
@@ -32,20 +35,19 @@ public class Points : MonoBehaviour
         _checker.NearMissed -= NearMiss;
     }
 
-    public void OnCollision(Vector3 vector)
+    private void OnCollision(Vector3 vector)
     {
         _isCollision = true;
         StartCalculate();
     }
 
-    public void NearMiss(Enemy enemy)
+    private void NearMiss(Enemy enemy)
     {
         if (_nearMiss.Contains(enemy) == false)
         {
             _nearMiss.Add(enemy);
             StartCalculate();
         }
-
     }
 
     private void OnBoarding(Enemy enemy)
@@ -66,21 +68,25 @@ public class Points : MonoBehaviour
 
     private IEnumerator CalculatePoints()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
+        var point = 0;
+        var typePoint = "";
         if (_player.Health > 0)
         {
             if (_boarding.Count > 0)
             {
-                _uiPoint.SetText("BRUTAL", _boarding.Count * 50);
-                _uiPoint.gameObject.SetActive(true);
+                point = _boarding.Count * 50;
+                typePoint = "BRUTAL";
                 _boardingCount += _boarding.Count;
             }
             else if (_isCollision == false && _nearMiss.Count > 0)
             {
-                _uiPoint.SetText("NEAR MISS", _nearMiss.Count * 100);
-                _uiPoint.gameObject.SetActive(true);
+                point = _nearMiss.Count * 100;
+                typePoint = "NEAR MISS";
                 _nearMissCount += _nearMiss.Count;
             }
+            CollectedWithText?.Invoke(typePoint, point);
+            Collected?.Invoke(point);
             _boarding.Clear();
             _nearMiss.Clear();
             _isCollision = false;
