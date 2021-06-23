@@ -14,6 +14,7 @@ public class SwipeDetector : MonoBehaviour
     private float minDistanceForSwipe = 20f;
 
     public event UnityAction<SwipeData> OnSwipe;
+    public event Action<float> OnSSwipe;
 
     private void Update()
     {
@@ -31,7 +32,7 @@ public class SwipeDetector : MonoBehaviour
                 DetectSwipe();
             }
 
-            if (touch.phase == TouchPhase.Ended)
+            if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
             {
                 fingerDownPosition = touch.position;
                 DetectSwipe();
@@ -45,13 +46,15 @@ public class SwipeDetector : MonoBehaviour
         {
             if (IsVerticalSwipe())
             {
-                var direction = fingerDownPosition.y - fingerUpPosition.y > 0 ? SwipeDirection.Up : SwipeDirection.Down;
-                SendSwipe(direction);
+               // var direction = fingerDownPosition.y - fingerUpPosition.y > 0 ? SwipeDirection.Up : SwipeDirection.Down;
+                SendSwipe(fingerDownPosition.y - fingerUpPosition.y);
+                //SendSwipe(direction);
             }
             else
             {
-                var direction = fingerDownPosition.x - fingerUpPosition.x > 0 ? SwipeDirection.Right : SwipeDirection.Left;
-                SendSwipe(direction);
+               //var direction = fingerDownPosition.x - fingerUpPosition.x > 0 ? SwipeDirection.Right : SwipeDirection.Left;
+                SendSwipe(fingerDownPosition.y - fingerUpPosition.y);
+                //SendSwipe(direction);
             }
             fingerUpPosition = fingerDownPosition;
         }
@@ -86,6 +89,11 @@ public class SwipeDetector : MonoBehaviour
             EndPosition = fingerUpPosition
         };
         OnSwipe?.Invoke(swipeData);
+    }
+
+    private void SendSwipe(float delta)
+    {
+        OnSSwipe?.Invoke(delta);
     }
 }
 

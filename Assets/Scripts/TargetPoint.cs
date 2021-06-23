@@ -1,20 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using EasyRoads3Dv3;
 
 public class TargetPoint : MonoBehaviour
 {
-    [SerializeField] private SwipeDetector _swipeDetector;
-    [SerializeField] private PlayerMover _vehicleControl;
+    [SerializeField] private SwipeDetection _detection;
+    [SerializeField] private PlayerMover _playerMover;
     [SerializeField] private Player _player;
-    [SerializeField] private float _maxRightTurn;
-    [SerializeField] private float _maxLeftTurn;
     [SerializeField] private float _stepSize;
     [SerializeField] private float _lengthFromVehicle;
-
-    private Vector3 _targetPosition;
-        
     [SerializeField] private ERModularRoad eRoad;
 
     private Vector3 waypointStart;
@@ -22,44 +15,40 @@ public class TargetPoint : MonoBehaviour
     private Vector3 waypointDirection;
     private Vector3 waypointRightDirection;
     private int waypointIndex = 2;
-    private float lastDistance;
-
     private float timeToLoose = 5;
 
-    private bool _isRightLine = true;
+    private float _startStepSize;
+    private float _currentStepSize;
 
     private void Start()
     {
-        transform.position = _vehicleControl.transform.position;
-        _targetPosition = transform.position;
-        TryTurnRight();
+        _startStepSize = _stepSize;
+        _currentStepSize = _startStepSize;
+
+        transform.position = _playerMover.transform.position;
+        SetNextPosition(_currentStepSize);
     }
 
     private void OnEnable()
     {
-        _swipeDetector.OnSwipe += OnSwipe;
+        _detection.OnSwipe += OnSwipe;
     }
 
     private void OnDisable()
     {
-        _swipeDetector.OnSwipe -= OnSwipe;
+        _detection.OnSwipe -= OnSwipe;
     }
 
-    private void OnSwipe(SwipeData data)
+    public void OnSwipe(float delta)
     {
-        if (data.Direction == SwipeDirection.Left)
-        {
-            _isRightLine = false;
-        }
-        if (data.Direction == SwipeDirection.Right)
-        {
-            _isRightLine = true;
-        }
+        delta /= 500;
+        var clampedDelta = Mathf.Clamp(delta, -_stepSize, _stepSize);
+        _currentStepSize += clampedDelta;
+        _currentStepSize = Mathf.Clamp(_currentStepSize, -_stepSize, _stepSize);
     }
-    
+
     private void SetWaypoints()
     {
-       
         waypointStart = eRoad.soSplinePoints[waypointIndex];
         waypointIndex++;
         if (waypointIndex == eRoad.soSplinePoints.Count)
@@ -67,83 +56,47 @@ public class TargetPoint : MonoBehaviour
             enabled = false;
             return;
         }
+
         waypointEnd = eRoad.soSplinePoints[waypointIndex];
-        
+
         var dir = (waypointEnd - waypointStart).normalized;
         waypointDirection = dir;
         waypointRightDirection = Quaternion.AngleAxis(90, Vector3.up) * dir;
-
-        lastDistance = Vector3.Distance(_vehicleControl.transform.position, waypointEnd);
-
         timeToLoose = 5;
     }
 
     private void CheckWaypointDestination()
     {
-       // var distance = Vector3.Distance(_vehicleControl.transform.position, waypointEnd);
-        //if (distance > lastDistance)
-        if (_vehicleControl.transform.position.z > waypointEnd.z)
+        if (_playerMover.transform.position.z > waypointEnd.z)
         {
             SetWaypoints();
         }
         else
         {
-            
             timeToLoose -= Time.deltaTime;
             if (timeToLoose < 0)
                 _player.TakeDamage(5000);
-                
-            //lastDistance = distance;
         }
     }
 
-    
     private void Update()
     {
         CheckWaypointDestination();
-
-        //if (lastDistance > 100)
-        //    _player.TakeDamage(5000);
-
-        float length = Vector3.Distance(_vehicleControl.transform.position, waypointStart) + _lengthFromVehicle;
-        transform.position = waypointStart + waypointDirection * length;
-
-        if (_isRightLine)
+        SetNextPosition(_currentStepSize);
+        if (Input.GetKey(KeyCode.A))
         {
-            TryTurnRight();
+            _currentStepSize -= 0.05f;
         }
-        else
+        if (Input.GetKey(KeyCode.D))
         {
-            TryTurnLeft();
+            _currentStepSize += 0.05f;
         }
-
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            _isRightLine = false;
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            _isRightLine = true;
-        }
+        _currentStepSize = Mathf.Clamp(_currentStepSize, -_stepSize, _stepSize);
     }
-
-    public void TryTurnRight()
-    {
-        SetNextPosition(_stepSize);
-    }
-
-    public void TryTurnLeft()
-    {
-        SetNextPosition(-_stepSize);        
-    }
-
-
+    
     private void SetNextPosition(float stepSize)
     {
-        float length = Vector3.Distance(_vehicleControl.transform.position, waypointStart) + _lengthFromVehicle;
-        transform.position = waypointStart + waypointDirection * length;
-
+        float length = Vector3.Distance(_playerMover.transform.position, waypointStart) + _lengthFromVehicle;
         transform.position = waypointStart + waypointDirection * length + waypointRightDirection * stepSize;
     }
-
 }
