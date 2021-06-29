@@ -313,13 +313,20 @@ public class PlayerMover : MonoBehaviour
     private void OnEnable()
     {
         _player.PlayerDied += OnPlayerDied;
+        _player.Revived += OnPlayerRevived;
     }
 
     private void OnDisable()
     {
         _player.PlayerDied -= OnPlayerDied;
+        _player.Revived -= OnPlayerRevived;
     }
 
+    private void OnPlayerRevived()
+    {
+        _isPlayerDied = false;
+    }
+    
     private void OnPlayerDied()
     {
         _isPlayerDied = true;

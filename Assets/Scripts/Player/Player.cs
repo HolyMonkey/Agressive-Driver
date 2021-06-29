@@ -1,25 +1,39 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class Player : MonoBehaviour 
 {
-    public int Health => _currentHealth;
     [SerializeField] private int _health;
+    [SerializeField] private AdSettings _ad;
 
+    private readonly int _damage = 25;
     private int _currentHealth;
-    readonly private int _damage = 25;
+    private int _startHealth;
+
+    public int Health => _currentHealth;
 
     public event UnityAction<Vector3> PlayerHited;
     public event UnityAction PlayerDied;
     public event UnityAction PlayerOvertook;
     public event UnityAction<int, int> HealthChanged;
     public event UnityAction<Enemy> Boarding;
+    public event Action Revived;
+
+    private void OnEnable()
+    {
+        _ad.AdShowned += Revive;
+    }
+
+    private void OnDisable()
+    {
+        _ad.AdShowned -= Revive;
+    }
 
     private void Start()
     {
         _currentHealth = _health;
+        _startHealth = _health;
     }
 
     public void TakeDamage(int damage)
@@ -33,6 +47,12 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void Revive()
+    {
+        _currentHealth = _startHealth;
+        Revived?.Invoke();
+    }
+    
     private void Die()
     {
         if (enabled)
@@ -62,12 +82,5 @@ public class Player : MonoBehaviour
             if (_currentHealth > 0 && Mathf.Abs(collisionDirection.x) >= 0.85f)
                 Boarding?.Invoke(enemy);
         }
-    }
-
-    public void Repair()
-    {
-        _currentHealth = _health;
-
-        HealthChanged?.Invoke(_currentHealth, _health);
     }
 }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Player))]
@@ -18,12 +16,15 @@ public class PlayerEffects : MonoBehaviour
         _player.PlayerHited += OnPlayerHitted;
         _player.PlayerDied += OnPlayerDied;
         _player.HealthChanged += OnHealthChanged;
+        _player.Revived += OnPlayerRevived;
     }
 
     private void OnDisable()
     {
         _player.PlayerHited -= OnPlayerHitted;
         _player.PlayerDied -= OnPlayerDied;
+        _player.HealthChanged -= OnHealthChanged;
+        _player.Revived -= OnPlayerRevived;
     }
 
     private void Awake()
@@ -31,7 +32,11 @@ public class PlayerEffects : MonoBehaviour
         _player = GetComponent<Player>();
     }
 
-
+    private void OnPlayerRevived()
+    {
+        _diedEffect.Stop();
+    }
+    
     private void OnPlayerHitted(Vector3 hitPoint)
     {
         Vector3 targetPosition = new Vector3(transform.position.x - hitPoint.x, _hitEffect.gameObject.transform.position.y, transform.position.z - hitPoint.z);

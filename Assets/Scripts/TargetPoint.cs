@@ -71,12 +71,12 @@ public class TargetPoint : MonoBehaviour
         {
             SetWaypoints();
         }
-        else
-        {
-            timeToLoose -= Time.deltaTime;
-            if (timeToLoose < 0)
-                _player.TakeDamage(5000);
-        }
+        // else
+        // {
+        //     timeToLoose -= Time.deltaTime;
+        //     if (timeToLoose < 0)
+        //         _player.TakeDamage(5000);
+        // }
     }
 
     private void Update()
