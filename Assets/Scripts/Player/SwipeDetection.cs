@@ -8,7 +8,7 @@ public class SwipeDetection : MonoBehaviour
     
     public event Action<float> OnSwipe;
 
-    private const float DeadZone = 0f;
+    private const float DeadZone = 0.3f;
     private Vector2 _tapPosition;
     private Vector2 _swipeDelta;
     private bool _isSwipe;
@@ -20,25 +20,18 @@ public class SwipeDetection : MonoBehaviour
     {
         if (Input.touchCount > 0)
         {
-            if (Input.GetTouch(0).phase == TouchPhase.Began)
+            var touch = Input.GetTouch(0);
+            if (touch.phase == TouchPhase.Began || touch.phase == TouchPhase.Stationary)
             {
                 _isSwipe = true;
+                _pressTime += Time.deltaTime;
                 _tapPosition = Input.GetTouch(0).position;
             }
-            else if (Input.GetTouch(0).phase == TouchPhase.Ended)
+            else if (touch.phase == TouchPhase.Ended)
             {
+                _pressTime = 0;
                 ResetSwap();
             }
-        }
-        if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonUp(0))
-        {
-            _pressTime = 0;
-        }
-
-        if (Input.GetMouseButton(0))
-        {
-            _isSwipe = true;
-            _pressTime += Time.deltaTime;
         }
         CheckSwipe(); 
     }
