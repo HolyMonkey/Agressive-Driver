@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,7 +11,6 @@ public class ProgressBar : MonoBehaviour
 
     private void Start()
     {
-
         distance = Vector3.Distance(_player.transform.position, _finish.transform.position);
     }
 
@@ -24,5 +21,4 @@ public class ProgressBar : MonoBehaviour
             lastProgress = progress;
         _progressSlider.value = lastProgress;
     }
-
 }

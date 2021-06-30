@@ -11,10 +11,6 @@ GameObject:
   - component: {fileID: 4308780276143187503}
   - component: {fileID: 4308780276143187507}
   - component: {fileID: 4308780276143187504}
-  - component: {fileID: 4308780276143187506}
-  - component: {fileID: 4308780276143187505}
-  - component: {fileID: 4308780276143187502}
-  - component: {fileID: 4308780276143187509}
   m_Layer: 5
   m_Name: PanelPoints
   m_TagString: Untagged
@@ -80,66 +76,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4308780276143187506
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4308780276143187500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a41c023e8ac3b4441baef766f39d97cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _rectTransform: {fileID: 4308780276906435908}
-  _duration: 1
-  _points: {fileID: 0}
-  _typeText: {fileID: 4308780277590955614}
-  _pointsText: {fileID: 4308780277958415216}
-  _popupTextSpawner: {fileID: 0}
---- !u!111 &4308780276143187505
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4308780276143187500}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 337820abe4b7efb41b2635a246f4af24, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: 337820abe4b7efb41b2635a246f4af24, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
---- !u!114 &4308780276143187502
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4308780276143187500}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc5215dddc931aa4cbd9c6be4293e0c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  typeText: {fileID: 4308780277590955614}
-  pointsText: {fileID: 4308780277958415216}
---- !u!225 &4308780276143187509
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4308780276143187500}
-  m_Enabled: 1
-  m_Alpha: 0
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!1 &4308780276906435909
 GameObject:
   m_ObjectHideFlags: 0
@@ -188,6 +124,8 @@ GameObject:
   - component: {fileID: 4308780277590955615}
   - component: {fileID: 4308780277590954401}
   - component: {fileID: 4308780277590955614}
+  - component: {fileID: 1603408898}
+  - component: {fileID: 1603408897}
   m_Layer: 5
   m_Name: Type
   m_TagString: Untagged
@@ -270,7 +208,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 134.05
+  m_fontSize: 134.15
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -312,6 +250,35 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!225 &1603408898
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4308780277590955612}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &1603408897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4308780277590955612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a41c023e8ac3b4441baef766f39d97cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 4308780276906435908}
+  _duration: 0.5
+  _points: {fileID: 0}
+  _typeText: {fileID: 4308780277590955614}
+  _pointsText: {fileID: 4308780277958415216}
 --- !u!1 &4308780277958415214
 GameObject:
   m_ObjectHideFlags: 0
@@ -422,7 +389,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 122.95
+  m_fontSize: 123.05
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1

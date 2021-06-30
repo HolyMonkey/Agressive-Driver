@@ -486,7 +486,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2236843573118358927}
   - component: {fileID: 2236843573118358926}
-  - component: {fileID: 2236843573118358925}
   - component: {fileID: 2236843573118358924}
   - component: {fileID: 2236843573118358931}
   - component: {fileID: 2236843573118358930}
@@ -533,25 +532,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!95 &2236843573118358925
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2236843573118358929}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &2236843573118358924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -581,6 +561,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 330ba08f60004e149bfc7b6ea7a24bf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waypoints: []
   _speed: -20
   _turnSpeed: 0
   _enemyOvertakingArea: {fileID: 1808372156163672632}
@@ -1598,12 +1579,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f0e35eb3be6fd64489f95960fcac9a9, type: 3}
---- !u!4 &1808372156163672630 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6516989886971166540, guid: 1f0e35eb3be6fd64489f95960fcac9a9,
-    type: 3}
-  m_PrefabInstance: {fileID: 4857236802121856378}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1808372156163672632 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6516989886971166530, guid: 1f0e35eb3be6fd64489f95960fcac9a9,
@@ -1616,3 +1591,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d2918fd212cb5543a4aa31e2418687e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1808372156163672630 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6516989886971166540, guid: 1f0e35eb3be6fd64489f95960fcac9a9,
+    type: 3}
+  m_PrefabInstance: {fileID: 4857236802121856378}
+  m_PrefabAsset: {fileID: 0}

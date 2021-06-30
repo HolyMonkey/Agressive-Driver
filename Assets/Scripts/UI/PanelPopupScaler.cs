@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using DG.Tweening;
 using TMPro;
@@ -12,7 +11,6 @@ public class PanelPopupScaler : MonoBehaviour
     [SerializeField] private Points _points;
     [SerializeField] private TextMeshProUGUI _typeText;
     [SerializeField] private TextMeshProUGUI _pointsText;
-    [SerializeField] private PopupTextSpawner _popupTextSpawner;
 
     private readonly int _endSize = 1;
     private readonly float _startSize = 0.4f;

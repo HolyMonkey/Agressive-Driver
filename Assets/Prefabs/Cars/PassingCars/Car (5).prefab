@@ -254,7 +254,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2524310787938195555}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 0}
   m_CullingMode: 0
@@ -281,7 +281,6 @@ MonoBehaviour:
     type: 3}
   _impulseForce: 8
   _diedTime: 1
-  _type: 0
   _diedEffect: {fileID: 1218782443215235195}
 --- !u!114 &2524310787938195553
 MonoBehaviour:
@@ -295,6 +294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 330ba08f60004e149bfc7b6ea7a24bf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waypoints: []
   _speed: 20
   _turnSpeed: 0
   _enemyOvertakingArea: {fileID: 2217123646802200746}

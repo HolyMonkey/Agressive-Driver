@@ -447,7 +447,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6178740536458233630}
   - component: {fileID: 6178740536458233629}
-  - component: {fileID: 6178740536458233628}
   - component: {fileID: 6178740536458233699}
   - component: {fileID: 6178740536458233698}
   - component: {fileID: 6178740536458233697}
@@ -494,25 +493,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!95 &6178740536458233628
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6178740536458233696}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &6178740536458233699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -542,6 +522,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 330ba08f60004e149bfc7b6ea7a24bf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waypoints: []
   _speed: -20
   _turnSpeed: 0
   _enemyOvertakingArea: {fileID: 5806114583289290679}
@@ -1586,6 +1567,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6f3dec3592b22334b9412b552afe8ad5, type: 3}
+--- !u!4 &322710590631014016 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5892173251569297778, guid: 6f3dec3592b22334b9412b552afe8ad5,
+    type: 3}
+  m_PrefabInstance: {fileID: 6178740536829659122}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5199745350278717427 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2132031182799624193, guid: 6f3dec3592b22334b9412b552afe8ad5,
+    type: 3}
+  m_PrefabInstance: {fileID: 6178740536829659122}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4351223095163768278 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7628514554162416164, guid: 6f3dec3592b22334b9412b552afe8ad5,
@@ -1601,18 +1594,6 @@ GameObject:
 --- !u!1 &6783969643748132753 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 836204682831315043, guid: 6f3dec3592b22334b9412b552afe8ad5,
-    type: 3}
-  m_PrefabInstance: {fileID: 6178740536829659122}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &5199745350278717427 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2132031182799624193, guid: 6f3dec3592b22334b9412b552afe8ad5,
-    type: 3}
-  m_PrefabInstance: {fileID: 6178740536829659122}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &322710590631014016 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5892173251569297778, guid: 6f3dec3592b22334b9412b552afe8ad5,
     type: 3}
   m_PrefabInstance: {fileID: 6178740536829659122}
   m_PrefabAsset: {fileID: 0}

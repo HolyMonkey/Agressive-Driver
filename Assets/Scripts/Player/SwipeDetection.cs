@@ -4,6 +4,7 @@ using UnityEngine;
 public class SwipeDetection : MonoBehaviour
 {
     [SerializeField] private TargetPoint _targetPoint;
+    [SerializeField] private PlayerSlower _playerSlower;
     
     public event Action<float> OnSwipe;
 
@@ -11,6 +12,9 @@ public class SwipeDetection : MonoBehaviour
     private Vector2 _tapPosition;
     private Vector2 _swipeDelta;
     private bool _isSwipe;
+    
+    private float _pressTime;
+    private float _pressTimeNeed = 0.1f;
 
     private void Update()
     {
@@ -27,17 +31,16 @@ public class SwipeDetection : MonoBehaviour
                 ResetSwap();
             }
         }
-        CheckSwipe();
-        
-        // if (Input.GetMouseButtonDown(0))
-        // {
-        //     _isSwipe = true;
-        //     _tapPosition = Input.mousePosition;
-        // }
-        // else if (Input.GetMouseButtonUp(0))
-        // {
-        //     ResetSwap();
-        // } 
+        if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonUp(0))
+        {
+            _pressTime = 0;
+        }
+
+        if (Input.GetMouseButton(0))
+        {
+            _pressTime += Time.deltaTime;
+        }
+        CheckSwipe(); 
     }
 
     private void CheckSwipe()
@@ -49,14 +52,18 @@ public class SwipeDetection : MonoBehaviour
             {
                 _swipeDelta = Input.GetTouch(0).position - _tapPosition;
             }
-            // else if (Input.GetMouseButtonDown(0))
-            // {
-            //     _swipeDelta = (Vector2)Input.mousePosition -_tapPosition;
-            // }
+
+            if (_pressTime >= _pressTimeNeed &&_swipeDelta.magnitude == 0)
+            {
+                _playerSlower.SlowPlayerSpeed(true);
+            }
+            else
+            {
+                _playerSlower.SlowPlayerSpeed(false);
+            }
         }
         if (_swipeDelta.magnitude > DeadZone)
         {
-            // OnSwipe?.Invoke(_swipeDelta.x);
             _targetPoint.OnSwipe(_swipeDelta.x);
         }
     }
@@ -66,5 +73,6 @@ public class SwipeDetection : MonoBehaviour
         _isSwipe = false;
         _tapPosition = Vector2.zero;
         _swipeDelta = Vector2.zero;
+        _playerSlower.SlowPlayerSpeed(false);
     }
 }

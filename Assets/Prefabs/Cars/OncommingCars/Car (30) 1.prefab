@@ -769,7 +769,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3437587092363735841}
   - component: {fileID: 3437587092363735840}
-  - component: {fileID: 3437587092363735847}
   - component: {fileID: 3437587092363735846}
   - component: {fileID: 3437587092363735845}
   - component: {fileID: 3437587092363735844}
@@ -816,25 +815,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!95 &3437587092363735847
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3437587092363735851}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &3437587092363735846
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -864,6 +844,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 330ba08f60004e149bfc7b6ea7a24bf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waypoints: []
   _speed: -20
   _turnSpeed: 0
   _enemyOvertakingArea: {fileID: 8621098926167702756}
@@ -1586,6 +1567,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 346b784fc036b5844ab957cc98e7c706, type: 3}
+--- !u!1 &478336409093785425 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2961019247870459780, guid: 346b784fc036b5844ab957cc98e7c706,
+    type: 3}
+  m_PrefabInstance: {fileID: 3437587092438415573}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6700401380518964800 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8306987031848605333, guid: 346b784fc036b5844ab957cc98e7c706,
@@ -1607,12 +1594,6 @@ GameObject:
 --- !u!1 &788331198594262451 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2685399041165221222, guid: 346b784fc036b5844ab957cc98e7c706,
-    type: 3}
-  m_PrefabInstance: {fileID: 3437587092438415573}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &478336409093785425 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2961019247870459780, guid: 346b784fc036b5844ab957cc98e7c706,
     type: 3}
   m_PrefabInstance: {fileID: 3437587092438415573}
   m_PrefabAsset: {fileID: 0}

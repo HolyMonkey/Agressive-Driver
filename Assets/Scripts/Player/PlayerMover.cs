@@ -133,6 +133,8 @@ public class PlayerMover : MonoBehaviour
     private Rigidbody myRigidbody;
     private WheelComponent[] wheels;
 
+    public Rigidbody PlayerRigidbody => myRigidbody;
+
     private class WheelComponent
     {
         public Transform wheel;
@@ -277,6 +279,11 @@ public class PlayerMover : MonoBehaviour
         }
     }
 
+    public void PressingBrake(bool isPress)
+    {
+        brake = isPress;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.transform.root.GetComponent<PlayerMover>())
@@ -313,20 +320,20 @@ public class PlayerMover : MonoBehaviour
     private void OnEnable()
     {
         _player.PlayerDied += OnPlayerDied;
-        _player.Revived += OnPlayerRevived;
+        _player.DelayRevived += OnPlayerDelayRevived;
     }
 
     private void OnDisable()
     {
         _player.PlayerDied -= OnPlayerDied;
-        _player.Revived -= OnPlayerRevived;
+        _player.DelayRevived -= OnPlayerDelayRevived;
     }
 
-    private void OnPlayerRevived()
+    private void OnPlayerDelayRevived()
     {
         _isPlayerDied = false;
     }
-    
+
     private void OnPlayerDied()
     {
         _isPlayerDied = true;
@@ -339,15 +346,10 @@ public class PlayerMover : MonoBehaviour
 
     private bool _isPower;
 
-    public void SetPower(bool isPower)
-    {
-        _isPower = isPower;
-    }
-
-    public void PressingBrake(bool isPress)
-    {
-        brake = isPress;
-    }
+    // public void SetPower(bool isPower)
+    // {
+    //     _isPower = isPower;
+    // }
 
     private void FixedUpdate()
     {
@@ -410,12 +412,6 @@ public class PlayerMover : MonoBehaviour
                 _stopDistance = 9f;
                 _limitSpeed = carSetting.LimitForwardSpeed;
             }
-        }
-        else
-        {
-            accel = 0.0f;
-            steer = 0.0f;
-            brake = false;
         }
 
         if (!carWheels.wheels.frontWheelDrive && !carWheels.wheels.backWheelDrive)
@@ -602,7 +598,7 @@ public class PlayerMover : MonoBehaviour
                     {
                         Particle[currentWheel] =
                             Instantiate(carParticles.brakeParticlePerfab, w.wheel.position,
-                                Quaternion.identity) as GameObject;
+                                Quaternion.identity);
                         Particle[currentWheel].name = "WheelParticle";
                         Particle[currentWheel].transform.parent = transform;
                         Particle[currentWheel].AddComponent<AudioSource>();
@@ -703,25 +699,13 @@ public class PlayerMover : MonoBehaviour
                         else
                         {
                             col.motorTorque = 0;
-                            col.brakeTorque = 2000;
                         }
-                    }
-                    else
-                    {
-                        col.motorTorque = 0;
                     }
                 }
             }
 
-            if (brake || slip2 > 2.0f)
-            {
-                col.steerAngle = Mathf.Lerp(col.steerAngle, steer * w.maxSteer, 0.02f);
-            }
-            else
-            {
-                float SteerAngle = Mathf.Clamp(Speed / carSetting.maxSteerAngle, 1.0f, carSetting.maxSteerAngle);
-                col.steerAngle = steer * (w.maxSteer / SteerAngle);
-            }
+            float SteerAngle = Mathf.Clamp(Speed / carSetting.maxSteerAngle, 1.0f, carSetting.maxSteerAngle);
+            col.steerAngle = steer * (w.maxSteer / SteerAngle);
         }
 
         Pitch = Mathf.Clamp(1.2f + ((motorRPM - carSetting.idleRPM) / (carSetting.shiftUpRPM - carSetting.idleRPM)),

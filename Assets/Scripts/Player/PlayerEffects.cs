@@ -16,7 +16,7 @@ public class PlayerEffects : MonoBehaviour
         _player.PlayerHited += OnPlayerHitted;
         _player.PlayerDied += OnPlayerDied;
         _player.HealthChanged += OnHealthChanged;
-        _player.Revived += OnPlayerRevived;
+        _player.DelayRevived += OnPlayerDelayRevived;
     }
 
     private void OnDisable()
@@ -24,7 +24,7 @@ public class PlayerEffects : MonoBehaviour
         _player.PlayerHited -= OnPlayerHitted;
         _player.PlayerDied -= OnPlayerDied;
         _player.HealthChanged -= OnHealthChanged;
-        _player.Revived -= OnPlayerRevived;
+        _player.DelayRevived -= OnPlayerDelayRevived;
     }
 
     private void Awake()
@@ -32,7 +32,7 @@ public class PlayerEffects : MonoBehaviour
         _player = GetComponent<Player>();
     }
 
-    private void OnPlayerRevived()
+    private void OnPlayerDelayRevived()
     {
         _diedEffect.Stop();
     }

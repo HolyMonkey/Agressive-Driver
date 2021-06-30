@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using AppodealAds.Unity.Api;
@@ -8,7 +7,7 @@ using UnityEngine.UI;
 
 public class AdSettings : MonoBehaviour, IInterstitialAdListener
 {
-    [SerializeField] private Button _button;
+    [SerializeField] private List<Button> _buttons;
     
     private const string AppKey = "667e788d47927e97f5ab08243b24725dbe07fdb083e46220";
 
@@ -16,12 +15,18 @@ public class AdSettings : MonoBehaviour, IInterstitialAdListener
 
     private void OnEnable()
     {
-        _button.onClick.AddListener(ShowAds);
+        foreach (var button in _buttons)
+        {
+            button.onClick.AddListener(ShowAds);
+        }
     }
 
     private void OnDisable()
     {
-        _button.onClick.RemoveListener(ShowAds);
+        foreach (var button in _buttons)
+        {
+            button.onClick.RemoveListener(ShowAds);
+        }
     }
 
     private void Start()
@@ -47,17 +52,18 @@ public class AdSettings : MonoBehaviour, IInterstitialAdListener
     public void onInterstitialFailedToLoad()
     {
         Debug.Log("Failed to load");
+        Time.timeScale = 0f;
     }
 
     public void onInterstitialShowFailed()
     {
         Debug.Log("Show failed");
+        Time.timeScale = 0f;
     }
 
     public void onInterstitialShown()
     {
         Debug.Log("Shown");
-        //AdShowned?.Invoke();
     }
 
     public void onInterstitialClosed()
@@ -74,5 +80,6 @@ public class AdSettings : MonoBehaviour, IInterstitialAdListener
     public void onInterstitialExpired()
     {
         Debug.Log("Expired");
+        Time.timeScale = 0f;
     }
 }

@@ -447,7 +447,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7712366538212302752}
   - component: {fileID: 7712366538212302759}
-  - component: {fileID: 7712366538212302758}
   - component: {fileID: 7712366538212302757}
   - component: {fileID: 7712366538212302756}
   - component: {fileID: 7712366538212302779}
@@ -494,25 +493,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!95 &7712366538212302758
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7712366538212302778}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &7712366538212302757
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -542,6 +522,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 330ba08f60004e149bfc7b6ea7a24bf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waypoints: []
   _speed: -20
   _turnSpeed: 0
   _enemyOvertakingArea: {fileID: 5214618662467709233}
@@ -1586,6 +1567,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bed734f3f02471642955c5bdf74becee, type: 3}
+--- !u!4 &7768925309583239047 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 60535714701763887, guid: bed734f3f02471642955c5bdf74becee,
+    type: 3}
+  m_PrefabInstance: {fileID: 7712366538472669864}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2847276767470376692 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5513632600806036572, guid: bed734f3f02471642955c5bdf74becee,
@@ -1607,12 +1594,6 @@ GameObject:
 --- !u!1 &3571138486930329238 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6523726883294579774, guid: bed734f3f02471642955c5bdf74becee,
-    type: 3}
-  m_PrefabInstance: {fileID: 7712366538472669864}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &7768925309583239047 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 60535714701763887, guid: bed734f3f02471642955c5bdf74becee,
     type: 3}
   m_PrefabInstance: {fileID: 7712366538472669864}
   m_PrefabAsset: {fileID: 0}

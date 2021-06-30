@@ -41,7 +41,7 @@ public class TargetPoint : MonoBehaviour
 
     public void OnSwipe(float delta)
     {
-        delta /= 500;
+        delta /= 450;
         var clampedDelta = Mathf.Clamp(delta, -_stepSize, _stepSize);
         _currentStepSize += clampedDelta;
         _currentStepSize = Mathf.Clamp(_currentStepSize, -_stepSize, _stepSize);
@@ -71,12 +71,6 @@ public class TargetPoint : MonoBehaviour
         {
             SetWaypoints();
         }
-        // else
-        // {
-        //     timeToLoose -= Time.deltaTime;
-        //     if (timeToLoose < 0)
-        //         _player.TakeDamage(5000);
-        // }
     }
 
     private void Update()

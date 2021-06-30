@@ -58,7 +58,7 @@ public class EnemyMover : MonoBehaviour
 
     public void SetWaypoint(int index)
     {
-        if (waypointIndex+1 >= waypoints.Count)
+        if (waypointIndex + 1 >= waypoints.Count)
         {
             enabled = false;
             Destroy(gameObject);
@@ -115,14 +115,14 @@ public class EnemyMover : MonoBehaviour
         var dir = (targetPoint - transform.position).normalized;
 
 
-        transform.forward = Vector3.Lerp(transform.forward , dir, Time.fixedDeltaTime * 20.4f);
+        transform.forward = Vector3.Lerp(transform.forward, dir, Time.fixedDeltaTime * 20.4f);
         Vector3 velocity = transform.forward * _speed;
         velocity.y = _rigidbody.velocity.y;
         _rigidbody.velocity = velocity;
 
         if (_isEnemyDied)
         {
-            if(_speed > _diedSpeed)
+            if (_speed > _diedSpeed)
                 _speed -= Time.deltaTime;
 
             if (_speed <= _diedSpeed)
@@ -137,12 +137,10 @@ public class EnemyMover : MonoBehaviour
 
     public void HitAvoiding()
     {
-            _targetLineX = -10F;
-
+        _targetLineX = -10F;
         _steerAngle = 1 * m_MaximumSteerAngle;
         m_WheelColliders[0].steerAngle = _steerAngle;
         m_WheelColliders[1].steerAngle = _steerAngle;
-
     }
 
     private void OnEnemyDied()
