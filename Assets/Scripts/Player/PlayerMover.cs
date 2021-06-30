@@ -127,13 +127,10 @@ public class PlayerMover : MonoBehaviour
     [HideInInspector] public bool Backward = false;
     private float wantedRPM = 0.0f;
     private float w_rotate;
-    private float slip, slip2 = 0.0f;
     private GameObject[] Particle = new GameObject[4];
     private Vector3 steerCurAngle;
     private Rigidbody myRigidbody;
     private WheelComponent[] wheels;
-
-    public Rigidbody PlayerRigidbody => myRigidbody;
 
     private class WheelComponent
     {
@@ -288,20 +285,12 @@ public class PlayerMover : MonoBehaviour
     {
         if (collision.transform.root.GetComponent<PlayerMover>())
         {
-            collision.transform.root.GetComponent<PlayerMover>().slip2 =
-                Mathf.Clamp(collision.relativeVelocity.magnitude, 0.0f, 10.0f);
             myRigidbody.angularVelocity = new Vector3(-myRigidbody.angularVelocity.x * 0.5f,
                 myRigidbody.angularVelocity.y * 0.5f,
                 -myRigidbody.angularVelocity.z * 0.5f);
             myRigidbody.velocity =
                 new Vector3(myRigidbody.velocity.x, myRigidbody.velocity.y * 0.5f, myRigidbody.velocity.z);
         }
-    }
-
-    private void OnCollisionStay(Collision collision)
-    {
-        if (collision.transform.root.GetComponent<PlayerMover>())
-            collision.transform.root.GetComponent<PlayerMover>().slip2 = 5.0f;
     }
 
     [SerializeField] private float _minSpeed;
@@ -344,27 +333,10 @@ public class PlayerMover : MonoBehaviour
         _targetPosition = targetPosition;
     }
 
-    private bool _isPower;
-
-    // public void SetPower(bool isPower)
-    // {
-    //     _isPower = isPower;
-    // }
-
     private void FixedUpdate()
     {
         Speed = myRigidbody.velocity.magnitude;
-
-        if (Speed < lastSpeed - 10 && slip < 10)
-        {
-            slip = lastSpeed / 15;
-        }
-
         lastSpeed = Speed;
-
-        if (slip2 != 0.0f)
-            slip2 = Mathf.MoveTowards(slip2, 0.0f, 0.1f);
-
         myRigidbody.centerOfMass = carSetting.shiftCentre;
 
         if (activeControl)
@@ -426,13 +398,16 @@ public class PlayerMover : MonoBehaviour
             if (Speed < 5.0f)
                 ShiftDown();
         }
+        else if (brake)
+        {
+            ShiftUp();
+        }
         else if (carSetting.automaticGear && (currentGear == 0) && (accel > 0.0f))
         {
             if (Speed < 5.0f)
                 ShiftUp();
         }
-        else if (carSetting.automaticGear && (motorRPM > carSetting.shiftUpRPM) && (accel > 0.0f) && Speed > 10.0f &&
-                 !brake)
+        else if (carSetting.automaticGear && (motorRPM > carSetting.shiftUpRPM) && (accel > 0.0f) && Speed > 10.0f && !brake)
         {
             ShiftUp();
         }
@@ -440,6 +415,7 @@ public class PlayerMover : MonoBehaviour
         {
             ShiftDown();
         }
+        
 
         if (Speed < 1.0f) Backward = true;
 
@@ -486,20 +462,13 @@ public class PlayerMover : MonoBehaviour
 
             if (w.drive)
             {
-                if (!NeutralGear && brake && currentGear < 2)
+                if (!NeutralGear)
                 {
-                    rpm += accel * carSetting.idleRPM;
+                    rpm += col.rpm;
                 }
                 else
                 {
-                    if (!NeutralGear)
-                    {
-                        rpm += col.rpm;
-                    }
-                    else
-                    {
-                        rpm += (carSetting.idleRPM * accel);
-                    }
+                    rpm += carSetting.idleRPM * accel;
                 }
 
                 motorizedWheels++;
@@ -507,24 +476,22 @@ public class PlayerMover : MonoBehaviour
 
             if (brake || accel < 0.0f)
             {
-                if ((accel < 0.0f) || (brake && (w == wheels[2] || w == wheels[3])))
+                if (accel < 0.0f || brake && (w == wheels[2] || w == wheels[3]))
                 {
-                    if (brake && (accel > 0.0f))
+                    _skidmarksEffect.StartEmitterSkidmarks(false);
+                    wantedRPM = 0f;
+                    if (myRigidbody.velocity.magnitude > 20.2f)
                     {
-                        slip = Mathf.Lerp(slip, 5.0f, accel * 0.01f);
+                        col.brakeTorque = carSetting.brakePower;
                     }
-                    else if (Speed > 1.0f)
+                    else if (myRigidbody.velocity.magnitude >= 19.8f && myRigidbody.velocity.magnitude < 20.1f)
                     {
-                        slip = Mathf.Lerp(slip, 1.0f, 0.002f);
+                        col.brakeTorque = 1000f;
                     }
                     else
                     {
-                        slip = Mathf.Lerp(slip, 1.0f, 0.02f);
+                        col.brakeTorque = 0;
                     }
-
-                    _skidmarksEffect.StartEmitterSkidmarks(false);
-                    wantedRPM = 0.0f;
-                    col.brakeTorque = carSetting.brakePower;
                     w.rotation = w_rotate;
                 }
             }
@@ -532,27 +499,18 @@ public class PlayerMover : MonoBehaviour
             {
                 _skidmarksEffect.StartEmitterSkidmarks(true);
                 col.brakeTorque = accel == 0 || NeutralGear ? col.brakeTorque = 1000 : col.brakeTorque = 0;
-
-                slip = Speed > 0.0f
-                    ? (Speed > 100
-                        ? slip = Mathf.Lerp(slip, 1.0f + Mathf.Abs(steer), 0.02f)
-                        : slip = Mathf.Lerp(slip, 1.5f, 0.02f))
-                    : slip = Mathf.Lerp(slip, 0.01f, 0.02f);
-
                 w_rotate = w.rotation;
             }
 
-            if (_isPower && (currentGear > 1 && Speed > 0f))
+            if (currentGear > 1 && Speed > 0f)
             {
                 if (powerShift == 0)
                 {
                     shifmotor = false;
                 }
-
+                
                 powerShift = Mathf.MoveTowards(powerShift, 0.0f, Time.deltaTime * 10.0f);
-
                 carSounds.nitro.volume = Mathf.Lerp(carSounds.nitro.volume, 1.0f, Time.deltaTime * 10.0f);
-
                 if (!carSounds.nitro.isPlaying)
                 {
                     carSounds.nitro.GetComponent<AudioSource>().Play();
@@ -572,7 +530,6 @@ public class PlayerMover : MonoBehaviour
                 }
 
                 carSounds.nitro.volume = Mathf.MoveTowards(carSounds.nitro.volume, 0.0f, Time.deltaTime * 2.0f);
-
                 if (carSounds.nitro.volume == 0)
                     carSounds.nitro.Stop();
 
@@ -683,27 +640,31 @@ public class PlayerMover : MonoBehaviour
             {
                 if (Mathf.Abs(col.rpm) > Mathf.Abs(wantedRPM))
                 {
-                    col.motorTorque = 0;
+                    col.motorTorque = 100f;
                 }
                 else
                 {
                     float curTorqueCol = col.motorTorque;
-
                     if (!brake && accel != 0 && NeutralGear == false)
                     {
                         if ((Speed < _limitSpeed && currentGear > 0) ||
                             (Speed < _limitSpeed && currentGear == 0))
                         {
                             col.motorTorque = curTorqueCol * 0.9f + newTorque * 1.0f;
+                            //print(col.motorTorque);
                         }
                         else
                         {
                             col.motorTorque = 0;
                         }
                     }
+                    else if (brake == true)
+                    {
+                        //col.motorTorque = curTorqueCol * 1.2f + newTorque * 4f;
+                        col.motorTorque = 300f;
+                    }
                 }
             }
-
             float SteerAngle = Mathf.Clamp(Speed / carSetting.maxSteerAngle, 1.0f, carSetting.maxSteerAngle);
             col.steerAngle = steer * (w.maxSteer / SteerAngle);
         }

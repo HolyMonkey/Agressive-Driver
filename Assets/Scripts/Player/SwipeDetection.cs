@@ -25,8 +25,7 @@ public class SwipeDetection : MonoBehaviour
                 _isSwipe = true;
                 _tapPosition = Input.GetTouch(0).position;
             }
-            else if (Input.GetTouch(0).phase == TouchPhase.Ended ||
-                     Input.GetTouch(0).phase == TouchPhase.Canceled)
+            else if (Input.GetTouch(0).phase == TouchPhase.Ended)
             {
                 ResetSwap();
             }
@@ -38,6 +37,7 @@ public class SwipeDetection : MonoBehaviour
 
         if (Input.GetMouseButton(0))
         {
+            _isSwipe = true;
             _pressTime += Time.deltaTime;
         }
         CheckSwipe(); 
