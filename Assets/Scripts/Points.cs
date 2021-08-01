@@ -8,6 +8,7 @@ public class Points : MonoBehaviour
     public int BoardingCount => _boardingCount;
     public int NearMissCount => _nearMissCount;
     [SerializeField] private Player _player;
+    [SerializeField] private PlayerChanger _playerChanger;
     [SerializeField] private NearMissChecker _checker;
 
     private List<Enemy> _boarding = new List<Enemy>();
@@ -26,6 +27,8 @@ public class Points : MonoBehaviour
         _player.Boarding += OnBoarding;
         _player.PlayerHited += OnCollision;
         _checker.NearMissed += NearMiss;
+        _playerChanger.PlayerChanged += OnPlayerChanged;
+        _playerChanger.NearMissCheckerChanged += OnNearMissCheckerChanged;
     }
 
     private void OnDisable()
@@ -33,6 +36,24 @@ public class Points : MonoBehaviour
         _player.Boarding -= OnBoarding;
         _player.PlayerHited -= OnCollision;
         _checker.NearMissed -= NearMiss;
+        _playerChanger.PlayerChanged -= OnPlayerChanged;
+        _playerChanger.NearMissCheckerChanged -= OnNearMissCheckerChanged;
+    }
+
+    private void OnNearMissCheckerChanged(NearMissChecker newNearMissChecker)
+    {
+        _checker.NearMissed -= NearMiss;
+        _checker = newNearMissChecker;
+        _checker.NearMissed += NearMiss;
+    }
+
+    private void OnPlayerChanged(Player newPlayer)
+    {
+        _player.Boarding -= OnBoarding;
+        _player.PlayerHited -= OnCollision;
+        _player = newPlayer;
+        _player.Boarding += OnBoarding;
+        _player.PlayerHited += OnCollision;
     }
 
     private void OnCollision(Vector3 vector)

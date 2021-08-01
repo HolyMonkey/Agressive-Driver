@@ -4,7 +4,8 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    [SerializeField] private Player _health;
+    [SerializeField] private Player _player;
+    [SerializeField] private PlayerChanger _playerChanger;
     [SerializeField] private Slider _slider;
     [SerializeField] private float _duration;
 
@@ -12,26 +13,30 @@ public class HealthBar : MonoBehaviour
 
     private void OnEnable()
     {
-        _health.HealthChanged += OnHealthChanged;
+        _player.HealthChanged += OnHealthChanged;
+        _playerChanger.PlayerChanged += OnPlayerChanged;
     }
 
     private void OnDisable()
     {
-        _health.HealthChanged -= OnHealthChanged;
+        _player.HealthChanged -= OnHealthChanged;
+        _playerChanger.PlayerChanged -= OnPlayerChanged;
+    }
+
+    private void OnPlayerChanged(Player newPlayer)
+    {
+        _player.HealthChanged -= OnHealthChanged;
+        _player = newPlayer;
+        _player.HealthChanged += OnHealthChanged;
     }
 
     private void OnHealthChanged(int currentValue, int maxValue)
     {
         float nextValue = (float) currentValue / maxValue;
-        if (_changing == null)
-        {
-            _changing = StartCoroutine(SliderValueChange(_slider.value, nextValue, _duration));
-        }
-        else
-        {
-            StopCoroutine(_changing);
-            _changing = StartCoroutine(SliderValueChange(_slider.value, nextValue, _duration));
-        }
+
+        if (_changing != null)
+            StopCoroutine(_changing);        
+        _changing = StartCoroutine(SliderValueChange(_slider.value, nextValue, _duration));
     }
 
     private IEnumerator SliderValueChange(float startValue, float endValue, float duration)

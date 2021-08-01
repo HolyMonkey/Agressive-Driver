@@ -5,6 +5,7 @@ public class SwipeDetection : MonoBehaviour
 {
     [SerializeField] private TargetPoint _targetPoint;
     [SerializeField] private PlayerSlower _playerSlower;
+    [SerializeField] private PlayerChanger _playerChanger;
     
     public event Action<float> OnSwipe;
 
@@ -34,6 +35,21 @@ public class SwipeDetection : MonoBehaviour
             }
         }
         CheckSwipe(); 
+    }
+
+    private void OnEnable()
+    {
+        _playerChanger.PlayerSlowerChanged += OnPlayerSlowerChanged;
+    }
+
+    private void OnDisable()
+    {
+        _playerChanger.PlayerSlowerChanged -= OnPlayerSlowerChanged;
+    }
+
+    private void OnPlayerSlowerChanged(PlayerSlower newPlayerSlower)
+    {
+        _playerSlower = newPlayerSlower;
     }
 
     private void CheckSwipe()

@@ -6,6 +6,7 @@ public class TargetPoint : MonoBehaviour
     [SerializeField] private SwipeDetection _detection;
     [SerializeField] private PlayerMover _playerMover;
     [SerializeField] private Player _player;
+    [SerializeField] private PlayerChanger _playerChanger;
     [SerializeField] private float _stepSize;
     [SerializeField] private float _lengthFromVehicle;
     [SerializeField] private ERModularRoad eRoad;
@@ -32,11 +33,15 @@ public class TargetPoint : MonoBehaviour
     private void OnEnable()
     {
         _detection.OnSwipe += OnSwipe;
+        _playerChanger.PlayerChanged += OnPlayerChanged;
+        _playerChanger.PlayerMoverChanged += OnPlayerMoverChanged;
     }
 
     private void OnDisable()
     {
         _detection.OnSwipe -= OnSwipe;
+        _playerChanger.PlayerChanged -= OnPlayerChanged;
+        _playerChanger.PlayerMoverChanged -= OnPlayerMoverChanged;
     }
 
     public void OnSwipe(float delta)
@@ -47,6 +52,18 @@ public class TargetPoint : MonoBehaviour
         _currentStepSize = Mathf.Clamp(_currentStepSize, -_stepSize, _stepSize);
     }
 
+
+    private void OnPlayerChanged(Player newPlayer)
+    {
+        _player = newPlayer;
+    }
+
+    private void OnPlayerMoverChanged(PlayerMover newPlayerMover)
+    {
+        _playerMover = newPlayerMover;
+    }
+
+    
     private void SetWaypoints()
     {
         waypointStart = eRoad.soSplinePoints[waypointIndex];

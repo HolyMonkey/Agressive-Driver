@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class ProgressBar : MonoBehaviour
 {
     [SerializeField] private Player _player;
+    [SerializeField] private PlayerChanger _playerChanger;
     [SerializeField] private Transform _finish;
     [SerializeField] private Slider _progressSlider;
     private float distance;
@@ -20,5 +21,20 @@ public class ProgressBar : MonoBehaviour
         if (progress > lastProgress)
             lastProgress = progress;
         _progressSlider.value = lastProgress;
+    }
+
+    private void OnEnable()
+    {
+        _playerChanger.PlayerChanged += OnPlayerChanged;
+    }
+
+    private void OnDisable()
+    {
+        _playerChanger.PlayerChanged -= OnPlayerChanged;
+    }
+
+    private void OnPlayerChanged(Player newPlayer)
+    {
+        _player = newPlayer;
     }
 }

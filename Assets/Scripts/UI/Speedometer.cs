@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Speedometer : MonoBehaviour
 {
+    [SerializeField] private PlayerChanger _playerChanger;
     [SerializeField] private float _startZRotation;
     [SerializeField] private float _maxSpeed;
     [SerializeField] private Transform _arrow;
@@ -24,6 +25,21 @@ public class Speedometer : MonoBehaviour
         
         float nextZRotation = GetSpeedRotation();
         _arrow.localRotation = Quaternion.Euler(0, 0, nextZRotation);
+    }
+
+    private void OnEnable()
+    {
+        _playerChanger.PlayerRigidbodyChanged += OnRigidbodyCarChanged;
+    }
+
+    private void OnDisable()
+    {
+        _playerChanger.PlayerRigidbodyChanged += OnRigidbodyCarChanged;
+    }
+
+    private void OnRigidbodyCarChanged(Rigidbody newRigidbodyCar)
+    {
+        _rigidbodyCar = newRigidbodyCar;
     }
 
     private float GetSpeedRotation()

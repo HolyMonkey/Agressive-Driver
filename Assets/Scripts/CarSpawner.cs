@@ -5,6 +5,7 @@ using UnityEngine;
 public class CarSpawner : MonoBehaviour
 {
     [SerializeField] private Transform _player;
+    [SerializeField] private PlayerChanger _playerChanger;
     [SerializeField] private List<GameObject> _carsTemplate;    
     [SerializeField] bool isBackDirection;
     [SerializeField] private float minDistance = 80;
@@ -44,6 +45,26 @@ public class CarSpawner : MonoBehaviour
             }
         }
         SpawnCar(0);
+    }
+
+    private void OnEnable()
+    {
+        _playerChanger.PlayerTransformChanged += OnPlayerTransformChanged;
+    }
+
+    private void OnDisable()
+    {
+        _playerChanger.PlayerTransformChanged -= OnPlayerTransformChanged;
+    }
+
+    public void ActivateCars()
+    {
+        for (int i = 0; i < _cars.Count; i++)
+        {
+            var car = _cars[i];
+            car.enabled = true;
+        }
+        _isStartLevel = true;
     }
 
     private void SpawnCar(int waypointIndex)
@@ -100,14 +121,9 @@ public class CarSpawner : MonoBehaviour
         }
     }
 
-    public void ActivateCars()
+    private void OnPlayerTransformChanged(Transform newPlayerTransform)
     {
-        for (int i = 0; i < _cars.Count; i++)
-        {
-            var car = _cars[i];
-                car.enabled = true;
-        }
-        _isStartLevel = true;
+        _player = newPlayerTransform;
     }
 
     private void OffSetingWayPoints()

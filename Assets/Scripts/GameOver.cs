@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class GameOver : MonoBehaviour
 {
     [SerializeField] private Player _player;
+    [SerializeField] private PlayerChanger _playerChanger;
     [SerializeField] private GameObject _gameOverPanel;
     [SerializeField] private Button _restartButton;
     private bool _isGameOver = false;
@@ -15,6 +16,7 @@ public class GameOver : MonoBehaviour
         _player.PlayerDied += StartGameOver;
         _player.Revived += StopGameOver;
         _restartButton.onClick.AddListener(RestartGame);
+        _playerChanger.PlayerChanged += OnPlayerChanged;
     }
 
     private void OnDisable()
@@ -22,6 +24,16 @@ public class GameOver : MonoBehaviour
         _player.PlayerDied -= StartGameOver;
         _player.Revived -= StopGameOver;
         _restartButton.onClick.RemoveListener(RestartGame);
+        _playerChanger.PlayerChanged -= OnPlayerChanged;
+    }
+
+    private void OnPlayerChanged(Player newPlayer)
+    {
+        _player.PlayerDied -= StartGameOver;
+        _player.Revived -= StopGameOver;
+        _player = newPlayer;
+        _player.PlayerDied += StartGameOver;
+        _player.Revived += StopGameOver;
     }
 
     private void StopGameOver()

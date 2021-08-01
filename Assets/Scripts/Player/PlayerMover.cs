@@ -204,6 +204,11 @@ public class PlayerMover : MonoBehaviour
         }
     }
 
+    public void SetCarSteer(Transform newCarSetting)
+    {
+        carSetting.carSteer = newCarSetting.transform;
+    }
+
     private void ShiftUp()
     {
         float now = Time.timeSinceLevelLoad;

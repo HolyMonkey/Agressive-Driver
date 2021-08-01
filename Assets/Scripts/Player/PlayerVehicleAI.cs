@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerVehicleAI : MonoBehaviour
 {
-    [SerializeField] private Transform _targetPositionTranform;
+    [SerializeField] private Transform _targetPositionTransform;
 
     private PlayerMover _vehicleControl;
     private Vector3 _targetPosition;
@@ -14,8 +14,13 @@ public class PlayerVehicleAI : MonoBehaviour
 
     private void Update()
     {
-        SetTargetPosition(_targetPositionTranform.position);
+        SetTargetPosition(_targetPositionTransform.position);
         _vehicleControl.SetInputs(_targetPosition);
+    }
+
+    public void SetTargetPositionTransform(Transform newTargetPositionTransform)
+    {
+        _targetPositionTransform = newTargetPositionTransform;
     }
 
     private void SetTargetPosition(Vector3 targetPosition)

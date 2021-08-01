@@ -5,6 +5,7 @@ using UnityEngine;
 public class SlowMotion : MonoBehaviour
 {
     [SerializeField] private Player _player;
+    [SerializeField] private PlayerChanger _playerChanger;
     [SerializeField] private float _slowdownFactor;
     [SerializeField] private float _slowdownLength;
     [SerializeField] private float _chancePercentage;
@@ -14,11 +15,13 @@ public class SlowMotion : MonoBehaviour
     private void OnEnable()
     {
         _player.PlayerHited += OnPlayerHited;
+        _playerChanger.PlayerChanged += OnPlayerChanged;
     }
 
     private void OnDisable()
     {
         _player.PlayerHited -= OnPlayerHited;
+        _playerChanger.PlayerChanged -= OnPlayerChanged;
     }
 
     private void Awake()
@@ -30,6 +33,11 @@ public class SlowMotion : MonoBehaviour
     {
         Time.timeScale += (1f / _slowdownLength) * Time.unscaledDeltaTime;
         Time.timeScale = Mathf.Clamp(Time.timeScale, 0f, 1f);
+    }
+
+    private void OnPlayerChanged(Player newPlayer)
+    {
+        _player = newPlayer;
     }
 
     private void OnPlayerHited(Vector3 hitPoint)

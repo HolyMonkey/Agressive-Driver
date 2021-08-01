@@ -4,28 +4,60 @@ using UnityEngine;
 
 public class UIStartGame : MonoBehaviour
 {
-    [SerializeField] List<GameObject> _needShowObject;
-    [SerializeField] List<CarSpawner> _spawners;
-    [SerializeField] Rigidbody _rigidbodyPlayer;
+    [SerializeField] private List<GameObject> _needShowObject;
+    [SerializeField] private List<CarSpawner> _spawners;
+    [SerializeField] private Rigidbody _rigidbodyPlayer;
+    [SerializeField] private PlayerChanger _playerChanger;
+    [SerializeField] private StartGameHider _startGameHider;
+    [SerializeField] private PlayerSelector _playerSelector;
 
+    private bool _isCarSelected;
+
+    private void Start()
+    {
+        _startGameHider.Hide();
+    }
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (_isCarSelected == true)
         {
-            
-            _rigidbodyPlayer.isKinematic = false;
-            foreach (var item in _needShowObject)
+            if (Input.GetMouseButtonDown(0))
             {
-                item.SetActive(true);                
-            }
+                _rigidbodyPlayer.isKinematic = false;
+                foreach (var item in _needShowObject)
+                {
+                    item.SetActive(true);
+                }   
 
-            foreach (var spawner in _spawners)
-            { 
-                spawner.ActivateCars();
+                foreach (var spawner in _spawners)
+                {
+                    spawner.ActivateCars();
+                }
+                _startGameHider.Hide();
             }
-            gameObject.SetActive(false);
-
         }
+    }
+
+    private void OnEnable()
+    {
+        _playerChanger.PlayerRigidbodyChanged += OnPlayerRigidbodyChanged;
+        _playerSelector.CarSelected += OnCarSelected;
+    }
+
+    private void OnDisable()
+    {
+        _playerChanger.PlayerRigidbodyChanged -= OnPlayerRigidbodyChanged;
+        _playerSelector.CarSelected -= OnCarSelected;
+    }
+
+    private void OnCarSelected(Player selectedPlayer)
+    {
+        _isCarSelected = true;
+    }
+
+    private void OnPlayerRigidbodyChanged(Rigidbody newRigidbodyPlayer)
+    {
+        _rigidbodyPlayer = newRigidbodyPlayer;
     }
 }

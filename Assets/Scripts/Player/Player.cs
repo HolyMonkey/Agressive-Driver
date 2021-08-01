@@ -39,6 +39,16 @@ public class Player : MonoBehaviour
         _startHealth = _health;
         HealthChanged?.Invoke(_currentHealth, _health);
     }
+  
+    public void Overtook()
+    {
+        PlayerOvertook?.Invoke();
+    }
+
+    public void SetAdSettings(AdSettings newAdSettings)
+    {
+        _ad = newAdSettings;
+    }
 
     private void TakeDamage(int damage)
     {
@@ -75,10 +85,6 @@ public class Player : MonoBehaviour
             
     }
 
-    public void Overtook()
-    {
-        PlayerOvertook?.Invoke();
-    }
 
     private void OnCollisionEnter(Collision collision)
     {

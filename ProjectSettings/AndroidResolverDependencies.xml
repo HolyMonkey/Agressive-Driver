@@ -8,8 +8,12 @@
     <package>androidx.multidex:multidex:2.0.1</package>
     <package>androidx.recyclerview:recyclerview:1.1.0@aar</package>
     <package>com.adcolony:sdk:4.5.0</package>
+    <package>com.android.support:appcompat-v7:25.3.1</package>
+    <package>com.android.support:cardview-v7:25.3.1</package>
+    <package>com.android.support:customtabs:25.3.1</package>
     <package>com.android.support:exifinterface:27.1.0</package>
     <package>com.android.support:support-annotations:27.1.0</package>
+    <package>com.android.support:support-v4:25.3.1</package>
     <package>com.applovin:applovin-sdk:10.2.1</package>
     <package>com.appodeal.ads.sdk.networks:a4g:2.10.1.10@aar</package>
     <package>com.appodeal.ads.sdk.networks:adcolony:2.10.1.12@aar</package>
