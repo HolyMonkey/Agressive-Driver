@@ -351,7 +351,18 @@ public class PlayerMover : MonoBehaviour
                 Vector3 localTarget = transform.InverseTransformPoint(_targetPosition);
                 float targetAngle = Mathf.Atan2(localTarget.x, localTarget.z) * Mathf.Rad2Deg;
                 steer = Mathf.Clamp(targetAngle * 0.05f, -1, 1) * 1.5f;
-                accel = 1f;
+                if (Input.GetMouseButton(0))
+                {
+                    accel = 1f;
+                }
+                else if(Speed > _minSpeed)
+                {
+                    accel = -1f;
+                }
+                else
+                {
+                    accel = 0f;
+                }
             }
 
             RaycastHit raycastHit;
@@ -625,7 +636,7 @@ public class PlayerMover : MonoBehaviour
 
         if (motorizedWheels > 1)
         {
-            rpm = rpm / motorizedWheels;
+            rpm /= motorizedWheels;
         }
 
         motorRPM = 0.95f * motorRPM + 0.05f * Mathf.Abs(rpm * carSetting.gears[currentGear]);

@@ -94,11 +94,11 @@ public class TargetPoint : MonoBehaviour
     {
         CheckWaypointDestination();
         SetNextPosition(_currentStepSize);
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetMouseButton(0))
         {
             _currentStepSize -= 0.05f;
         }
-        if (Input.GetKey(KeyCode.D))
+        else
         {
             _currentStepSize += 0.05f;
         }
