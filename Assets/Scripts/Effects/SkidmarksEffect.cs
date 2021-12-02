@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,11 +13,10 @@ public class SkidmarksEffect : MonoBehaviour
         if (_isTireMarks)
             return;
 
-        foreach (TrailRenderer trail in _tireMarks)
+        for (int i = 0; i < _tireMarks.Count; i++)
         {
-            trail.emitting = true;
+            _tireMarks[i].emitting = true;
         }
-
 
         _isTireMarks = true;
     }
@@ -29,12 +27,11 @@ public class SkidmarksEffect : MonoBehaviour
         if (!_isTireMarks)
             return;
 
-        foreach (TrailRenderer trail in _tireMarks)
+        for (int i = 0; i < _tireMarks.Count; i++)
         {
-            trail.emitting = false;
+            _tireMarks[i].emitting = false;
         }
-;
-       
+
         _isTireMarks = false;
     }
 }

@@ -1,0 +1,13 @@
+﻿# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/contentModel.xml
+/projectSettingsUpdater.xml
+/.idea.Agressive-Driver.iml
+/modules.xml
+# Datasource local storage ignored files
+/../../../../../../:\Unity Projects\Agressive-Driver\.idea\.idea.Agressive-Driver\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/

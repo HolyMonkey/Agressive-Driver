@@ -1,27 +1,53 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    [SerializeField] protected Slider Slider;
     [SerializeField] private Player _player;
-    [SerializeField] private float _changeSpeed;
+    [SerializeField] private PlayerChanger _playerChanger;
+    [SerializeField] private Slider _slider;
+    [SerializeField] private float _duration;
+
+    private Coroutine _changing;
 
     private void OnEnable()
     {
-        _player.HealthChanged += OnValueChanged;
-        Slider.value = 1;
+        _player.HealthChanged += OnHealthChanged;
+        _playerChanger.PlayerChanged += OnPlayerChanged;
     }
 
     private void OnDisable()
     {
-        _player.HealthChanged -= OnValueChanged;
+        _player.HealthChanged -= OnHealthChanged;
+        _playerChanger.PlayerChanged -= OnPlayerChanged;
     }
 
-    public void OnValueChanged(int value, int maxValue)
+    private void OnPlayerChanged(Player newPlayer)
     {
-        Slider.value = 0;
+        _player.HealthChanged -= OnHealthChanged;
+        _player = newPlayer;
+        _player.HealthChanged += OnHealthChanged;
+    }
+
+    private void OnHealthChanged(int currentValue, int maxValue)
+    {
+        float nextValue = (float) currentValue / maxValue;
+
+        if (_changing != null)
+            StopCoroutine(_changing);        
+        _changing = StartCoroutine(SliderValueChange(_slider.value, nextValue, _duration));
+    }
+
+    private IEnumerator SliderValueChange(float startValue, float endValue, float duration)
+    {
+        float elapsed = 0;
+        while (_slider.value != endValue)
+        {
+            float nextValue = Mathf.Lerp(startValue, endValue, elapsed / duration);
+            _slider.value = nextValue;
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
     }
 }

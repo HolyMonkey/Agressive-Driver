@@ -1,24 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SlowMotion : MonoBehaviour
 {
     [SerializeField] private Player _player;
+    [SerializeField] private PlayerChanger _playerChanger;
     [SerializeField] private float _slowdownFactor;
     [SerializeField] private float _slowdownLength;
     [SerializeField] private float _chancePercentage;
 
     private float _chance;
+    private float _timeScale;
 
     private void OnEnable()
     {
         _player.PlayerHited += OnPlayerHited;
+        _playerChanger.PlayerChanged += OnPlayerChanged;
     }
 
     private void OnDisable()
     {
         _player.PlayerHited -= OnPlayerHited;
+        _playerChanger.PlayerChanged -= OnPlayerChanged;
     }
 
     private void Awake()
@@ -26,10 +28,9 @@ public class SlowMotion : MonoBehaviour
         _chance = _chancePercentage / 100f;
     }
 
-    private void Update()
+    private void OnPlayerChanged(Player newPlayer)
     {
-        Time.timeScale += (1f / _slowdownLength) * Time.unscaledDeltaTime;
-        Time.timeScale = Mathf.Clamp(Time.timeScale, 0f, 1f);
+        _player = newPlayer;
     }
 
     private void OnPlayerHited(Vector3 hitPoint)
@@ -40,7 +41,7 @@ public class SlowMotion : MonoBehaviour
 
     private void RunSlowMotion()
     {
-        Time.timeScale = _slowdownFactor;
-        Time.fixedDeltaTime = Time.timeScale * 0.02f;
+        _timeScale = _slowdownFactor;
+        Time.fixedDeltaTime = _timeScale * 0.02f;
     }
 }

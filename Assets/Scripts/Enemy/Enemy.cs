@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,12 +10,16 @@ public class Enemy : MonoBehaviour
     [SerializeField] private ParticleSystem _diedEffect;
 
     private Rigidbody _rigidbody;
+    private Vector3 _forward;
+    private ForceMode _impulse;
 
     public event UnityAction EnemyDied;
 
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        _forward = Vector3.forward;
+        _impulse = ForceMode.Impulse;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -52,7 +54,7 @@ public class Enemy : MonoBehaviour
 
     private void Die(Vector3 hitDirection)
     { 
-        _rigidbody.AddForce(Vector3.forward * _impulseForce, ForceMode.Impulse);
+        _rigidbody.AddForce(_forward * _impulseForce, _impulse);
         EnemyDied?.Invoke();
     }
 }
