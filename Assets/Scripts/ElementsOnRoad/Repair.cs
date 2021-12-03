@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Repair : MonoBehaviour
@@ -10,8 +8,6 @@ public class Repair : MonoBehaviour
     {
         if(other.TryGetComponent(out Player player))
         {
-            player.Repair();
-
             Instantiate(_pickUpEffect, transform.position, _pickUpEffect.gameObject.transform.rotation);
             Destroy(gameObject, 0.1f);
         }
