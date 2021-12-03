@@ -39,10 +39,18 @@ public class Advertisement : MonoBehaviour
         VideoAd.Show();
     }
 
+    private IEnumerator EditTimeScale()
+    {
+        yield return new WaitForSecondsRealtime(20f);
+
+        Time.timeScale = 1;
+    }
+
     public void GiveSecondChance()
     {
         if (_isTapedReviveButton == false)
         {
+            Time.timeScale = 0;
             _gameOver = GetComponent<GameOver>();
             _player = FindObjectOfType<Player>();
             _playerEffects = _player.GetComponent<PlayerEffects>();
@@ -54,6 +62,8 @@ public class Advertisement : MonoBehaviour
             _gameOver.SetActiveGameOverPanel();
             _player.GetSecondChance();
             EditIsTapedReviveButtonToTrue();
+
+            StartCoroutine(EditTimeScale());
         }
     }
 
