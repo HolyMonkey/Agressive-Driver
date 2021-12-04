@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using YandexGames;
+using UnityEngine.UI;
 
 public class Advertisement : MonoBehaviour
 {
@@ -18,13 +19,12 @@ public class Advertisement : MonoBehaviour
         yield break;
 #endif
 
-        // Always wait for it if invoking something immediately in the first scene.
+        
         yield return YandexGamesSdk.WaitForInitialization();
 
-        // Avoid unexpected authorization window popup that will freak out the user.
+        
         if (PlayerAccount.IsAuthorized)
         {
-            // Authenticate silently without requesting photo and real name permissions.
             PlayerAccount.Authenticate(false);
         }
     }
