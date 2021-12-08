@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using YandexGames;
-using UnityEngine.UI;
 
 public class Advertisement : MonoBehaviour
 {
@@ -12,6 +11,11 @@ public class Advertisement : MonoBehaviour
     private PlayerMover _playerMover;
 
     public bool IsTapedReviveButton => _isTapedReviveButton;
+
+    private void Awake()
+    {
+        YandexGamesSdk.CallbackLogging = true;
+    }
 
     private IEnumerator Start()
     {
