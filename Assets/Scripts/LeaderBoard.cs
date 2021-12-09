@@ -1,21 +1,26 @@
 using UnityEngine;
 using YandexGames;
+using System.Linq;
+using TMPro;
 
 public class LeaderBoard : MonoBehaviour
 {
+    private TMP_Text _playerScore;
+
     private void Start()
     {
         if (PlayerAccount.IsAuthorized)
         {
             Leaderboard.GetEntries("PlaytestBoard", (result) =>
             {
-                // Use it
-                Debug.Log($"My rank = {result.userRank}");
-                foreach (var entry in result.entries)
+                var filterResult = result.entries.Where(result => result.score > 0).OrderByDescending(result => result.score);
+                foreach (var entry in filterResult)
                 {
-                    Debug.Log(entry.player.publicName + " " + entry.score);
+                    _playerScore.text = ($"1. {entry.player.publicName} \t \t {entry.score}");
                 }
             });
         }
+#if !UNITY_WEBGL || UNITY_EDITOR
+#endif
     }
 }
