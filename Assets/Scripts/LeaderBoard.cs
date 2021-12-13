@@ -1,16 +1,33 @@
 using UnityEngine;
 using YandexGames;
-using System.Linq;
 using TMPro;
+using System.Collections;
 
 public class LeaderBoard : MonoBehaviour
 {
     [SerializeField] private TMP_Text _playerScore;
     [SerializeField] private GameObject _leaderBoardPanel;
 
-    private void Start()
+    private void Awake()
+    {
+        YandexGamesSdk.CallbackLogging = true;
+    }
+
+    private IEnumerator Start()
     {
         _leaderBoardPanel.SetActive(false);
+
+        if (PlayerPrefs.HasKey("AllScore"))
+        {
+            Leaderboard.SetScore("TestLeaderBoard", 0);
+        }
+
+#if !UNITY_WEBGL || UNITY_EDITOR
+        yield break;
+#endif
+
+        // Always wait for it if invoking something immediately in the first scene.
+        yield return YandexGamesSdk.WaitForInitialization();
     }
 
     public void GetLeaderBoard()
