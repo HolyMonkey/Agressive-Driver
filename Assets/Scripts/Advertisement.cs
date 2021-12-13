@@ -23,14 +23,8 @@ public class Advertisement : MonoBehaviour
         yield break;
 #endif
 
-        
+        // Always wait for it if invoking something immediately in the first scene.
         yield return YandexGamesSdk.WaitForInitialization();
-
-        
-        if (PlayerAccount.IsAuthorized)
-        {
-            PlayerAccount.Authenticate(false);
-        }
     }
 
     private void EditIsTapedReviveButtonToTrue()
