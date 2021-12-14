@@ -32,7 +32,7 @@ public class FinishLevel : MonoBehaviour
         if (PlayerPrefs.HasKey("AllScore"))
         {
             _allScore = PlayerPrefs.GetInt("AllScore");
-            Leaderboard.SetScore("TestLeaderBoard", _allScore);
+            Leaderboard.SetScore("PlaytestBoard", _allScore);
         }
     }
 
@@ -69,7 +69,7 @@ public class FinishLevel : MonoBehaviour
             _allScore += score;
 
             PlayerPrefs.SetInt("AllScore", _allScore);
-            Leaderboard.SetScore("TestLeaderBoard", _allScore);
+            Leaderboard.SetScore("PlaytestBoard", _allScore);
 
             Finished?.Invoke();
         }

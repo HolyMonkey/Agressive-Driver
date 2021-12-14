@@ -19,7 +19,9 @@ public class LeaderBoard : MonoBehaviour
 
         if (PlayerPrefs.HasKey("AllScore"))
         {
-            Leaderboard.SetScore("TestLeaderBoard", 0);
+            int score = PlayerPrefs.GetInt("AllScore");
+
+            Leaderboard.SetScore("PlaytestBoard", score);
         }
 
 #if !UNITY_WEBGL || UNITY_EDITOR
@@ -34,7 +36,7 @@ public class LeaderBoard : MonoBehaviour
     {
         _leaderBoardPanel.SetActive(true);
 
-        Leaderboard.GetEntries("TestLeaderBoard", (result) =>
+        Leaderboard.GetEntries("PlaytestBoard", (result) =>
         {
             var entries = result.entries;
 
