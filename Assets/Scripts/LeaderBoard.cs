@@ -1,62 +1,62 @@
-using UnityEngine;
-using YandexGames;
-using TMPro;
-using System.Collections;
+//using UnityEngine;
+//using YandexGames;
+//using TMPro;
+//using System.Collections;
 
-public class LeaderBoard : MonoBehaviour
-{
-    [SerializeField] private TMP_Text _playerScore;
-    [SerializeField] private GameObject _leaderBoardPanel;
+//public class LeaderBoard : MonoBehaviour
+//{
+//    [SerializeField] private TMP_Text _playerScore;
+//    [SerializeField] private GameObject _leaderBoardPanel;
 
-    private void Awake()
-    {
-        YandexGamesSdk.CallbackLogging = true;
-    }
+//    private void Awake()
+//    {
+//        YandexGamesSdk.CallbackLogging = true;
+//    }
 
-    private IEnumerator Start()
-    {
-        _leaderBoardPanel.SetActive(false);
+//    private IEnumerator Start()
+//    {
+//        _leaderBoardPanel.SetActive(false);
 
-        if (PlayerPrefs.HasKey("AllScore"))
-        {
-            int score = PlayerPrefs.GetInt("AllScore");
+//        if (PlayerPrefs.HasKey("AllScore"))
+//        {
+//            int score = PlayerPrefs.GetInt("AllScore");
 
-            Leaderboard.SetScore("PlaytestBoard", score);
-        }
+//            Leaderboard.SetScore("PlaytestBoard", score);
+//        }
 
-#if !UNITY_WEBGL || UNITY_EDITOR
-        yield break;
-#endif
+//#if !UNITY_WEBGL || UNITY_EDITOR
+//        yield break;
+//#endif
 
-        // Always wait for it if invoking something immediately in the first scene.
-        yield return YandexGamesSdk.WaitForInitialization();
-    }
+//        // Always wait for it if invoking something immediately in the first scene.
+//        yield return YandexGamesSdk.WaitForInitialization();
+//    }
 
-    public void GetLeaderBoard()
-    {
-        _leaderBoardPanel.SetActive(true);
+//    public void GetLeaderBoard()
+//    {
+//        _leaderBoardPanel.SetActive(true);
 
-        Leaderboard.GetEntries("PlaytestBoard", (result) =>
-        {
-            var entries = result.entries;
+//        Leaderboard.GetEntries("PlaytestBoard", (result) =>
+//        {
+//            var entries = result.entries;
 
-            foreach (var entry in entries)
-            {
-                string name = entry.player.publicName;
+//            foreach (var entry in entries)
+//            {
+//                string name = entry.player.publicName;
 
-                if (string.IsNullOrEmpty(name))
-                    name = "Anonymous";
+//                if (string.IsNullOrEmpty(name))
+//                    name = "Anonymous";
 
-                int score = entry.score;
-                string playerScore = $"{entry.rank} \t\t {name} \t\t {score}";
+//                int score = entry.score;
+//                string playerScore = $"{entry.rank} \t\t {name} \t\t {score}";
 
-                _playerScore.text = playerScore;
-            }
-        });
-    }
+//                _playerScore.text = playerScore;
+//            }
+//        });
+//    }
 
-    public void Close()
-    {
-        _leaderBoardPanel.SetActive(false);
-    }
-}
+//    public void Close()
+//    {
+//        _leaderBoardPanel.SetActive(false);
+//    }
+//}

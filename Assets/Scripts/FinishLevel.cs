@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using YandexGames;
+//using YandexGames;
 
 public class FinishLevel : MonoBehaviour
 {
@@ -20,21 +20,21 @@ public class FinishLevel : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _Total;
     [SerializeField] private TextMeshProUGUI _TotalAll;
     [SerializeField] private Button _button;
-    [SerializeField] private Advertisement _ad;
+    //[SerializeField] private Advertisement _ad;
 
     private StringBuilder _x = new StringBuilder("x ");
     private bool isFinished = false;
     private int _allScore = 0;
     public event Action Finished;
 
-    private void Start()
-    {
-        if (PlayerPrefs.HasKey("AllScore"))
-        {
-            _allScore = PlayerPrefs.GetInt("AllScore");
-            Leaderboard.SetScore("PlaytestBoard", _allScore);
-        }
-    }
+    //private void Start()
+    //{
+    //    if (PlayerPrefs.HasKey("AllScore"))
+    //    {
+    //        _allScore = PlayerPrefs.GetInt("AllScore");
+    //        Leaderboard.SetScore("PlaytestBoard", _allScore);
+    //    }
+    //}
 
     private void OnEnable()
     {
@@ -50,7 +50,7 @@ public class FinishLevel : MonoBehaviour
     {
         if (other.TryGetComponent(out Player player))
         {
-            _ad.EditIsTapedReviveButtonToFalse();
+            //_ad.EditIsTapedReviveButtonToFalse();
             _camera.GetComponent<CameraFollow>().enabled = false;
             player.enabled = false;
             _WinPanel.SetActive(true);
@@ -69,7 +69,7 @@ public class FinishLevel : MonoBehaviour
             _allScore += score;
 
             PlayerPrefs.SetInt("AllScore", _allScore);
-            Leaderboard.SetScore("PlaytestBoard", _allScore);
+            //Leaderboard.SetScore("PlaytestBoard", _allScore);
 
             Finished?.Invoke();
         }
