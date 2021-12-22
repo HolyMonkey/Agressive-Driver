@@ -30,7 +30,6 @@ public class UIStartGame : MonoBehaviour
                 }
 
                 _startGameHider.Hide();
-                _startGameHider.SetOffCanvasGroup();
             }
         }
     }

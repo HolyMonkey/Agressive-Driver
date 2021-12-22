@@ -6,14 +6,17 @@ public class PlayerSelector : MonoBehaviour
 {
     [SerializeField] private CarData[] _cars;
     [SerializeField] private Image _carImage;
-    [SerializeField] private PlayerChanger _playerChanger;
     [SerializeField] private StartGameHider _startGameHider;
-    [SerializeField] private GameObject _leaderBoardButton;
 
+    private ButtonsAnimator _buttonsAnimator;
     private int _carIndex = 0;
-    private Image _currentImage;
 
     public event UnityAction<Player> CarSelected;
+
+    private void OnEnable()
+    {
+        _buttonsAnimator = GetComponentInParent<ButtonsAnimator>();
+    }
 
     private void Start()
     {
@@ -41,9 +44,8 @@ public class PlayerSelector : MonoBehaviour
     public void SelectCar()
     {
         CarSelected?.Invoke(_cars[_carIndex].CarPrefab);
+        _buttonsAnimator.SetFadeDown();
         _startGameHider.Show();
-        _leaderBoardButton.SetActive(false);
-        gameObject.SetActive(false);     
     }
 }
 

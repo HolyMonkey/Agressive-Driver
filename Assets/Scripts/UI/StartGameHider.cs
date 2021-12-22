@@ -1,21 +1,25 @@
 using UnityEngine;
+using DG.Tweening;
 
 public class StartGameHider : MonoBehaviour
 {
     [SerializeField] private CanvasGroup _canvasGroup;
 
-    public void Hide()
-    {
-        _canvasGroup.alpha = 0;
-    }
+    private const float Duration = 0.5f;
 
     public void Show()
     {
-        _canvasGroup.alpha = 1;
+        _canvasGroup.DOFade(1, Duration); 
     }
 
-    public void SetOffCanvasGroup()
+    public void Hide()
     {
-        _canvasGroup.gameObject.SetActive(false);
+        var tweenFade = _canvasGroup.DOFade(0, Duration);
+        SetOffCanvasGroup();
+    }
+
+    private void SetOffCanvasGroup()
+    {
+        _canvasGroup.interactable = false;
     }
 }
