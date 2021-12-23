@@ -13,6 +13,7 @@ public class FinishSpawner : MonoBehaviour
     private Quaternion _rotation;
 
     public float Complete => _transform.position.z / _distance;
+
     public event UnityAction PlayerReached;
 
     private void Start()

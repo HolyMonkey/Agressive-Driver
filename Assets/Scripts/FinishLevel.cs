@@ -25,6 +25,7 @@ public class FinishLevel : MonoBehaviour
     private StringBuilder _x = new StringBuilder("x ");
     private bool isFinished = false;
     private int _allScore = 0;
+
     public event Action Finished;
 
     //private void Start()
@@ -70,7 +71,6 @@ public class FinishLevel : MonoBehaviour
 
             PlayerPrefs.SetInt("AllScore", _allScore);
             //Leaderboard.SetScore("PlaytestBoard", _allScore);
-
             Finished?.Invoke();
         }
     }

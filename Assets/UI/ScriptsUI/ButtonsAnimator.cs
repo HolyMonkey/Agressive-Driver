@@ -10,6 +10,7 @@ public class ButtonsAnimator : MonoBehaviour
     [SerializeField] private CanvasGroup _canvasGroup;
 
     private const float Duration = 1f;
+    private const float ScaleDown = 0.8f;
 
     public void SetFadeDown()
     {
@@ -24,14 +25,14 @@ public class ButtonsAnimator : MonoBehaviour
         if (_rectTransforms == null || _playerSelector == null || _canvasGroup == null)
             throw new InvalidOperationException();
 
-        _playerSelector.ButtonSelected += SetSize;
+        _playerSelector.ButtonSelected += SetSizeDown;
 
         Move();
     }
 
     private void OnDisable()
     {
-        _playerSelector.ButtonSelected -= SetSize;
+        _playerSelector.ButtonSelected -= SetSizeDown;
     }
 
     private void Move()
@@ -42,9 +43,11 @@ public class ButtonsAnimator : MonoBehaviour
         }
     }
 
-    private void SetSize(Button button)
+    private void SetSizeDown(Button button)
     {
-
+        float delay = 0.2f;
+        var tween = button.transform.DOScale(ScaleDown, delay);
+        var tween2 = button.transform.DOScale(1, Duration / 2).SetDelay(delay);
     }
 
     private void DisableCanvas()
