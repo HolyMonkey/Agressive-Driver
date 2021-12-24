@@ -12,8 +12,6 @@ public class TotalScoreChanger : MonoBehaviour
     private TMP_Text _scoreText;
     private ScrambleMode _numerals;
 
-    
-
     private void Awake()
     {
         _scoreText = GetComponent<TMP_Text>();

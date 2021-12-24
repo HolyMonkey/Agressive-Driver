@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Diamond : MonoBehaviour
@@ -10,9 +8,7 @@ public class Diamond : MonoBehaviour
     {
         if (other.TryGetComponent(out Player player))
         {
-            // player.Repair();
             Instantiate(_pickUpEffect, transform.position, _pickUpEffect.gameObject.transform.rotation);
-            //_pickUpEffect.Play();
             Destroy(gameObject);
         }
     }

@@ -1,49 +1,72 @@
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class PlayerSelector : MonoBehaviour
 {
     [SerializeField] private CarData[] _cars;
     [SerializeField] private Image _carImage;
-    [SerializeField] private PlayerChanger _playerChanger;
     [SerializeField] private StartGameHider _startGameHider;
-    [SerializeField] private GameObject _leaderBoardButton;
+    [Header("Buttons")]
+    [SerializeField] private Button _select;
+    [SerializeField] private Button _nextCar;
+    [SerializeField] private Button _previousCar;
 
+    private ButtonsAnimator _buttonsAnimator;
     private int _carIndex = 0;
-    private Image _currentImage;
 
-    public event UnityAction<Player> CarSelected;
+    public event Action<Player> CarSelected;
+    public event Action<Button> ButtonSelected;
+
+    private void OnEnable()
+    {
+        _buttonsAnimator = GetComponentInParent<ButtonsAnimator>();
+
+        _select.onClick.AddListener(SelectCar);
+        _nextCar.onClick.AddListener(NextCar);
+        _previousCar.onClick.AddListener(PreviousCar);
+    }
 
     private void Start()
     {
         _carImage.sprite = _cars[_carIndex].CarIcon;
     }
 
-    public void NextCar()
+    private void OnDisable()
+    {
+        _select.onClick.RemoveListener(SelectCar);
+        _nextCar.onClick.RemoveListener(NextCar);
+        _previousCar.onClick.RemoveListener(PreviousCar);
+    }
+
+    private void NextCar()
     {
         if(_carIndex < _cars.Length - 1)
         {
             _carIndex++;
             _carImage.sprite = _cars[_carIndex].CarIcon;
-        }   
+        }
+
+        ButtonSelected?.Invoke(_nextCar);
     }
 
-    public void PreviousCar()
+    private void PreviousCar()
     {
         if (_carIndex > 0)
         {
             _carIndex--;
             _carImage.sprite = _cars[_carIndex].CarIcon;
-        }    
+        }
+
+        ButtonSelected?.Invoke(_previousCar);
     }
 
-    public void SelectCar()
+    private void SelectCar()
     {
         CarSelected?.Invoke(_cars[_carIndex].CarPrefab);
+        _buttonsAnimator.SetFadeDown();
         _startGameHider.Show();
-        _leaderBoardButton.SetActive(false);
-        gameObject.SetActive(false);     
+
+        ButtonSelected?.Invoke(_select);
     }
 }
-

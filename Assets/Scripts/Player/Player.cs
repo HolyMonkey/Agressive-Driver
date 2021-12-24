@@ -67,7 +67,6 @@ public class Player : MonoBehaviour
             
     }
 
-
     private void OnCollisionEnter(Collision collision)
     {
         Vector3 collisionDirection = collision.GetContact(0).normal;
