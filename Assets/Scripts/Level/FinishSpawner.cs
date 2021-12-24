@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,15 +8,26 @@ public class FinishSpawner : MonoBehaviour
     [SerializeField] private Finish _finishPrefab;
 
     private bool _spawned = false;
+    private Transform _transform;
+    private Vector3 _forward;
+    private Quaternion _rotation;
 
-    public float Complete => transform.position.z / _distance;
+    public float Complete => _transform.position.z / _distance;
+
     public event UnityAction PlayerReached;
+
+    private void Start()
+    {
+        _rotation = Quaternion.identity;
+        _forward = Vector3.forward;
+        _transform = GetComponent<Transform>();
+    }
 
     private void FixedUpdate()
     {
-        if (!_spawned && transform.position.z + _spawnOffset >= _distance)
+        if (!_spawned && _transform.position.z + _spawnOffset >= _distance)
         {
-            Finish finish = Instantiate(_finishPrefab, transform.position + Vector3.forward * _spawnOffset, Quaternion.identity);
+            Finish finish = Instantiate(_finishPrefab, _transform.position + _forward * _spawnOffset, _rotation);
             finish.Entered += PlayerReachedFinish;
             _spawned = true;
         }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Player))]
@@ -10,6 +8,7 @@ public class PlayerEffects : MonoBehaviour
     [SerializeField] private ParticleSystem _diedEffect;
 
     private Player _player;
+    private Transform _transform;
 
     private readonly float _needChangeAlphaValue = 0.7f;
 
@@ -18,23 +17,31 @@ public class PlayerEffects : MonoBehaviour
         _player.PlayerHited += OnPlayerHitted;
         _player.PlayerDied += OnPlayerDied;
         _player.HealthChanged += OnHealthChanged;
+        _player.DelayRevived += OnPlayerDelayRevived;
     }
 
     private void OnDisable()
     {
         _player.PlayerHited -= OnPlayerHitted;
         _player.PlayerDied -= OnPlayerDied;
+        _player.HealthChanged -= OnHealthChanged;
+        _player.DelayRevived -= OnPlayerDelayRevived;
     }
 
     private void Awake()
     {
+        _transform = GetComponent<Transform>();
         _player = GetComponent<Player>();
     }
 
-
+    public void OnPlayerDelayRevived()
+    {
+        _diedEffect.Stop();
+    }
+    
     private void OnPlayerHitted(Vector3 hitPoint)
     {
-        Vector3 targetPosition = new Vector3(transform.position.x - hitPoint.x, _hitEffect.gameObject.transform.position.y, transform.position.z - hitPoint.z);
+        Vector3 targetPosition = new Vector3(_transform.position.x - hitPoint.x, _hitEffect.gameObject.transform.position.y, _transform.position.z - hitPoint.z);
 
         _hitEffect.gameObject.transform.position = targetPosition;
         _hitEffect.Play();

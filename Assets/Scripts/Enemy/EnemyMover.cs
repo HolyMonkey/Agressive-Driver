@@ -1,10 +1,21 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody), typeof(Enemy))]
 public class EnemyMover : MonoBehaviour
 {
+    public int WaypointIndex => _waypointIndex;
+
+    private Vector3 _targetPoint;
+
+    public List<Vector3> waypoints;
+    private Vector3 _waypointStart;
+    private Vector3 _waypointEnd;
+    private Vector3 _waypointDirection;
+    private int _waypointIndex;
+    private float _lastDistance;
+
+
     [SerializeField] private float _speed;
     [SerializeField] private float _turnSpeed;
     [SerializeField] private EnemyOvertakingArea _enemyOvertakingArea;
@@ -12,10 +23,7 @@ public class EnemyMover : MonoBehaviour
     [SerializeField] private GameObject[] m_WheelMeshes = new GameObject[4];
     [SerializeField] private float m_MaximumSteerAngle;
     [SerializeField] private Vector3 m_CentreOfMassOffset;
-    [SerializeField] private Transform _target;
-    [SerializeField] private float _targetLineX;
     [SerializeField] private float _lengthFromVehicle;
-    [SerializeField] private float _collisionOffsetX;
 
     private Quaternion[] m_WheelMeshLocalRotations;
     private float _steerAngle;
@@ -26,9 +34,13 @@ public class EnemyMover : MonoBehaviour
     private Rigidbody _rigidbody;
     private Enemy _enemy;
     private bool _isEnemyDied;
+    private Transform _transform;
+    private float _fixedDeltaTime;
 
     private void Awake()
     {
+        _fixedDeltaTime = 0.02f;
+        _transform = GetComponent<Transform>();
         _rigidbody = GetComponent<Rigidbody>();
         _enemy = GetComponent<Enemy>();
 
@@ -42,6 +54,36 @@ public class EnemyMover : MonoBehaviour
         }
 
         m_WheelColliders[0].attachedRigidbody.centerOfMass = m_CentreOfMassOffset;
+    }
+
+    public void SetWaypoint(int index)
+    {
+        if (_waypointIndex + 1 >= waypoints.Count)
+        {
+            enabled = false;
+            Destroy(gameObject);
+            return;
+        }
+
+        _waypointIndex = index;
+        _waypointStart = waypoints[_waypointIndex];
+        _waypointIndex++;
+        _waypointEnd = waypoints[_waypointIndex];
+
+        _waypointDirection = (_waypointEnd - _waypointStart).normalized;
+
+        _lastDistance = Vector3.Distance(_transform.position, _waypointEnd);
+    }
+
+    private void CheckWaypointDestination()
+    {
+        var distance = Vector3.Distance(_transform.position, _waypointEnd);
+        if (distance > _lastDistance)
+        {
+            SetWaypoint(_waypointIndex);
+        }
+        else
+            _lastDistance = distance;
     }
 
     private void OnEnable()
@@ -58,17 +100,23 @@ public class EnemyMover : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _target.position = new Vector3(_targetLineX, transform.position.y, transform.position.z + _lengthFromVehicle);
+        CheckWaypointDestination();
 
-        Vector3 velocity = _rigidbody.velocity;
+        float length = Vector3.Distance(_transform.position, _waypointStart) + _lengthFromVehicle;
+        _targetPoint = _waypointStart + _waypointDirection * length;
 
-        velocity.z = _speed;
+        _targetPoint.y = _transform.position.y;
+        var dir = (_targetPoint - _transform.position).normalized;
+
+
+        _transform.forward = Vector3.Lerp(_transform.forward, dir, _fixedDeltaTime * 20.4f);
+        Vector3 velocity = _transform.forward * _speed;
+        velocity.y = _rigidbody.velocity.y;
         _rigidbody.velocity = velocity;
-
 
         if (_isEnemyDied)
         {
-            if(_speed > _diedSpeed)
+            if (_speed > _diedSpeed)
                 _speed -= Time.deltaTime;
 
             if (_speed <= _diedSpeed)
@@ -83,12 +131,9 @@ public class EnemyMover : MonoBehaviour
 
     public void HitAvoiding()
     {
-            _targetLineX = -10F;
-
         _steerAngle = 1 * m_MaximumSteerAngle;
         m_WheelColliders[0].steerAngle = _steerAngle;
         m_WheelColliders[1].steerAngle = _steerAngle;
-
     }
 
     private void OnEnemyDied()

@@ -3,9 +3,6 @@ using System.Collections;
 
 public class VehicleDamage : MonoBehaviour
 {
-
-
-
     public float maxMoveDelta = 1.0f; // maximum distance one vertice moves per explosion (in meters)
     public float maxCollisionStrength = 50.0f;
     public float YforceDamp = 0.1f; // 0.0 - 1.0
@@ -14,11 +11,10 @@ public class VehicleDamage : MonoBehaviour
     public MeshFilter[] optionalMeshList;
     public AudioSource crashSound;
 
-
+    public GameObject sparkleEffect;
 
     private MeshFilter[] meshfilters;
     private float sqrDemRange;
-
 
     public void Start()
     {
@@ -32,15 +28,11 @@ public class VehicleDamage : MonoBehaviour
 
     }
 
-
-
     private Vector3 colPointToMe;
     private float colStrength;
 
     public void OnCollisionEnter(Collision collision)
     {
-
-        //  if (collision.gameObject.CompareTag("car")) return;
 
         Vector3 colRelVel = collision.relativeVelocity;
         colRelVel.y *= YforceDamp;
@@ -60,6 +52,9 @@ public class VehicleDamage : MonoBehaviour
 
                 OnMeshForce(collision.contacts[0].point, Mathf.Clamp01(colStrength / maxCollisionStrength));
 
+                Instantiate(sparkleEffect, collision.contacts[0].point, Quaternion.identity);
+
+
             }
         }
 
@@ -74,50 +69,9 @@ public class VehicleDamage : MonoBehaviour
 
     }
 
+    // force should be between 0.0 and 1.0
     public void OnMeshForce(Vector3 originPos, float force)
     {
-        // force should be between 0.0 and 1.0
         force = Mathf.Clamp01(force);
-
-
-
-
-
-
-        //for (int j = 0; j < meshfilters.Length; ++j)
-        //{
-        //    Vector3[] verts = meshfilters[j].mesh.vertices;
-
-        //    for (int i = 0; i < verts.Length; ++i)
-        //    {
-        //        Vector3 scaledVert = Vector3.Scale(verts[i], transform.localScale);
-        //        Vector3 vertWorldPos = meshfilters[j].transform.position + (meshfilters[j].transform.rotation * scaledVert);
-        //        Vector3 originToMeDir = vertWorldPos - originPos;
-        //        Vector3 flatVertToCenterDir = transform.position - vertWorldPos;
-        //        flatVertToCenterDir.y = 0.0f;
-
-
-        //        // 0.5 - 1 => 45° to 0°  / current vertice is nearer to exploPos than center of bounds
-        //        if (originToMeDir.sqrMagnitude < sqrDemRange) //dot > 0.8f )
-        //        {
-        //            float dist = Mathf.Clamp01(originToMeDir.sqrMagnitude / sqrDemRange);
-        //            float moveDelta = force * (1.0f - dist) * maxMoveDelta;
-
-        //            Vector3 moveDir = Vector3.Slerp(originToMeDir, flatVertToCenterDir, impactDirManipulator).normalized * moveDelta;
-
-        //            verts[i] += Quaternion.Inverse(transform.rotation) * moveDir;
-
-
-        //        }
-
-        //    }
-
-        //    meshfilters[j].mesh.vertices = verts;
-        //    meshfilters[j].mesh.RecalculateBounds();
-        //}
-
-
-
-
     }
 }

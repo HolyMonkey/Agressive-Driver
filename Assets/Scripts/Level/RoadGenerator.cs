@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 
 public class RoadGenerator : MonoBehaviour
 {
@@ -10,11 +9,15 @@ public class RoadGenerator : MonoBehaviour
     private readonly int _tileLength = 500;
     private readonly int _activePlatforms = 3;
     private float _spawnPointZ;
+    private Quaternion _identity;
+    private Transform _transform;
 
     private Queue<Road> _activeLevelPlatforms = new Queue<Road>();
 
     private void Start()
     {
+        _transform = GetComponent<Transform>();
+        _identity = Quaternion.identity;
         TryCreateTemplate(RoadType.StartRoad);
     }
 
@@ -40,7 +43,7 @@ public class RoadGenerator : MonoBehaviour
         if (template == null)
             return;
 
-        var levelPlatform = Instantiate(template, template.gameObject.transform.position + transform.forward * _spawnPointZ, Quaternion.identity, transform);
+        var levelPlatform = Instantiate(template, template.gameObject.transform.position + _transform.forward * _spawnPointZ, _identity, _transform);
         _activeLevelPlatforms.Enqueue(levelPlatform);
 
         _spawnPointZ += _tileLength;
@@ -48,13 +51,20 @@ public class RoadGenerator : MonoBehaviour
 
     private Road GetRandomTemplate(RoadType type)
     {
-        var variants = _templates.Where(levelPlatform => levelPlatform.Type == type);
+        List<Road> roads = new List<Road>();
 
-        if (variants.Count() == 1)
-            return variants.First();
+        for (int i = 0; i < _templates.Length; i++)
+        {
+            if (_templates[i].Type == type)
+            {
+                roads.Add(_templates[i]);
+            }
+        }
 
-        var template = variants.ElementAt(Random.Range(0, variants.Count()));
+        if (roads.Count == 1)
+            return roads[0];
 
+        var template = roads[Random.Range(0, roads.Count)];
         return template;
     }
 
