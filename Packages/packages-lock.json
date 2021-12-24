@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.agava.yandexgames": {
+      "version": "https://github.com/forcepusher/com.agava.yandexgames.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "a8f168358c5cee0fb9faf22fe28ff17f8cbe3dab"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,
@@ -85,7 +92,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.settings-manager": {
-      "version": "2.0.1",
+      "version": "1.0.3",
       "depth": 1,
       "source": "registry",
       "dependencies": {},
