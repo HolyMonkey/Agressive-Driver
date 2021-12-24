@@ -10,12 +10,12 @@ public class GameOver : MonoBehaviour
     [SerializeField] private Button _restartButton;
     [SerializeField] private Button _reviveButton;
 
-    private Advertisement _ad;
+    //private Advertisement _ad;
     private bool _isGameOver = false;
 
     private void Start()
     {
-        _ad = GetComponent<Advertisement>();
+        //_ad = GetComponent<Advertisement>();
     }
 
     private void OnEnable()
@@ -48,10 +48,10 @@ public class GameOver : MonoBehaviour
     private void StartGameOver()
     {
         _gameOverPanel.SetActive(true);
-        if (_ad.IsTapedReviveButton == true)
-        {
-            _reviveButton.gameObject.SetActive(false);
-        }
+        //if (_ad.IsTapedReviveButton == true)
+        //{
+        //    _reviveButton.gameObject.SetActive(false);
+        //}
         _isGameOver = true;
     }
 
