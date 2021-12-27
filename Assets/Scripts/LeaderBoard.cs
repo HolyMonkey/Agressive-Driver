@@ -48,7 +48,7 @@ public class LeaderBoard : MonoBehaviour
                     name = "Anonymous";
 
                 int score = entry.score;
-                string playerScore = $"{entry.rank}  {name}  {score}";
+                string playerScore = $"{entry.rank} \t\t {name} \t\t {score}";
 
                 _playerScore.text = playerScore;
             }
