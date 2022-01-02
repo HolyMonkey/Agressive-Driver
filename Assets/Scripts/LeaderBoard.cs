@@ -48,15 +48,16 @@ public class LeaderBoard : MonoBehaviour
                     name = "Anonymous";
 
                 int score = entry.score;
-                string playerScore = $"{entry.rank} \t\t {name} \t\t {score}";
+                string playerScore = $"{entry.rank} \t\t {name} \t\t {score}\n";
 
-                _playerScore.text = playerScore;
+                _playerScore.text += playerScore;
             }
         });
     }
 
     public void Close()
     {
+        _playerScore.text = string.Empty;
         _leaderBoardPanel.SetActive(false);
     }
 }
