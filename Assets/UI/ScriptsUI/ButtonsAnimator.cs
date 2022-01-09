@@ -14,8 +14,6 @@ public class ButtonsAnimator : MonoBehaviour
 
     public void SetFadeDown()
     {
-        Debug.Log(_canvasGroup);
-
         var tween = _canvasGroup.DOFade(0, Duration);
         tween.OnComplete(DisableCanvas);
     }

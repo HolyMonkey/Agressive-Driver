@@ -399,15 +399,6 @@ public class PlayerMover : MonoBehaviour
             }
             RaycastHit raycastHit;
 
-            if (Mathf.Abs(_transform.position.x - _targetPosition.x) > 0.9f)
-            {
-                _skidmarksEffect.StartEmitterSkidmarks(false);
-            }
-            else
-            {
-                _skidmarksEffect.StopEmitterSkidmarks(true);
-            }
-
             if (Physics.Raycast(new Vector3(_transform.position.x, _transform.position.y + 0.3f, _transform.position.z),
                 transform.TransformDirection(_forward), out raycastHit, _layerMask) && _targetPosition.x < 1f)
             {
@@ -417,13 +408,11 @@ public class PlayerMover : MonoBehaviour
                     {
                         accel = -1f;
                         _limitSpeed = _minSpeed;
-                        _skidmarksEffect.StartEmitterSkidmarks(false);
                         _isSkidmarks = true;
                     }
                     else
                     {
                         _stopDistance = _pursuitDistance;
-                        _skidmarksEffect.StopEmitterSkidmarks(true);
                     }
                 }
             }
@@ -503,7 +492,6 @@ public class PlayerMover : MonoBehaviour
                 {
                     if (accel < 0.0f || brake && (wheels[i] == wheels[2] || wheels[i] == wheels[3]))
                     {
-                        _skidmarksEffect.StartEmitterSkidmarks(false);
                         wantedRPM = 0f;
                         if (myRigidbody.velocity.magnitude > 20.2f)
                         {
@@ -522,7 +510,6 @@ public class PlayerMover : MonoBehaviour
                 }
                 else
                 {
-                    _skidmarksEffect.StartEmitterSkidmarks(true);
                     col.brakeTorque = accel == 0 || NeutralGear ? col.brakeTorque = 1000 : col.brakeTorque = 0;
                     w_rotate = wheels[i].rotation;
                 }
