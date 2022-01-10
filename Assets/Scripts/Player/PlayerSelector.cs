@@ -106,7 +106,6 @@ public class PlayerSelector : MonoBehaviour
         CarSelected?.Invoke(_cars[_carIndex].CarPrefab);
         _buttonsAnimator.SetFadeDown();
         _startGameHider.Show();
-
         ButtonSelected?.Invoke(_select);
     }
 

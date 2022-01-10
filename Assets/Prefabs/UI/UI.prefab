@@ -282,6 +282,7 @@ MonoBehaviour:
   _instructionPanel: {fileID: 6494800864928542221}
   _panelText: {fileID: 5393637129760044}
   _instructionText: {fileID: 4734025062913093646}
+  _touchToStart: {fileID: 5393638322823685}
 --- !u!225 &5393637150268902
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -958,7 +959,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 35.2
+  m_fontSize: 40.05
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1803,7 +1804,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 51.15
+  m_fontSize: 56.15
   m_fontSizeBase: 110
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2232,7 +2233,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.15200001, y: 0}
   m_AnchorMax: {x: 0.8574376, y: 1}
-  m_AnchoredPosition: {x: -11.000214, y: -0.024963379}
+  m_AnchoredPosition: {x: -11.000244, y: -0.024963379}
   m_SizeDelta: {x: 691.99756, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5393637993717987
@@ -3861,7 +3862,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 39.4
+  m_fontSize: 45.95
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -6851,7 +6852,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6494800864928542221}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -7593,7 +7594,7 @@ PrefabInstance:
     - target: {fileID: 2796381030733735157, guid: 14763faa119fff24f92586b11f076042,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.5
+      value: -542
       objectReference: {fileID: 0}
     - target: {fileID: 2796381030733735157, guid: 14763faa119fff24f92586b11f076042,
         type: 3}
