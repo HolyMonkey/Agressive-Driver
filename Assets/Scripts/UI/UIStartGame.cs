@@ -18,7 +18,6 @@ public class UIStartGame : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 _rigidbodyPlayer.isKinematic = false;
-
                 for (int i = 0; i < _spawners.Count; i++)
                 {
                     _spawners[i].ActivateCars();

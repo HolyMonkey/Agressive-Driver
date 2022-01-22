@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private int _health;
 
+    private Sounds _sounds;
     private readonly int _damage = 25;
     private int _currentHealth;
     private int _startHealth;
@@ -30,7 +31,7 @@ public class Player : MonoBehaviour
         _startHealth = _health;
         HealthChanged?.Invoke(_currentHealth, _health);
     }
-  
+
     public void Overtook()
     {
         PlayerOvertook?.Invoke();

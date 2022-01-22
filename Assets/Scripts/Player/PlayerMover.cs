@@ -338,6 +338,7 @@ public class PlayerMover : MonoBehaviour
     private bool _isSkidmarks;
     private float _limitSpeed;
     public bool IsSkidmarks => _isSkidmarks;
+    public bool IsPlayerDied => _isPlayerDied;
 
     private void OnEnable()
     {

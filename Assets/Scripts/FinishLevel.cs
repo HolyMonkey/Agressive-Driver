@@ -51,27 +51,30 @@ public class FinishLevel : MonoBehaviour
     {
         if (other.TryGetComponent(out Player player))
         {
-            _ad.EditIsTapedReviveButtonToFalse();
-            _camera.GetComponent<CameraFollow>().enabled = false;
-            player.enabled = false;
-            _WinPanel.SetActive(true);
-            int near = _points.NearMissCount * 100;
-            int board = _points.BoardingCount * 50;
-            int score = near + board + LoadScore();
-            SaveScore(score);
-            _boardingCount.text = _x + _points.BoardingCount.ToString();
-            _nearMissCount.text = _x + _points.NearMissCount.ToString();
-            _boardingTotal.text = board.ToString();
-            _nearMissTotal.text = near.ToString();
-            _Total.text = (near + board).ToString();
-            _TotalAll.text = score.ToString();
-            isFinished = true;
+            if (player.GetComponent<PlayerMover>().IsPlayerDied == false)
+            {
+                _ad.EditIsTapedReviveButtonToFalse();
+                _camera.GetComponent<CameraFollow>().enabled = false;
+                player.enabled = false;
+                _WinPanel.SetActive(true);
+                int near = _points.NearMissCount * 100;
+                int board = _points.BoardingCount * 50;
+                int score = near + board + LoadScore();
+                SaveScore(score);
+                _boardingCount.text = _x + _points.BoardingCount.ToString();
+                _nearMissCount.text = _x + _points.NearMissCount.ToString();
+                _boardingTotal.text = board.ToString();
+                _nearMissTotal.text = near.ToString();
+                _Total.text = (near + board).ToString();
+                _TotalAll.text = score.ToString();
+                isFinished = true;
 
-            _allScore += score;
+                _allScore += score;
 
-            PlayerPrefs.SetInt("AllScore", _allScore);
-            Leaderboard.SetScore("PlaytestBoard", _allScore);
-            Finished?.Invoke();
+                PlayerPrefs.SetInt("AllScore", _allScore);
+                Leaderboard.SetScore("PlaytestBoard", _allScore);
+                Finished?.Invoke();
+            }
         }
     }
     
