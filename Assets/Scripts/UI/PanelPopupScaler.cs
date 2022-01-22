@@ -48,7 +48,8 @@ public class PanelPopupScaler : MonoBehaviour
 
     private void HidePanel()
     {
-        StartCoroutine(DelayAndHide());
+        if(enabled == true)
+            StartCoroutine(DelayAndHide());
     }
 
     private IEnumerator DelayAndHide()

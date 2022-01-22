@@ -5,7 +5,7 @@ public class ProgressBar : MonoBehaviour
 {
     [SerializeField] private Player _player;
     [SerializeField] private PlayerChanger _playerChanger;
-    [SerializeField] private Transform _finish;
+    [SerializeField] private FinishLevel _finish;
     [SerializeField] private Slider _progressSlider;
     private float distance;
     private float lastProgress = 0;

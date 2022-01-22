@@ -23,7 +23,7 @@ public class Advertisement : MonoBehaviour
         yield break;
 #endif
 
-        // Always wait for it if invoking something immediately in the first scene.
+        Always wait for it if invoking something immediately in the first scene.
         yield return YandexGamesSdk.WaitForInitialization();
     }
 

@@ -7,23 +7,32 @@ public class ButtonsAnimator : MonoBehaviour
 {
     [SerializeField] private RectTransform[] _rectTransforms;
     [SerializeField] private PlayerSelector _playerSelector;
-    [SerializeField] private CanvasGroup _canvasGroup;
+    [SerializeField] private CanvasGroup _playSelector;
+    [SerializeField] private CanvasGroup _tapToStart;
 
-    private const float Duration = 1f;
+    private const float Duration = 0.5f;
     private const float ScaleDown = 0.8f;
 
-    public void SetFadeDown()
+    public void DisablePlayerSelector()
     {
-        var tween = _canvasGroup.DOFade(0, Duration);
+        var tween = _playSelector.DOFade(0, Duration);
         tween.OnComplete(DisableCanvas);
+    }
+
+    public void DisableStart()
+    {
+        _tapToStart.gameObject.SetActive(false);
+        _tapToStart.interactable = false;
+        _tapToStart.blocksRaycasts = false;
     }
 
     private void OnEnable()
     {
-        if (_rectTransforms == null || _playerSelector == null || _canvasGroup == null)
-            throw new InvalidOperationException();
+        if (_rectTransforms == null || _playerSelector == null || _playSelector == null || _tapToStart == null)
+            throw new InvalidOperationException(nameof(ButtonsAnimator));
 
         _playerSelector.ButtonSelected += SetSizeDown;
+        _tapToStart.alpha = 0;
 
         Move();
     }
@@ -50,6 +59,18 @@ public class ButtonsAnimator : MonoBehaviour
 
     private void DisableCanvas()
     {
-        _canvasGroup.gameObject.SetActive(false);
+        ShowStart();
+        _playSelector.gameObject.SetActive(false);
+    }
+
+    private void ShowStart()
+    {
+        var tween = _tapToStart.DOFade(1, Duration * 2);
+        tween.OnComplete(EnableStart);
+    }
+
+    private void EnableStart()
+    {
+        _tapToStart.interactable = true;
     }
 }

@@ -36,7 +36,7 @@ public class FinishLevel : MonoBehaviour
             Leaderboard.SetScore("PlaytestBoard", _allScore);
         }
     }
-
+    
     private void OnEnable()
     {
         _button.onClick.AddListener(OnClick);

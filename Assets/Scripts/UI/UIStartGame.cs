@@ -6,15 +6,10 @@ public class UIStartGame : MonoBehaviour
     [SerializeField] private List<CarSpawner> _spawners;
     [SerializeField] private Rigidbody _rigidbodyPlayer;
     [SerializeField] private PlayerChanger _playerChanger;
-    [SerializeField] private StartGameHider _startGameHider;
     [SerializeField] private PlayerSelector _playerSelector;
+    [SerializeField] private ButtonsAnimator _buttonsAnimator;
 
     private bool _isCarSelected;
-
-    private void Start()
-    {
-        _startGameHider.Hide();
-    }
 
     private void Update()
     {
@@ -29,7 +24,7 @@ public class UIStartGame : MonoBehaviour
                     _spawners[i].ActivateCars();
                 }
 
-                _startGameHider.Hide();
+                _buttonsAnimator.DisableStart();
             }
         }
     }

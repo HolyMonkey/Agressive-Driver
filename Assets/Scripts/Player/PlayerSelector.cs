@@ -9,7 +9,6 @@ public class PlayerSelector : MonoBehaviour
 {
     [SerializeField] private CarData[] _cars;
     [SerializeField] private Image _carImage;
-    [SerializeField] private StartGameHider _startGameHider;
     [Header("Buttons")]
     [SerializeField] private Button _select;
     [SerializeField] private Button _nextCar;
@@ -104,8 +103,7 @@ public class PlayerSelector : MonoBehaviour
     private void SelectCar()
     {
         CarSelected?.Invoke(_cars[_carIndex].CarPrefab);
-        _buttonsAnimator.SetFadeDown();
-        _startGameHider.Show();
+        _buttonsAnimator.DisablePlayerSelector();
         ButtonSelected?.Invoke(_select);
     }
 
