@@ -6,7 +6,7 @@ public class Destroyer : MonoBehaviour
     {
         if(other.TryGetComponent(out Enemy enemy))
         {
-            enemy.gameObject.SetActive(false);
+            Destroy(enemy.gameObject,2);
         }
     }
 }
