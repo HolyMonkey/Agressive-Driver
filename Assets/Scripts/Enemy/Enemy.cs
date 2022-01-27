@@ -31,11 +31,24 @@ public class Enemy : MonoBehaviour
             Die(contact.point);
             _diedEffect.Play();
         }
+
+        if (collision.gameObject.TryGetComponent(out Enemy enemy))
+        {
+            if (_hitEffect.TryGetComponent(out ParticleSystem particleSystem))
+            {
+                Vector3 targetPosition = new Vector3(contact.point.x, _hitEffect.transform.position.y, contact.point.z);
+                _hitEffect.transform.position = targetPosition;
+                particleSystem.Play();
+            }
+
+            Die(contact.point);
+            _diedEffect.Play();
+        }
         
 
         if (collision.gameObject.TryGetComponent(out Destroyer destroyer))
         {
-            gameObject.SetActive(false);
+            Destroy(gameObject);
         }
     }
 
