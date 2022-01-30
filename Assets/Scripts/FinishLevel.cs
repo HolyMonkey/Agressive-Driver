@@ -59,7 +59,7 @@ public class FinishLevel : MonoBehaviour
                 _WinPanel.SetActive(true);
                 int near = _points.NearMissCount * 100;
                 int board = _points.BoardingCount * 50;
-                int score = near + board + LoadScore();
+                int score = near + board;
                 SaveScore(score);
                 _boardingCount.text = _x + _points.BoardingCount.ToString();
                 _nearMissCount.text = _x + _points.NearMissCount.ToString();
