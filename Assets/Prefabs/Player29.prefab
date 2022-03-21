@@ -11105,7 +11105,7 @@ MonoBehaviour:
     dampers: 5000
     carPower: 180
     shiftPower: 220
-    brakePower: 30000
+    brakePower: 3000
     maxSteerAngle: 30
     shiftDownRPM: 2000
     shiftUpRPM: 4000
@@ -11189,7 +11189,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5920171972636673911}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b76839523b67e354784ece9a57fec758, type: 3}
   m_Name: 

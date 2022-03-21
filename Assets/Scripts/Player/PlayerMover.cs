@@ -386,7 +386,7 @@ public class PlayerMover : MonoBehaviour
                 float targetAngle = Mathf.Atan2(localTarget.x, localTarget.z) * _rad2Deg;
                 steer = Mathf.Clamp(targetAngle * 0.05f, -1, 1) * 1.5f;
                 if (Input.GetKey(_w) || Input.GetKey(_upArrow) || Input.touchCount > 0)
-                {
+                {                  
                     accel = 1f;
                 }
                 else if (Speed > _minSpeed)

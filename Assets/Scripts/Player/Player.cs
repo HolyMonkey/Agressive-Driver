@@ -86,7 +86,6 @@ public class Player : MonoBehaviour
             }
         }
     }
-
     public void GetSecondChance()
     {
         _currentHealth = _health;

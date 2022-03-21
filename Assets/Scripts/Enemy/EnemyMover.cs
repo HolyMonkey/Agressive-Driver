@@ -14,6 +14,7 @@ public class EnemyMover : MonoBehaviour
     private Vector3 _waypointDirection;
     private int _waypointIndex;
     private float _lastDistance;
+    private float _currentSpeedTarget;
 
 
     [SerializeField] private float _speed;
@@ -24,6 +25,8 @@ public class EnemyMover : MonoBehaviour
     [SerializeField] private float m_MaximumSteerAngle;
     [SerializeField] private Vector3 m_CentreOfMassOffset;
     [SerializeField] private float _lengthFromVehicle;
+    [SerializeField] private float _maxSpeed = 20;
+    [SerializeField] private float _minSpeed = 5;
 
     private Quaternion[] m_WheelMeshLocalRotations;
     private float _steerAngle;
@@ -39,6 +42,7 @@ public class EnemyMover : MonoBehaviour
 
     private void Awake()
     {
+        _currentSpeedTarget = _minSpeed;
         _fixedDeltaTime = 0.02f;
         _transform = GetComponent<Transform>();
         _rigidbody = GetComponent<Rigidbody>();
@@ -110,6 +114,7 @@ public class EnemyMover : MonoBehaviour
 
 
         _transform.forward = Vector3.Lerp(_transform.forward, dir, _fixedDeltaTime * 20.4f);
+        ChangeSpeed();
         Vector3 velocity = _transform.forward * _speed;
         velocity.y = _rigidbody.velocity.y;
         _rigidbody.velocity = velocity;
@@ -140,5 +145,23 @@ public class EnemyMover : MonoBehaviour
     {
         _isEnemyDied = true;
         _enemyOvertakingArea.gameObject.SetActive(false);
+    }
+
+    private void ChangeSpeed()
+    {
+        if (_currentSpeedTarget == _minSpeed) 
+        {
+            if (_speed > _currentSpeedTarget)
+                _speed -= 0.2f * Time.deltaTime;
+            else
+                _currentSpeedTarget = _maxSpeed;
+        }
+        else
+        {
+            if (_speed < _currentSpeedTarget)
+                _speed += 0.1f * Time.deltaTime;
+            else
+                _currentSpeedTarget = _minSpeed;
+        }
     }
 }

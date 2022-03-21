@@ -7,13 +7,17 @@ public class PlayerChanger : MonoBehaviour
     [SerializeField] private TargetPoint _targetPoint;
     [SerializeField] private Skidmarks _skidMarks;
     [SerializeField] private PlayerSelector _playerSelector;
- 
+
     public event UnityAction<Player> PlayerChanged;
     public event UnityAction<PlayerMover> PlayerMoverChanged;
     public event UnityAction<PlayerSlower> PlayerSlowerChanged;
     public event UnityAction<Transform> PlayerTransformChanged;
     public event UnityAction<Rigidbody> PlayerRigidbodyChanged;
     public event UnityAction<NearMissChecker> NearMissCheckerChanged;
+
+    private PlayerMover _currentPlayerMover;
+
+    public PlayerMover CurrentPlayerMover => _currentPlayerMover;
 
     private void OnEnable()
     {
@@ -39,6 +43,7 @@ public class PlayerChanger : MonoBehaviour
         Destroy(_currentPlayer.gameObject);
 
         _currentPlayer = newPlayer;
+        _currentPlayerMover = playerMover;
         playerVehicleAI.SetTargetPositionTransform(_targetPoint.transform);
         playerMover.SetCarSteer(_skidMarks.transform);
         

@@ -8,6 +8,9 @@ public class UIStartGame : MonoBehaviour
     [SerializeField] private PlayerChanger _playerChanger;
     [SerializeField] private PlayerSelector _playerSelector;
     [SerializeField] private ButtonsAnimator _buttonsAnimator;
+    [SerializeField] private GameObject _text;
+
+    private int _clickCount = 0;
 
     private bool _isCarSelected;
 
@@ -17,13 +20,20 @@ public class UIStartGame : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                _rigidbodyPlayer.isKinematic = false;
-                for (int i = 0; i < _spawners.Count; i++)
+                if (_clickCount < 1)
                 {
-                    _spawners[i].ActivateCars();
+                    _clickCount++;
+                    _rigidbodyPlayer.isKinematic = false;
+                    for (int i = 0; i < _spawners.Count; i++)
+                    {
+                        _spawners[i].ActivateCars();
+                    }
+
+                    Invoke(nameof(EnableKinematic), 0.1f);
+                    Invoke(nameof(DisableKinematicAndThis), 1.1f);
                 }
 
-                _buttonsAnimator.DisableStart();
+               // _buttonsAnimator.DisableStart();
             }
         }
     }
@@ -43,6 +53,16 @@ public class UIStartGame : MonoBehaviour
     private void OnCarSelected(Player selectedPlayer)
     {
         _isCarSelected = true;
+    }
+
+    private void EnableKinematic()
+    {
+        _rigidbodyPlayer.isKinematic = true;       
+    }
+    private void DisableKinematicAndThis()
+    {
+        _rigidbodyPlayer.isKinematic = false;
+        _buttonsAnimator.DisableStart();
     }
 
     private void OnPlayerRigidbodyChanged(Rigidbody newRigidbodyPlayer)

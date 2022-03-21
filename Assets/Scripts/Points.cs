@@ -11,7 +11,8 @@ public class Points : MonoBehaviour
     [SerializeField] private Player _player;
     [SerializeField] private PlayerChanger _playerChanger;
     [SerializeField] private NearMissChecker _checker;
-    
+    [SerializeField] private float _minSpeedForNearMiss;
+
     private List<Enemy> _boarding = new List<Enemy>();
     private List<Enemy> _nearMiss = new List<Enemy>();
     private bool _isCollision = false;
@@ -104,8 +105,8 @@ public class Points : MonoBehaviour
                 typePoint = _brutalText.ToString();
                 _boardingCount += _boarding.Count;
             }
-            else if (_isCollision == false && _nearMiss.Count > 0)
-            {
+            else if (_isCollision == false && _nearMiss.Count > 0 && _playerChanger.CurrentPlayerMover.Speed > _minSpeedForNearMiss)
+            {            
                 point = _nearMiss.Count * 100;
                 typePoint = _nearMissText.ToString();
                 _nearMissCount += _nearMiss.Count;

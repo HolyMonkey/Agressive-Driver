@@ -113,22 +113,22 @@ public class TargetPoint : MonoBehaviour
 
         if (Input.GetKey(_a) || Input.GetKey(_leftArrow))
         {
-            _currentStepSize -= 0.05f;
+            _currentStepSize -= 8f * Time.deltaTime;
         }
         else if(Input.GetKey(_d) || Input.GetKey(_rightArrow))
         {
-            _currentStepSize += 0.05f;
+            _currentStepSize += 8f * Time.deltaTime;
         }
 
         if (Input.touchCount > 0)
         {
             if (Input.GetTouch(0).position.x < _screenWidght / 2)
             {
-                _currentStepSize -= 0.05f;
+                _currentStepSize -= 18f * Time.deltaTime;
             }
             else if (Input.GetTouch(0).position.x > _screenWidght / 2)
             {
-                _currentStepSize += 0.05f;
+                _currentStepSize += 18f * Time.deltaTime;
             }
         }
 
