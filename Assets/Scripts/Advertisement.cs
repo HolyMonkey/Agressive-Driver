@@ -38,7 +38,8 @@ public class Advertisement : MonoBehaviour
 
     private IEnumerator EditTimeScale()
     {
-        yield return new WaitForSecondsRealtime(20f);
+       // yield return new WaitForSecondsRealtime(20f);
+        yield return new WaitForSecondsRealtime(0.1f);
 
         Time.timeScale = 1;
     }

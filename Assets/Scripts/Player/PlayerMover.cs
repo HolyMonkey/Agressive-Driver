@@ -187,13 +187,14 @@ public class PlayerMover : MonoBehaviour
             col.mass = carWheels.setting.Weight;
             WheelFrictionCurve fc = col.forwardFriction;
             fc.asymptoteValue = 5000.0f;
-            fc.extremumSlip = 2.0f;
+            fc.extremumSlip = 3.0f;
             fc.asymptoteSlip = 20.0f;
             fc.stiffness = carSetting.stiffness;
             col.forwardFriction = fc;
             fc = col.sidewaysFriction;
             fc.asymptoteValue = 7500.0f;
             fc.asymptoteSlip = 2.0f;
+            fc.extremumSlip = 0.3f;
             fc.stiffness = carSetting.stiffness;
             col.sidewaysFriction = fc;
         }
@@ -291,13 +292,13 @@ public class PlayerMover : MonoBehaviour
     }
 
     private void FixedUpdate()
-    {
-        Speed = _rigidbody.velocity.magnitude;
-        lastSpeed = Speed;
-        _rigidbody.centerOfMass = carSetting.shiftCentre;
-
+    {   
         if (activeControl)
         {
+            Speed = _rigidbody.velocity.magnitude;
+            lastSpeed = Speed;
+            _rigidbody.centerOfMass = carSetting.shiftCentre;
+                
             if (carWheels.wheels.frontWheelDrive || carWheels.wheels.backWheelDrive)
             {
                 Vector3 localTarget = _transform.InverseTransformPoint(_targetPosition);
@@ -366,7 +367,7 @@ public class PlayerMover : MonoBehaviour
 
             if (Speed < 1.0f) Backward = true;
 
-            if (currentGear == 0 && Backward == true)
+            if (currentGear == 0 && Backward)
             {
                 if (Speed < carSetting.gears[0] * -10)
                     accel = -accel;

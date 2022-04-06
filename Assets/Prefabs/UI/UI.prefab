@@ -2772,7 +2772,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -0.00012207031}
   m_SizeDelta: {x: 0, y: -0.000061035}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3121,6 +3121,7 @@ MonoBehaviour:
   _maxSpeed: 40
   _arrow: {fileID: 5393637647779458}
   _rigidbodyCar: {fileID: 0}
+  _maxZRotation: -90
 --- !u!1 &5393638276944305
 GameObject:
   m_ObjectHideFlags: 0
@@ -3673,7 +3674,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5393638451954792
 RectTransform:
   m_ObjectHideFlags: 0
