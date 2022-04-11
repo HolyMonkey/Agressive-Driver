@@ -1,12 +1,19 @@
 using UnityEngine;
-using YandexGames;
+using Agava.YandexGames;
 using TMPro;
 using System.Collections;
+using System.Collections.Generic;
 
 public class LeaderBoard : MonoBehaviour
 {
     [SerializeField] private TMP_Text _playerScore;
     [SerializeField] private GameObject _leaderBoardPanel;
+    [SerializeField] private string _name = "PlaytestBoard";
+    [SerializeField] private EntryView _playerEntryView;
+    [SerializeField] private EntryViewPool _playerEntriesViewPool;
+
+    private string _playerName;
+    private List<EntryView> _entryViews = new List<EntryView>();
 
     private void Awake()
     {
@@ -32,32 +39,54 @@ public class LeaderBoard : MonoBehaviour
         yield return YandexGamesSdk.WaitForInitialization();
     }
 
-    public void GetLeaderBoard()
+    public void Show()
     {
         _leaderBoardPanel.SetActive(true);
-
-        Leaderboard.GetEntries("PlaytestBoard", (result) =>
+            
+        Leaderboard.GetEntries(_name, (result) =>
         {
-            var entries = result.entries;
+            foreach (var entryView in _entryViews)
+                entryView.gameObject.SetActive(false);
 
-            foreach (var entry in entries)
+            _entryViews.Clear();
+            Leaderboard.GetPlayerEntry(_name, (playerEntry) =>
             {
-                string name = entry.player.publicName;
+                _playerEntryView.Init(playerEntry.rank.ToString(), playerEntry.player.publicName, playerEntry.score.ToString());
+            });
 
-                if (string.IsNullOrEmpty(name))
-                    name = "Anonymous";
-
-                int score = entry.score;
-                string playerScore = $"{entry.rank} {name} {score}\n";
-
-                _playerScore.text += playerScore;
+            foreach (var entry in result.entries)
+            {
+                _playerName = entry.player.publicName;                                                                
+                EntryView entryView = _playerEntriesViewPool.GetFreeObject();
+                entryView.Init(entry.rank.ToString(), _playerName, entry.score.ToString());
+                entryView.gameObject.SetActive(true);
+                _entryViews.Add(entryView);
             }
         });
+        /*
+       foreach (var entryView in _entryViews)
+           entryView.gameObject.SetActive(false);
+       
+       _entryViews.Clear();
+       
+       _playerEntryView.Init("123", "123","123");
+       
+       float _rankk = 1;
+       foreach (var entry in _test)
+       {
+           _playerName = "123";                                                                
+           EntryView entryView = _playerEntriesViewPool.GetFreeObject();
+           entryView.Init("123", "123","123");
+           entryView.gameObject.SetActive(true);
+           _entryViews.Add(entryView);
+       }
+
+       _playerEntryView.Init("321", "1eqweqe3", "1e12dasd23");
+       */
     }
 
     public void Close()
-    {
-        _playerScore.text = string.Empty;
+    {      
         _leaderBoardPanel.SetActive(false);
     }
 }

@@ -1,9 +1,10 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
-using YandexGames;
+using Agava.YandexGames;
 using TMPro;
 using System.Collections;
+using UnityEngine.Serialization;
 
 public class PlayerSelector : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class PlayerSelector : MonoBehaviour
     [SerializeField] private GameObject _instructionPanel;
     [SerializeField] private TMP_Text _panelText;
     [SerializeField] private TMP_Text _instructionText;
+    [SerializeField] private LeaderBoard _leaderboardScript;
 
     private ButtonsAnimator _buttonsAnimator;
     private int _carIndex = 0;
@@ -42,7 +44,7 @@ public class PlayerSelector : MonoBehaviour
         _previousCar.onClick.AddListener(PreviousCar);
         _leaderboard.onClick.AddListener(GetLeaderBoard);
         _closePanel.onClick.AddListener(CloseLeaderboard);
-        _movementInstruction.onClick.AddListener(GetMovementInstraction);
+        _movementInstruction.onClick.AddListener(GetMovementInstructions);
         _closeInstruction.onClick.AddListener(CloseInstruction);
     }
 
@@ -74,7 +76,7 @@ public class PlayerSelector : MonoBehaviour
         _previousCar.onClick.RemoveListener(PreviousCar);
         _leaderboard.onClick.RemoveListener(GetLeaderBoard);
         _closePanel.onClick.RemoveListener(CloseLeaderboard);
-        _movementInstruction.onClick.RemoveListener(GetMovementInstraction);
+        _movementInstruction.onClick.RemoveListener(GetMovementInstructions);
         _closeInstruction.onClick.RemoveListener(CloseInstruction);
     }
 
@@ -109,28 +111,10 @@ public class PlayerSelector : MonoBehaviour
 
     private void GetLeaderBoard()
     {
-        _leaderboardPanel.SetActive(true);
-
-        Leaderboard.GetEntries("PlaytestBoard", (result) =>
-        {
-            var entries = result.entries;
-
-            foreach (var entry in entries)
-            {
-                string name = entry.player.publicName;
-
-                if (string.IsNullOrEmpty(name))
-                    name = "Anonymous";
-
-                int score = entry.score;
-                string playerScore = $"{entry.rank} {name} {score}\n";
-
-                _panelText.text += playerScore;
-            }
-        });
+        _leaderboardScript.Show();
     }
 
-    private void GetMovementInstraction()
+    private void GetMovementInstructions()
     {
         _instructionPanel.SetActive(true);
         _instructionText.gameObject.SetActive(true);
@@ -138,8 +122,7 @@ public class PlayerSelector : MonoBehaviour
 
     private void CloseLeaderboard()
     {
-        _panelText.text = string.Empty;
-        _leaderboardPanel.SetActive(false);
+        _leaderboardScript.Close();
     }
 
     private void CloseInstruction()

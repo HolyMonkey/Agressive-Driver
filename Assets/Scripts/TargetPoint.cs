@@ -1,15 +1,17 @@
 using UnityEngine;
 using EasyRoads3Dv3;
+using UnityEngine.UIElements;
 
 public class TargetPoint : MonoBehaviour
 {
-    [SerializeField] private SwipeDetection _detection;
     [SerializeField] private PlayerMover _playerMover;
     [SerializeField] private Player _player;
     [SerializeField] private PlayerChanger _playerChanger;
     [SerializeField] private float _stepSize;
     [SerializeField] private float _lengthFromVehicle;
     [SerializeField] private ERModularRoad eRoad;
+    [SerializeField] private ButtonHoldChecker _leftButton;
+    [SerializeField] private ButtonHoldChecker _rightButton;
 
     private Vector3 waypointStart;
     private Vector3 waypointEnd;
@@ -19,10 +21,8 @@ public class TargetPoint : MonoBehaviour
     private float timeToLoose = 5;
     private Transform _transform;
     private Vector3 _up;
-
     private float _startStepSize;
     private float _currentStepSize;
-    private float _screenWidght;
     private KeyCode _a;
     private KeyCode _d;
     private KeyCode _leftArrow;
@@ -34,8 +34,7 @@ public class TargetPoint : MonoBehaviour
         _d = KeyCode.D;
         _leftArrow = KeyCode.LeftArrow;
         _rightArrow = KeyCode.RightArrow;
-
-        _screenWidght = Screen.width;
+        
         _up = Vector3.up;
         _transform = GetComponent<Transform>();
 
@@ -48,26 +47,15 @@ public class TargetPoint : MonoBehaviour
 
     private void OnEnable()
     {
-        _detection.OnSwipe += OnSwipe;
         _playerChanger.PlayerChanged += OnPlayerChanged;
         _playerChanger.PlayerMoverChanged += OnPlayerMoverChanged;
     }
 
     private void OnDisable()
     {
-        _detection.OnSwipe -= OnSwipe;
         _playerChanger.PlayerChanged -= OnPlayerChanged;
         _playerChanger.PlayerMoverChanged -= OnPlayerMoverChanged;
     }
-
-    public void OnSwipe(float delta)
-    {
-        delta /= 450;
-        var clampedDelta = Mathf.Clamp(delta, -_stepSize, _stepSize);
-        _currentStepSize += clampedDelta;
-        _currentStepSize = Mathf.Clamp(_currentStepSize, -_stepSize, _stepSize);
-    }
-
 
     private void OnPlayerChanged(Player newPlayer)
     {
@@ -105,31 +93,19 @@ public class TargetPoint : MonoBehaviour
             SetWaypoints();
         }
     }
-
-    private void Update()
+    
+    private void FixedUpdate()
     {
         CheckWaypointDestination();
         SetNextPosition(_currentStepSize);
 
-        if (Input.GetKey(_a) || Input.GetKey(_leftArrow))
+        if (Input.GetKey(_a) || Input.GetKey(_leftArrow ) || _leftButton.IsPressed)
         {
             _currentStepSize -= 8f * Time.deltaTime;
         }
-        else if(Input.GetKey(_d) || Input.GetKey(_rightArrow))
+        else if(Input.GetKey(_d) || Input.GetKey(_rightArrow) || _rightButton.IsPressed)
         {
             _currentStepSize += 8f * Time.deltaTime;
-        }
-
-        if (Input.touchCount > 0)
-        {
-            if (Input.GetTouch(0).position.x < _screenWidght / 2)
-            {
-                _currentStepSize -= 18f * Time.deltaTime;
-            }
-            else if (Input.GetTouch(0).position.x > _screenWidght / 2)
-            {
-                _currentStepSize += 18f * Time.deltaTime;
-            }
         }
 
         _currentStepSize = Mathf.Clamp(_currentStepSize, -_stepSize, _stepSize);

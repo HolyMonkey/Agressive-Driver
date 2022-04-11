@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.agava.yandexgames": "https://github.com/forcepusher/com.agava.yandexgames.git",
+    "com.agava.yandexgames": "https://github.com/forcepusher/com.agava.yandexgames.git#8.2.0",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.collab-proxy": "1.15.1",
     "com.unity.ide.rider": "3.0.7",

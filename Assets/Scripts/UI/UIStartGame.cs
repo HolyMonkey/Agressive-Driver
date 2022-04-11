@@ -1,29 +1,45 @@
+using System;
 using System.Collections.Generic;
+using Agava.YandexGames;
 using UnityEngine;
+using DeviceType = Agava.YandexGames.DeviceType;
 
 public class UIStartGame : MonoBehaviour
 {
     [SerializeField] private List<CarSpawner> _spawners;
-    [SerializeField] private Rigidbody _rigidbodyPlayer;
+    
     [SerializeField] private PlayerChanger _playerChanger;
     [SerializeField] private PlayerSelector _playerSelector;
     [SerializeField] private ButtonsAnimator _buttonsAnimator;
+    [SerializeField] private GameObject _phoneButtons;
 
+    private CanvasGroup _canvasGroup;
+    private Rigidbody _rigidbodyPlayer;
     private bool _isCarSelected;
+    private bool _isGameStarted;
+
+    private void Start()
+    {
+        _canvasGroup = GetComponent<CanvasGroup>();
+    }
 
     private void Update()
     {
-        if (_isCarSelected == true)
+        if (_isGameStarted == false && _isCarSelected)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && _canvasGroup.interactable)
             {
+                _isGameStarted = true;
                 _rigidbodyPlayer.isKinematic = false;
                 
                 for (int i = 0; i < _spawners.Count; i++)
                 { 
                     _spawners[i].ActivateCars();
                 }
-                    
+                
+              //  if(Device.Type == DeviceType.Mobile)
+              //      _phoneButtons.SetActive(true);
+              
                 _buttonsAnimator.DisableStart();
             }
         }

@@ -1,12 +1,15 @@
+using Agava.YandexGames;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using DeviceType = Agava.YandexGames.DeviceType;
 
 public class GameOver : MonoBehaviour
 {
     [SerializeField] private Player _player;
     [SerializeField] private PlayerChanger _playerChanger;
     [SerializeField] private GameObject _gameOverPanel;
+    [SerializeField] private GameObject _phoneButtons;
     [SerializeField] private Button _restartButton;
     [SerializeField] private Button _reviveButton;
 
@@ -47,11 +50,16 @@ public class GameOver : MonoBehaviour
     
     private void StartGameOver()
     {
+        //if(Device.Type == DeviceType.Mobile)
+        //    _phoneButtons.SetActive(false);
+        
         _gameOverPanel.SetActive(true);
-        if (_ad.IsTapedReviveButton == true)
+        
+        if (_ad.IsTapedReviveButton)
         {
             _reviveButton.gameObject.SetActive(false);
         }
+        
         _isGameOver = true;
     }
 
@@ -64,5 +72,8 @@ public class GameOver : MonoBehaviour
     {
         _gameOverPanel.SetActive(false);
         _isGameOver = false;
+        
+      //  if(Device.Type == DeviceType.Mobile)
+       //     _phoneButtons.SetActive(true);
     }
 }

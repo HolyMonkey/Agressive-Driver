@@ -22,8 +22,6 @@ public class ButtonsAnimator : MonoBehaviour
     public void DisableStart()
     {
         _tapToStart.gameObject.SetActive(false);
-        _tapToStart.interactable = false;
-        _tapToStart.blocksRaycasts = false;
     }
 
     private void OnEnable()
@@ -65,8 +63,8 @@ public class ButtonsAnimator : MonoBehaviour
 
     private void ShowStart()
     {
-        var tween = _tapToStart.DOFade(1, Duration * 2);
-        tween.OnComplete(EnableStart);
+        var tween = _tapToStart.DOFade(1, Duration);
+        EnableStart();
     }
 
     private void EnableStart()

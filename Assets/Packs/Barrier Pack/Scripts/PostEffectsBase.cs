@@ -112,25 +112,7 @@ namespace UnityStandardAssets.ImageEffects
             return true;
         }
 
-        protected bool CheckSupport (bool needDepth,  bool needHdr)
-		{
-            if (!CheckSupport(needDepth))
-                return false;
-
-            if (needHdr && !supportHDRTextures)
-			{
-                NotSupported ();
-                return false;
-            }
-
-            return true;
-        }
-
-
-        public bool Dx11Support ()
-		{
-            return supportDX11;
-        }
+      
 
 
         protected void ReportAutoDisable ()

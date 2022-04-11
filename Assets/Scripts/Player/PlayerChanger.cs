@@ -7,6 +7,7 @@ public class PlayerChanger : MonoBehaviour
     [SerializeField] private TargetPoint _targetPoint;
     [SerializeField] private Skidmarks _skidMarks;
     [SerializeField] private PlayerSelector _playerSelector;
+    [SerializeField] private ButtonHoldChecker _phoneAccelerationButton;
 
     public event UnityAction<Player> PlayerChanged;
     public event UnityAction<PlayerMover> PlayerMoverChanged;
@@ -46,12 +47,13 @@ public class PlayerChanger : MonoBehaviour
         _currentPlayerMover = playerMover;
         playerVehicleAI.SetTargetPositionTransform(_targetPoint.transform);
         playerMover.SetCarSteer(_skidMarks.transform);
-        
+
         PlayerChanged?.Invoke(newPlayer);
         PlayerMoverChanged?.Invoke(playerMover); 
         PlayerSlowerChanged?.Invoke(playerSlower);
         PlayerTransformChanged?.Invoke(playerTransform);
         PlayerRigidbodyChanged?.Invoke(playerRigidbody);
         NearMissCheckerChanged?.Invoke(nearMissChecker);
-    }   
+        _currentPlayerMover.SetAccelerationButton(_phoneAccelerationButton);
+    }
 }

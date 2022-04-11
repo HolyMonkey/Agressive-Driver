@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Text;
+using UnityEngine.UIElements;
 
 public class PlayerMover : MonoBehaviour
 {
@@ -70,14 +71,10 @@ public class PlayerMover : MonoBehaviour
     private float accel = 0.0f;
     [HideInInspector] public bool brake;
 
-    private bool shifmotor;
-
     [HideInInspector] public float curTorque = 100f;
     [HideInInspector] public float powerShift = 100;
-    private float torque = 100f;
     [HideInInspector] public float Speed = 0.0f;
     private float lastSpeed = -10.0f;
-    private bool _shifting = false;
 
     private float[] efficiencyTable =
     {
@@ -99,7 +96,6 @@ public class PlayerMover : MonoBehaviour
     private Vector3 _steerCurAngle;
     private Rigidbody _rigidbody;
     private WheelComponent[] _wheels;
-
     private Transform _transform;
     private Vector3 _forward;
     private Vector3 _down;
@@ -113,6 +109,7 @@ public class PlayerMover : MonoBehaviour
     private AudioRolloffMode _custom;
     private float _rad2Deg;
     private AudioSource _audioSource;
+    private ButtonHoldChecker _phoneAccelerationButton;
 
     public Rigidbody PlayerRigidbody => _rigidbody;
 
@@ -132,7 +129,6 @@ public class PlayerMover : MonoBehaviour
     {
         WheelComponent result = new WheelComponent();
         GameObject wheelCol = new GameObject(wheel.name + _wheelCollider);
-
         wheelCol.transform.parent = transform;
         wheelCol.transform.position = wheel.position;
         wheelCol.transform.eulerAngles = transform.eulerAngles;
@@ -158,7 +154,6 @@ public class PlayerMover : MonoBehaviour
         _identity = Quaternion.identity;
         _down = Vector3.down;
         _up = Vector3.up;
-
         _limitSpeed = carSetting.LimitForwardSpeed;
         _player = GetComponent<Player>();
         if (carSetting.automaticGear) NeutralGear = false;
@@ -194,7 +189,7 @@ public class PlayerMover : MonoBehaviour
             fc = col.sidewaysFriction;
             fc.asymptoteValue = 7500.0f;
             fc.asymptoteSlip = 2.0f;
-            fc.extremumSlip = 0.3f;
+            fc.extremumSlip = 0.38f;
             fc.stiffness = carSetting.stiffness;
             col.sidewaysFriction = fc;
         }
@@ -209,6 +204,7 @@ public class PlayerMover : MonoBehaviour
     {
         float now = Time.timeSinceLevelLoad;
         if (now < _shiftDelay) return;
+        
         if (currentGear < carSetting.gears.Length - 1)
         {
             currentGear++;
@@ -221,6 +217,7 @@ public class PlayerMover : MonoBehaviour
     {
         float now = Time.timeSinceLevelLoad;
         if (now < _shiftDelay) return;
+        
         if (currentGear > 0 || NeutralGear)
         {
             currentGear--;
@@ -232,6 +229,11 @@ public class PlayerMover : MonoBehaviour
     public void PressingBrake(bool isPress)
     {
         brake = isPress;
+    }
+
+    public void SetAccelerationButton(ButtonHoldChecker button)
+    {
+        _phoneAccelerationButton = button;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -250,12 +252,13 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] private float _stopDistance;
     [SerializeField] private float _pursuitDistance;
     [SerializeField] private LayerMask _layerMask;
-
+    
     private bool _isPlayerDied;
     private Player _player;
     private Vector3 _targetPosition;
     private bool _isSkidmarks;
     private float _limitSpeed;
+    
     public bool IsSkidmarks => _isSkidmarks;
     public bool IsPlayerDied => _isPlayerDied;
 
@@ -304,7 +307,7 @@ public class PlayerMover : MonoBehaviour
                 Vector3 localTarget = _transform.InverseTransformPoint(_targetPosition);
                 float targetAngle = Mathf.Atan2(localTarget.x, localTarget.z) * _rad2Deg;
                 steer = Mathf.Clamp(targetAngle * 0.05f, -1, 1) * 1.5f;
-                if (Input.GetKey(_w) || Input.GetKey(_upArrow) || Input.touchCount > 0)
+                if (Input.GetKey(_w) || Input.GetKey(_upArrow) || (_phoneAccelerationButton != null && _phoneAccelerationButton.IsPressed))
                 {                  
                     accel = 1f;
                 }
@@ -383,7 +386,6 @@ public class PlayerMover : MonoBehaviour
             }
 
             wantedRPM = (5500.0f * accel) * 0.1f + wantedRPM * 0.9f;
-
             float rpm = 0.0f;
             int motorizedWheels = 0;
             bool floorContact = false;
@@ -436,10 +438,6 @@ public class PlayerMover : MonoBehaviour
 
                 if (currentGear > 1 && Speed > 0f)
                 {
-                    if (powerShift == 0)
-                    {
-                        shifmotor = false;
-                    }
                     powerShift = Mathf.MoveTowards(powerShift, 0.0f, Time.deltaTime * 10.0f);
 
                     curTorque = powerShift > 0 ? carSetting.shiftPower : carSetting.carPower;
@@ -450,11 +448,6 @@ public class PlayerMover : MonoBehaviour
                 }
                 else
                 {
-                    if (powerShift > 20)
-                    {
-                        shifmotor = true;
-                    }
-
                     powerShift = Mathf.MoveTowards(powerShift, 100.0f, Time.deltaTime * 5.0f);
                     curTorque = carSetting.carPower;
                     carParticles.shiftParticle1.emissionRate = Mathf.Lerp(carParticles.shiftParticle1.emissionRate, 0,

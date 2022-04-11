@@ -751,7 +751,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.2
+      scalar: 0.3
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -5461,7 +5461,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2409583334980744986
 Transform:
   m_ObjectHideFlags: 0
@@ -5629,7 +5629,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.2
+      scalar: 0.3
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -10953,7 +10953,6 @@ GameObject:
   - component: {fileID: 5567153555553704108}
   - component: {fileID: 5920171972636673905}
   - component: {fileID: 5920171972636673906}
-  - component: {fileID: 5920171972636673904}
   - component: {fileID: 5920171972636673907}
   m_Layer: 3
   m_Name: Player2
@@ -11095,7 +11094,7 @@ MonoBehaviour:
     dampers: 5000
     carPower: 180
     shiftPower: 220
-    brakePower: 3000
+    brakePower: 30000
     maxSteerAngle: 30
     shiftDownRPM: 2000
     shiftUpRPM: 4000
@@ -11178,7 +11177,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5920171972636673911}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b76839523b67e354784ece9a57fec758, type: 3}
   m_Name: 
@@ -11200,23 +11199,6 @@ MonoBehaviour:
   _hitEffect: {fileID: 3201267165008078272}
   _damageEffect: {fileID: 5567153556481092033}
   _diedEffect: {fileID: 5567153555976251771}
---- !u!114 &5920171972636673904
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5920171972636673911}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d36ac0daef0a4dd4280f6a5f98c1f6a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _tireMarks:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!65 &5920171972636673907
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11228,8 +11210,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.4, y: 0.8, z: 3.2}
-  m_Center: {x: 0, y: 0.55, z: 0}
+  m_Size: {x: 1.4, y: 1.64, z: 3.2}
+  m_Center: {x: 0, y: 0.95, z: 0}
 --- !u!1 &6659466061203265074
 GameObject:
   m_ObjectHideFlags: 0

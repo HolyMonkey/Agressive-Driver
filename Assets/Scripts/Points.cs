@@ -21,8 +21,8 @@ public class Points : MonoBehaviour
     private int _boardingCount = 0;
     private int _nearMissCount = 0;
 
-    private StringBuilder _brutalText = new StringBuilder("Брутально 50");
-    private StringBuilder _nearMissText = new StringBuilder("Близкое столкновение 100");
+    private StringBuilder _brutalText = new StringBuilder("Р‘СЂСѓС‚Р°Р»СЊРЅРѕ 50");
+    private StringBuilder _nearMissText = new StringBuilder("Р‘Р»РёР·РєРѕРµ СЃС‚РѕР»РєРЅРѕРІРµРЅРёРµ 100");
 
     public event Action<int> Collected;
     public event Action<string, int> CollectedWithText;
