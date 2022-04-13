@@ -1,21 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ButtonHoldChecker : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class ButtonHoldChecker : MonoBehaviour
 {
     private bool _isPressed = false;
     
     public bool IsPressed => _isPressed;
-
-    public void OnPointerDown(PointerEventData pointerEventData)
+    /*
+    public void OnPointerEnter(PointerEventData eventData)
     {
         _isPressed = true;
     }
-
-    public void OnPointerUp(PointerEventData pointerEventData)
+    
+    public void OnPointerExit(PointerEventData eventData)
     {
         _isPressed = false;
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        _isPressed = false;
+    }
+    */
+    
+    public void SetIsPressed()
+    {
+    _isPressed = true;
+    }
+    
+    public void SetIsPressedFalse()
+    {
+    _isPressed = false;
     }
 }

@@ -50,6 +50,11 @@ public class PlayerSelector : MonoBehaviour
 
     private IEnumerator Start()
     {
+        if (PlayerPrefs.HasKey("CarIndex"))
+        {
+            _carIndex = PlayerPrefs.GetInt("CarIndex");
+        }
+        
         _instructionText.gameObject.SetActive(false);
         _carImage.sprite = _cars[_carIndex].CarIcon;
         _leaderboardPanel.SetActive(false);
@@ -104,6 +109,8 @@ public class PlayerSelector : MonoBehaviour
 
     private void SelectCar()
     {
+        PlayerPrefs.SetInt("CarIndex",_carIndex);
+        PlayerPrefs.Save();
         CarSelected?.Invoke(_cars[_carIndex].CarPrefab);
         _buttonsAnimator.DisablePlayerSelector();
         ButtonSelected?.Invoke(_select);

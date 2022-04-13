@@ -94,7 +94,7 @@ public class TargetPoint : MonoBehaviour
         }
     }
     
-    private void FixedUpdate()
+    private void Update()
     {
         CheckWaypointDestination();
         SetNextPosition(_currentStepSize);

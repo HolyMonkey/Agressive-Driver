@@ -5461,7 +5461,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2409583334980744986
 Transform:
   m_ObjectHideFlags: 0
@@ -11094,7 +11094,7 @@ MonoBehaviour:
     dampers: 5000
     carPower: 180
     shiftPower: 220
-    brakePower: 30000
+    brakePower: 8000
     maxSteerAngle: 30
     shiftDownRPM: 2000
     shiftUpRPM: 4000

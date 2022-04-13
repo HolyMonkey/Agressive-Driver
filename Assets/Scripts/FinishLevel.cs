@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Agava.YandexGames;
+using DeviceType = Agava.YandexGames.DeviceType;
 
 public class FinishLevel : MonoBehaviour
 {
@@ -21,10 +22,14 @@ public class FinishLevel : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _TotalAll;
     [SerializeField] private Button _button;
     [SerializeField] private Advertisement _ad;
+    [SerializeField] private GameObject _phoneButtons;
 
     private StringBuilder _x = new StringBuilder("x ");
-    private bool isFinished = false;
+    private bool _isFinished = false;
     private int _allScore = 0;
+
+    public bool IsFinished => _isFinished;
+    
 
     public event Action Finished;
 
@@ -47,12 +52,15 @@ public class FinishLevel : MonoBehaviour
         _button.onClick.RemoveListener(OnClick);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        if (other.TryGetComponent(out Player player))
+        if (other.TryGetComponent(out Player player) && _isFinished == false)
         {
             if (player.GetComponent<PlayerMover>().IsPlayerDied == false)
             {
+                if (Device.Type == DeviceType.Mobile)
+                    _phoneButtons.SetActive(false);
+                
                 _ad.EditIsTapedReviveButtonToFalse();
                 _camera.GetComponent<CameraFollow>().enabled = false;
                 player.enabled = false;
@@ -67,7 +75,7 @@ public class FinishLevel : MonoBehaviour
                 _nearMissTotal.text = near.ToString();
                 _Total.text = (near + board).ToString();
                 _TotalAll.text = score.ToString();
-                isFinished = true;
+                _isFinished = true;
 
                 _allScore += score;
 

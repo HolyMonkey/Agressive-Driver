@@ -7,6 +7,7 @@ using DeviceType = Agava.YandexGames.DeviceType;
 public class GameOver : MonoBehaviour
 {
     [SerializeField] private Player _player;
+    [SerializeField] private FinishLevel _finishLevel;
     [SerializeField] private PlayerChanger _playerChanger;
     [SerializeField] private GameObject _gameOverPanel;
     [SerializeField] private GameObject _phoneButtons;
@@ -15,6 +16,9 @@ public class GameOver : MonoBehaviour
 
     private Advertisement _ad;
     private bool _isGameOver = false;
+    private bool _isPlayerFinished = false;
+
+    public bool IsGameOver => _isGameOver;
 
     private void Start()
     {
@@ -50,17 +54,20 @@ public class GameOver : MonoBehaviour
     
     private void StartGameOver()
     {
-        //if(Device.Type == DeviceType.Mobile)
-        //    _phoneButtons.SetActive(false);
-        
-        _gameOverPanel.SetActive(true);
-        
-        if (_ad.IsTapedReviveButton)
+        if (_finishLevel.IsFinished == false)
         {
-            _reviveButton.gameObject.SetActive(false);
+            if (Device.Type == DeviceType.Mobile)
+                _phoneButtons.SetActive(false);
+
+            _gameOverPanel.SetActive(true);
+
+            if (_ad.IsTapedReviveButton)
+            {
+                _reviveButton.gameObject.SetActive(false);
+            }
+
+            _isGameOver = true;
         }
-        
-        _isGameOver = true;
     }
 
     private void RestartGame()
@@ -73,7 +80,7 @@ public class GameOver : MonoBehaviour
         _gameOverPanel.SetActive(false);
         _isGameOver = false;
         
-      //  if(Device.Type == DeviceType.Mobile)
-       //     _phoneButtons.SetActive(true);
+       if(Device.Type == DeviceType.Mobile)
+            _phoneButtons.SetActive(true);
     }
 }
