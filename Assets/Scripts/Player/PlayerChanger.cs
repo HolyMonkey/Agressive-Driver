@@ -17,8 +17,10 @@ public class PlayerChanger : MonoBehaviour
     public event UnityAction<NearMissChecker> NearMissCheckerChanged;
 
     private PlayerMover _currentPlayerMover;
+    private Rigidbody _currentPlayerRigidbody;
 
     public PlayerMover CurrentPlayerMover => _currentPlayerMover;
+    public Rigidbody CurrentPlayerRigidbody => _currentPlayerRigidbody;
 
     private void OnEnable()
     {
@@ -45,6 +47,7 @@ public class PlayerChanger : MonoBehaviour
 
         _currentPlayer = newPlayer;
         _currentPlayerMover = playerMover;
+        _currentPlayerRigidbody = playerRigidbody;
         playerVehicleAI.SetTargetPositionTransform(_targetPoint.transform);
         playerMover.SetCarSteer(_skidMarks.transform);
 

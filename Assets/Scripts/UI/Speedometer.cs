@@ -14,6 +14,7 @@ public class Speedometer : MonoBehaviour
     private void Start()
     {
         _arrow.localRotation = Quaternion.Euler(0, 0, _startZRotation);
+        _rigidbodyCar = _playerChanger.CurrentPlayerRigidbody;
     }
 
     private void FixedUpdate()

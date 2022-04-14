@@ -30,18 +30,9 @@ public class FinishLevel : MonoBehaviour
 
     public bool IsFinished => _isFinished;
     
-
     public event Action Finished;
+    public event Action<int> PointsCounted;
 
-    private void Start()
-    {
-        if (PlayerPrefs.HasKey("AllScore"))
-        {
-            _allScore = PlayerPrefs.GetInt("AllScore");
-            Leaderboard.SetScore("PlaytestBoard", _allScore);
-        }
-    }
-    
     private void OnEnable()
     {
         _button.onClick.AddListener(OnClick);
@@ -68,7 +59,6 @@ public class FinishLevel : MonoBehaviour
                 int near = _points.NearMissCount * 100;
                 int board = _points.BoardingCount * 50;
                 int score = near + board;
-                SaveScore(score);
                 _boardingCount.text = _x + _points.BoardingCount.ToString();
                 _nearMissCount.text = _x + _points.NearMissCount.ToString();
                 _boardingTotal.text = board.ToString();
@@ -76,27 +66,14 @@ public class FinishLevel : MonoBehaviour
                 _Total.text = (near + board).ToString();
                 _TotalAll.text = score.ToString();
                 _isFinished = true;
-
                 _allScore += score;
-
-                PlayerPrefs.SetInt("AllScore", _allScore);
-                Leaderboard.SetScore("PlaytestBoard", _allScore);
                 Finished?.Invoke();
+                PointsCounted?.Invoke(_allScore);
+                Debug.Log("scoreFinishLevel" +_allScore);
             }
         }
     }
     
-    private int LoadScore()
-    {
-        return PlayerPrefs.GetInt(_scoreConst, 0);
-    }
-
-    private void SaveScore(int score)
-    {
-        PlayerPrefs.SetInt(_scoreConst, score);
-        PlayerPrefs.Save();
-    }
-
     private void OnClick()
     {
         int nextLevelIndex = SceneManager.GetActiveScene().buildIndex + 1;

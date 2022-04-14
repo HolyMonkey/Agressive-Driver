@@ -13,6 +13,7 @@ public class RestartButtonBrain : MonoBehaviour
     [SerializeField] private Button _restartButton;
     [SerializeField] private float _amountSecondsForPlayerStuckCheck = 2.5f;
     [SerializeField] private GameOver _gameOver;
+    [SerializeField] private FinishLevel _finishLevel;
     
     private WaitForSeconds _waitForSeconds;
     private PlayerMover _playerMover;
@@ -59,7 +60,7 @@ public class RestartButtonBrain : MonoBehaviour
     {
         yield return _waitForSeconds;
         
-        if (_playerMover.Speed < 1 && _gameOver.IsGameOver == false)
+        if (_playerMover.Speed < 1 && _gameOver.IsGameOver == false && _finishLevel.IsFinished == false)
             _restartButton.gameObject.SetActive(true);
         else if(_restartButton.isActiveAndEnabled)
             _restartButton.gameObject.SetActive(false);

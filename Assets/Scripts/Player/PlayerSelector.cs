@@ -22,7 +22,7 @@ public class PlayerSelector : MonoBehaviour
     [SerializeField] private GameObject _instructionPanel;
     [SerializeField] private TMP_Text _panelText;
     [SerializeField] private TMP_Text _instructionText;
-    [SerializeField] private LeaderBoard _leaderboardScript;
+    [SerializeField] private Leaderboard _leaderboardScript;
 
     private ButtonsAnimator _buttonsAnimator;
     private int _carIndex = 0;
@@ -50,6 +50,13 @@ public class PlayerSelector : MonoBehaviour
 
     private IEnumerator Start()
     {
+#if !UNITY_WEBGL || UNITY_EDITOR
+        yield break;
+#endif
+
+        // Always wait for it if invoking something immediately in the first scene.
+        yield return YandexGamesSdk.WaitForInitialization();
+        
         if (PlayerPrefs.HasKey("CarIndex"))
         {
             _carIndex = PlayerPrefs.GetInt("CarIndex");
@@ -58,20 +65,6 @@ public class PlayerSelector : MonoBehaviour
         _instructionText.gameObject.SetActive(false);
         _carImage.sprite = _cars[_carIndex].CarIcon;
         _leaderboardPanel.SetActive(false);
-
-        if (PlayerPrefs.HasKey("AllScore"))
-        {
-            int score = PlayerPrefs.GetInt("AllScore");
-
-            Leaderboard.SetScore("PlaytestBoard", score);
-        }
-
-#if !UNITY_WEBGL || UNITY_EDITOR
-        yield break;
-#endif
-
-        // Always wait for it if invoking something immediately in the first scene.
-        yield return YandexGamesSdk.WaitForInitialization();
     }
 
     private void OnDisable()

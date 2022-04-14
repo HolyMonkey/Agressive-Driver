@@ -5,7 +5,9 @@ public class CarData : ScriptableObject
 {
     [SerializeField] private Player _carPrefab;
     [SerializeField] private Sprite _carIcon;
+    [SerializeField] private int _price;
 
-    public Player CarPrefab { get { return _carPrefab; } }
-    public Sprite CarIcon { get { return _carIcon; } }
+    public Player CarPrefab => _carPrefab;
+    public Sprite CarIcon => _carIcon;
+    public int Price => _price;
 }

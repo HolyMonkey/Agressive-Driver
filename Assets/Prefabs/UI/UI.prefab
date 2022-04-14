@@ -6221,8 +6221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7c7961469799b84d9b14c13f5791165, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerScore: {fileID: 0}
-  _leaderBoardPanel: {fileID: 5393637671469013}
+  _leaderboardPanel: {fileID: 5393637671469013}
   _name: PlaytestBoard
   _playerEntryView: {fileID: 8533298263516251019}
   _playerEntriesViewPool: {fileID: 1776278490}
@@ -6271,6 +6270,7 @@ MonoBehaviour:
   _restartButton: {fileID: 886005525}
   _amountSecondsForPlayerStuckCheck: 1.5
   _gameOver: {fileID: 5393638460801952}
+  _finishLevel: {fileID: 0}
 --- !u!1 &5393638560681690
 GameObject:
   m_ObjectHideFlags: 0
@@ -10452,7 +10452,7 @@ PrefabInstance:
     - target: {fileID: 1288749902521635817, guid: 7ae737573fc6cee4ea53a9be7ea57662,
         type: 3}
       propertyPath: m_Name
-      value: LeaderBoard
+      value: Leaderboard
       objectReference: {fileID: 0}
     - target: {fileID: 1288749902521635817, guid: 7ae737573fc6cee4ea53a9be7ea57662,
         type: 3}

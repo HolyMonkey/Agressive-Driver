@@ -80,7 +80,7 @@ public class GameOver : MonoBehaviour
         _gameOverPanel.SetActive(false);
         _isGameOver = false;
         
-       if(Device.Type == DeviceType.Mobile)
+      if(Device.Type == DeviceType.Mobile)
             _phoneButtons.SetActive(true);
     }
 }
