@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine.Scripting;
 
     [Serializable]
@@ -7,9 +8,9 @@ using UnityEngine.Scripting;
         [field: Preserve]
         public int TotalScore;
         [field: Preserve]
-        public int Score;
+        public int Money;
         [field: Preserve] 
-        public int[] UnlockedCars;
+        public List<CarData> UnlockedCars;
         [field: Preserve] 
         public int CurrentCar;
     }

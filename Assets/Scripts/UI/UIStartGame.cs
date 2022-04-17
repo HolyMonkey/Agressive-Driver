@@ -37,7 +37,7 @@ public class UIStartGame : MonoBehaviour
                 _isGameStarted = true;
                 GameStarted?.Invoke();
                 _rigidbodyPlayer.isKinematic = false;
-                
+
                 for (int i = 0; i < _spawners.Count; i++)
                 { 
                     _spawners[i].ActivateCars();

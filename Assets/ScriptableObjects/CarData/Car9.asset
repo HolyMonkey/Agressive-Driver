@@ -15,3 +15,5 @@ MonoBehaviour:
   _carPrefab: {fileID: 5567153555553704108, guid: a501ec320fc2be442a1bf3a53a056b34,
     type: 3}
   _carIcon: {fileID: 21300000, guid: 571d97d1eb9692d4db6046772bdfd237, type: 3}
+  _price: 2000
+  _buyed: 0

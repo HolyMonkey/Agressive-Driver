@@ -6,7 +6,9 @@ public class ProgressBar : MonoBehaviour
     [SerializeField] private Player _player;
     [SerializeField] private PlayerChanger _playerChanger;
     [SerializeField] private FinishLevel _finish;
+    [SerializeField] private UIStartGame _uiStartGame;
     [SerializeField] private Slider _progressSlider;
+    
     private float distance;
     private float lastProgress = 0;
 
@@ -26,15 +28,22 @@ public class ProgressBar : MonoBehaviour
     private void OnEnable()
     {
         _playerChanger.PlayerChanged += OnPlayerChanged;
+        _uiStartGame.GameStarted += OnGameStarted;
     }
 
     private void OnDisable()
     {
         _playerChanger.PlayerChanged -= OnPlayerChanged;
+        _uiStartGame.GameStarted -= OnGameStarted;
     }
 
     private void OnPlayerChanged(Player newPlayer)
     {
         _player = newPlayer;
+    }
+
+    private void OnGameStarted()
+    {
+        _progressSlider.gameObject.SetActive(true);
     }
 }

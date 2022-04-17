@@ -4,13 +4,15 @@ using UnityEngine.UI;
 using Agava.YandexGames;
 using TMPro;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.Serialization;
 
 public class PlayerSelector : MonoBehaviour
 {
-    [SerializeField] private CarData[] _cars;
+    [SerializeField] private List<CarData> _cars;
     [SerializeField] private Image _carImage;
-    [Header("Buttons")]
+    [Header("Buttons")] 
+    [SerializeField] private Button _buyCarButton;
     [SerializeField] private Button _select;
     [SerializeField] private Button _nextCar;
     [SerializeField] private Button _previousCar;
@@ -21,13 +23,20 @@ public class PlayerSelector : MonoBehaviour
     [SerializeField] private GameObject _leaderboardPanel;
     [SerializeField] private GameObject _instructionPanel;
     [SerializeField] private TMP_Text _panelText;
+    [SerializeField] private TMP_Text _carPriceText;
     [SerializeField] private TMP_Text _instructionText;
     [SerializeField] private Leaderboard _leaderboardScript;
+    [SerializeField] private SaveSystem _saveSystem;
+    [SerializeField] private Color _availableButtonColor;
+    [SerializeField] private Color _unavailableButtonColor;
+    [SerializeField] private Image _padlockImage;
+    [SerializeField] private YoyoScaler _buyButtonTextYoyoScaler;
 
     private ButtonsAnimator _buttonsAnimator;
     private int _carIndex = 0;
 
     public event Action<Player> CarSelected;
+    public event Action<CarData> CarPurchased;
     public event Action<Button> ButtonSelected;
 
     private void Awake()
@@ -39,6 +48,7 @@ public class PlayerSelector : MonoBehaviour
     {
         _buttonsAnimator = GetComponentInParent<ButtonsAnimator>();
 
+        _saveSystem.PlayerDataLoaded += OnPlayerDataLoaded;
         _select.onClick.AddListener(SelectCar);
         _nextCar.onClick.AddListener(NextCar);
         _previousCar.onClick.AddListener(PreviousCar);
@@ -63,12 +73,12 @@ public class PlayerSelector : MonoBehaviour
         }
         
         _instructionText.gameObject.SetActive(false);
-        _carImage.sprite = _cars[_carIndex].CarIcon;
         _leaderboardPanel.SetActive(false);
     }
 
     private void OnDisable()
     {
+        _saveSystem.PlayerDataLoaded -= OnPlayerDataLoaded;
         _select.onClick.RemoveListener(SelectCar);
         _nextCar.onClick.RemoveListener(NextCar);
         _previousCar.onClick.RemoveListener(PreviousCar);
@@ -78,12 +88,21 @@ public class PlayerSelector : MonoBehaviour
         _closeInstruction.onClick.RemoveListener(CloseInstruction);
     }
 
+    public void TryToBuyCar()
+    {
+        if (_saveSystem.Money >= _cars[_carIndex].Price)
+        {
+            CarPurchased?.Invoke(_cars[_carIndex]);
+            ResetCarInfo();
+        }
+    }
+
     private void NextCar()
     {
-        if (_carIndex < _cars.Length - 1)
+        if (_carIndex < _cars.Count - 1)
         {
             _carIndex++;
-            _carImage.sprite = _cars[_carIndex].CarIcon;
+            ResetCarInfo();
         }
 
         ButtonSelected?.Invoke(_nextCar);
@@ -94,7 +113,7 @@ public class PlayerSelector : MonoBehaviour
         if (_carIndex > 0)
         {
             _carIndex--;
-            _carImage.sprite = _cars[_carIndex].CarIcon;
+            ResetCarInfo();
         }
 
         ButtonSelected?.Invoke(_previousCar);
@@ -102,11 +121,46 @@ public class PlayerSelector : MonoBehaviour
 
     private void SelectCar()
     {
-        PlayerPrefs.SetInt("CarIndex",_carIndex);
-        PlayerPrefs.Save();
-        CarSelected?.Invoke(_cars[_carIndex].CarPrefab);
-        _buttonsAnimator.DisablePlayerSelector();
-        ButtonSelected?.Invoke(_select);
+        if (_saveSystem.CarDatas.Contains(_cars[_carIndex]))
+        {
+            PlayerPrefs.SetInt("CarIndex", _carIndex);
+            PlayerPrefs.Save();
+            CarSelected?.Invoke(_cars[_carIndex].CarPrefab);
+            _buttonsAnimator.DisablePlayerSelector();
+            ButtonSelected?.Invoke(_select);
+        }
+    }
+
+    private void ResetCarInfo()
+    {
+        _carImage.sprite = _cars[_carIndex].CarIcon;
+        
+        if (_saveSystem.CarDatas.Contains(_cars[_carIndex]))
+        {
+            _buyCarButton.gameObject.SetActive(false);
+            _carPriceText.gameObject.SetActive(false);
+            _padlockImage.gameObject.SetActive(false);
+        }
+        else
+        {
+            _carPriceText.gameObject.SetActive(true);
+            _carPriceText.text = _cars[_carIndex].Price.ToString();
+            _buyCarButton.gameObject.SetActive(true);
+            _padlockImage.gameObject.SetActive(true);
+
+            if (_saveSystem.Money >= _cars[_carIndex].Price)
+            {
+                _buyCarButton.image.color = _availableButtonColor;
+                _buyCarButton.interactable = true;
+                _buyButtonTextYoyoScaler.enabled = true;
+            }
+            else
+            {
+                _buyCarButton.image.color = _unavailableButtonColor;
+                _buyCarButton.interactable = false;
+                _buyButtonTextYoyoScaler.enabled = false;
+            }
+        }
     }
 
     private void GetLeaderBoard()
@@ -129,5 +183,28 @@ public class PlayerSelector : MonoBehaviour
     {
         _instructionText.gameObject.SetActive(false);
         _instructionPanel.SetActive(false);
+    }
+    
+    private bool CheckForCarPurchased()
+    {
+        bool Purchased = false;
+        
+        foreach (var CarData in _saveSystem.CarDatas)
+            if (CarData == _cars[_carIndex])
+            {
+                Purchased = true;
+            }
+
+        return Purchased;
+    }
+
+    private void OnPlayerDataLoaded()
+    {
+        ResetCarInfo();
+        
+        if (_saveSystem.CarDatas.Contains(_cars[0]) == false)
+        {
+            CarPurchased?.Invoke(_cars[0]);
+        }
     }
 }

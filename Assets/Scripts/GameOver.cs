@@ -16,7 +16,6 @@ public class GameOver : MonoBehaviour
 
     private Advertisement _ad;
     private bool _isGameOver = false;
-    private bool _isPlayerFinished = false;
 
     public bool IsGameOver => _isGameOver;
 

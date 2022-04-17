@@ -20,6 +20,7 @@ public class PlayerChanger : MonoBehaviour
     private Rigidbody _currentPlayerRigidbody;
 
     public PlayerMover CurrentPlayerMover => _currentPlayerMover;
+    public Player CurrentPlayer => _currentPlayer;
     public Rigidbody CurrentPlayerRigidbody => _currentPlayerRigidbody;
 
     private void OnEnable()
