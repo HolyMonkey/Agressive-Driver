@@ -7,11 +7,10 @@ public class PlayerChanger : MonoBehaviour
     [SerializeField] private TargetPoint _targetPoint;
     [SerializeField] private Skidmarks _skidMarks;
     [SerializeField] private PlayerSelector _playerSelector;
-    [SerializeField] private ButtonHoldChecker _phoneAccelerationButton;
-
+    [SerializeField] private PlayerInput _playerInput;
+    
     public event UnityAction<Player> PlayerChanged;
     public event UnityAction<PlayerMover> PlayerMoverChanged;
-    public event UnityAction<PlayerSlower> PlayerSlowerChanged;
     public event UnityAction<Transform> PlayerTransformChanged;
     public event UnityAction<Rigidbody> PlayerRigidbodyChanged;
     public event UnityAction<NearMissChecker> NearMissCheckerChanged;
@@ -38,7 +37,6 @@ public class PlayerChanger : MonoBehaviour
         Player newPlayer = Instantiate(playerPrefab, _currentPlayer.transform.position, _currentPlayer.transform.rotation);
 
         PlayerMover playerMover = newPlayer.GetComponent<PlayerMover>();
-        PlayerSlower playerSlower = newPlayer.GetComponent<PlayerSlower>();
         PlayerVehicleAI playerVehicleAI = newPlayer.GetComponent<PlayerVehicleAI>();
         NearMissChecker nearMissChecker = newPlayer.GetComponentInChildren<NearMissChecker>();
         Rigidbody playerRigidbody = newPlayer.GetComponent<Rigidbody>();
@@ -53,11 +51,10 @@ public class PlayerChanger : MonoBehaviour
         playerMover.SetCarSteer(_skidMarks.transform);
 
         PlayerChanged?.Invoke(newPlayer);
-        PlayerMoverChanged?.Invoke(playerMover); 
-        PlayerSlowerChanged?.Invoke(playerSlower);
+        PlayerMoverChanged?.Invoke(playerMover);
         PlayerTransformChanged?.Invoke(playerTransform);
         PlayerRigidbodyChanged?.Invoke(playerRigidbody);
         NearMissCheckerChanged?.Invoke(nearMissChecker);
-        _currentPlayerMover.SetAccelerationButton(_phoneAccelerationButton);
+        _currentPlayerMover.SetPlayerInput(_playerInput);
     }
 }

@@ -10,9 +10,8 @@ public class TargetPoint : MonoBehaviour
     [SerializeField] private float _stepSize;
     [SerializeField] private float _lengthFromVehicle;
     [SerializeField] private ERModularRoad eRoad;
-    [SerializeField] private ButtonHoldChecker _leftButton;
-    [SerializeField] private ButtonHoldChecker _rightButton;
-
+    [SerializeField] private PlayerInput _playerInput;
+    
     private Vector3 waypointStart;
     private Vector3 waypointEnd;
     private Vector3 waypointDirection;
@@ -94,16 +93,16 @@ public class TargetPoint : MonoBehaviour
         }
     }
     
-    private void Update()
+    private void FixedUpdate()
     {
         CheckWaypointDestination();
         SetNextPosition(_currentStepSize);
 
-        if (Input.GetKey(_a) || Input.GetKey(_leftArrow ) || _leftButton.IsPressed)
+        if (_playerInput.LeftButtonPressed)
         {
             _currentStepSize -= 8f * Time.deltaTime;
         }
-        else if(Input.GetKey(_d) || Input.GetKey(_rightArrow) || _rightButton.IsPressed)
+        else if(_playerInput.RightButtonPressed)
         {
             _currentStepSize += 8f * Time.deltaTime;
         }

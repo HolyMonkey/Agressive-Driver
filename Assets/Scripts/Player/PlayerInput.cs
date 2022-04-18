@@ -1,26 +1,64 @@
+using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.UIElements;
 
-[RequireComponent(typeof(PlayerMover))]
 public class PlayerInput : MonoBehaviour
 {
-    [SerializeField] private TargetPoint _targetPoint;
-    [SerializeField] private float _doubleClickTime;
+    [SerializeField] private ButtonHoldChecker _leftButton;
+    [SerializeField] private ButtonHoldChecker _rightButton;
+    [SerializeField] private ButtonHoldChecker _accelerationButton;
     
-    private PlayerMover _playerMover;
-    private float _lastClickTime;
+    private bool _accelerationButtonPressed;
+    private bool _leftButtonPressed;
+    private bool _rightButtonPressed;
+    private KeyCode _w;
+    private KeyCode _a;
+    private KeyCode _d;
+    private KeyCode _leftArrow;
+    private KeyCode _rightArrow;
 
+    public bool AccelerationButtonPressed => _accelerationButtonPressed;
+    public bool LeftButtonPressed => _leftButtonPressed;
+    public bool RightButtonPressed => _rightButtonPressed;
+    
     private void Start()
     {
-        _playerMover = GetComponent<PlayerMover>();
-    }
+        _a = KeyCode.A;
+        _d = KeyCode.D;
+        _w = KeyCode.W;
 
+        _w = KeyCode.W;
+        _leftArrow = KeyCode.LeftArrow;
+        _rightArrow = KeyCode.RightArrow;
+    }
+    
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKey(_w) || _accelerationButton.IsPressed)
         {
-            float _timeSinceLastClick = Time.time - _lastClickTime;
-
-            _lastClickTime = Time.time;
+            _accelerationButtonPressed = true;
+        }
+        else
+        {
+            _accelerationButtonPressed = false;
+        }
+        
+        if (Input.GetKey(_a) || Input.GetKey(_leftArrow) || _leftButton.IsPressed)
+        {
+            _leftButtonPressed = true;
+        }
+        else
+        {
+            _leftButtonPressed = false;
+        }
+        
+        if (Input.GetKey(_d) || Input.GetKey(_rightArrow) || _rightButton.IsPressed)
+        {
+            _rightButtonPressed = true;
+        }
+        else
+        {
+            _rightButtonPressed = false;
         }
     }
 }
