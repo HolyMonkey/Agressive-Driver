@@ -376,7 +376,6 @@ GameObject:
   - component: {fileID: 747344225}
   - component: {fileID: 747344227}
   - component: {fileID: 747344228}
-  - component: {fileID: 737569662}
   m_Layer: 5
   m_Name: LeftMovementButton
   m_TagString: Untagged
@@ -497,67 +496,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c44195f379bd88e42a99ff84c7aa3576, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &737569662
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 747344223}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 1
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 747344228}
-          m_TargetAssemblyTypeName: ButtonHoldChecker, Assembly-CSharp
-          m_MethodName: SetIsPressedFalse
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 3
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 747344228}
-          m_TargetAssemblyTypeName: ButtonHoldChecker, Assembly-CSharp
-          m_MethodName: SetIsPressedFalse
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 2
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 747344228}
-          m_TargetAssemblyTypeName: ButtonHoldChecker, Assembly-CSharp
-          m_MethodName: SetIsPressed
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!1 &823214995
 GameObject:
   m_ObjectHideFlags: 0
@@ -901,7 +839,6 @@ GameObject:
   - component: {fileID: 932488766}
   - component: {fileID: 932488768}
   - component: {fileID: 932488769}
-  - component: {fileID: 365571728}
   m_Layer: 5
   m_Name: RightMovementButton
   m_TagString: Untagged
@@ -1022,67 +959,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &365571728
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 932488764}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 1
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 932488768}
-          m_TargetAssemblyTypeName: ButtonHoldChecker, Assembly-CSharp
-          m_MethodName: SetIsPressedFalse
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 3
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 932488768}
-          m_TargetAssemblyTypeName: ButtonHoldChecker, Assembly-CSharp
-          m_MethodName: SetIsPressedFalse
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 2
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 932488768}
-          m_TargetAssemblyTypeName: ButtonHoldChecker, Assembly-CSharp
-          m_MethodName: SetIsPressed
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!1 &991585934
 GameObject:
   m_ObjectHideFlags: 0
@@ -2276,6 +2152,7 @@ GameObject:
   - component: {fileID: 5393637150268923}
   - component: {fileID: 5393637150268902}
   - component: {fileID: 617523485}
+  - component: {fileID: 857255920947279820}
   m_Layer: 5
   m_Name: PlayerSelector
   m_TagString: Untagged
@@ -2399,6 +2276,20 @@ CanvasGroup:
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
 --- !u!114 &617523485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5393637150268921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66cc64f41e15d144b8445762109f37f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _money: {fileID: 5349995841949076683}
+  _saveSystem: {fileID: 0}
+--- !u!114 &857255920947279820
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10301,7 +10192,6 @@ GameObject:
   - component: {fileID: 5494102013440219582}
   - component: {fileID: 4702146854519354791}
   - component: {fileID: 7029592911169408437}
-  - component: {fileID: 570084208}
   m_Layer: 5
   m_Name: SpeedButton
   m_TagString: Untagged
@@ -10422,67 +10312,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &570084208
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6142989886858072826}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 3
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 4702146854519354791}
-          m_TargetAssemblyTypeName: ButtonHoldChecker, Assembly-CSharp
-          m_MethodName: SetIsPressedFalse
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 2
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 4702146854519354791}
-          m_TargetAssemblyTypeName: ButtonHoldChecker, Assembly-CSharp
-          m_MethodName: SetIsPressed
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 1
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 4702146854519354791}
-          m_TargetAssemblyTypeName: ButtonHoldChecker, Assembly-CSharp
-          m_MethodName: SetIsPressedFalse
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!1 &6494800864928542221
 GameObject:
   m_ObjectHideFlags: 0
@@ -11599,15 +11428,15 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1292997402397731900}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &5393637671469013 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1288749902521635817, guid: 7ae737573fc6cee4ea53a9be7ea57662,
-    type: 3}
-  m_PrefabInstance: {fileID: 1292997402397731900}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &5393637671469014 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1288749902521635818, guid: 7ae737573fc6cee4ea53a9be7ea57662,
+    type: 3}
+  m_PrefabInstance: {fileID: 1292997402397731900}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5393637671469013 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1288749902521635817, guid: 7ae737573fc6cee4ea53a9be7ea57662,
     type: 3}
   m_PrefabInstance: {fileID: 1292997402397731900}
   m_PrefabAsset: {fileID: 0}
