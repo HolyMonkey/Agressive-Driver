@@ -17,7 +17,7 @@ public class SaveSystem : MonoBehaviour
    private string _currentJsonData;
    
    public int Money => _playerData.Money;
-   public List<CarData> CarDatas => _playerData.UnlockedCars;
+   public List<int> UnlockedCars => _playerData.UnlockedCarsId.UnlockedCarsIdArray;
 
    public event Action<int> MoneyChanged;
    public event Action PlayerDataLoaded;
@@ -79,11 +79,10 @@ public class SaveSystem : MonoBehaviour
       Save();
    }
 
-   private void OnCarPurchased(CarData car)
+   private void OnCarPurchased(int carId, int carPrice)
    {
-      car.SetBuyed();
-      _playerData.Money -= car.Price;
-      _playerData.UnlockedCars.Add(car);
+      _playerData.Money -= carPrice;
+      _playerData.UnlockedCarsId.UnlockedCarsIdArray.Add(carId);
       MoneyChanged?.Invoke(_playerData.Money);
       Save();
    }

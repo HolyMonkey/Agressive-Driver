@@ -5,6 +5,7 @@ using Agava.YandexGames;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.Serialization;
 
 public class PlayerSelector : MonoBehaviour
@@ -36,7 +37,7 @@ public class PlayerSelector : MonoBehaviour
     private int _carIndex = 0;
 
     public event Action<Player> CarSelected;
-    public event Action<CarData> CarPurchased;
+    public event Action<int,int> CarPurchased;
     public event Action<Button> ButtonSelected;
 
     private void Awake()
@@ -92,7 +93,7 @@ public class PlayerSelector : MonoBehaviour
     {
         if (_saveSystem.Money >= _cars[_carIndex].Price)
         {
-            CarPurchased?.Invoke(_cars[_carIndex]);
+            CarPurchased?.Invoke(_carIndex,_cars[_carIndex].Price);
             ResetCarInfo();
         }
     }
@@ -121,7 +122,7 @@ public class PlayerSelector : MonoBehaviour
 
     private void SelectCar()
     {
-        if (_saveSystem.CarDatas.Contains(_cars[_carIndex]))
+        if (CheckForCarPurchased())
         {
             PlayerPrefs.SetInt("CarIndex", _carIndex);
             PlayerPrefs.Save();
@@ -135,7 +136,7 @@ public class PlayerSelector : MonoBehaviour
     {
         _carImage.sprite = _cars[_carIndex].CarIcon;
         
-        if (_saveSystem.CarDatas.Contains(_cars[_carIndex]))
+        if (_saveSystem.UnlockedCars.Contains(_carIndex))
         {
             _buyCarButton.gameObject.SetActive(false);
             _carPriceText.gameObject.SetActive(false);
@@ -187,24 +188,24 @@ public class PlayerSelector : MonoBehaviour
     
     private bool CheckForCarPurchased()
     {
-        bool Purchased = false;
+        bool purchased = false;
         
-        foreach (var CarData in _saveSystem.CarDatas)
-            if (CarData == _cars[_carIndex])
+        foreach (var car in _saveSystem.UnlockedCars)
+            if (car == _carIndex)
             {
-                Purchased = true;
+                purchased = true;
             }
 
-        return Purchased;
+        return purchased;
     }
 
     private void OnPlayerDataLoaded()
     {
         ResetCarInfo();
         
-        if (_saveSystem.CarDatas.Contains(_cars[0]) == false)
+        if (_saveSystem.UnlockedCars.Contains(0) == false)
         {
-            CarPurchased?.Invoke(_cars[0]);
+            CarPurchased?.Invoke(_carIndex,_cars[_carIndex].Price);
         }
     }
 }

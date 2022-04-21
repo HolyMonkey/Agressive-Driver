@@ -9,8 +9,15 @@ using UnityEngine.Scripting;
         public int TotalScore;
         [field: Preserve]
         public int Money;
-        [field: Preserve] 
-        public List<CarData> UnlockedCars;
+        [field: Preserve]
+        public UnlockedCars UnlockedCarsId;
         [field: Preserve] 
         public int CurrentCar;
+        
+        [Serializable]
+        public class UnlockedCars
+        {
+            [field: Preserve]
+            public List<int> UnlockedCarsIdArray;
+        }
     }

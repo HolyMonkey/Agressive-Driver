@@ -1,10 +1,11 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class ButtonHoldChecker : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
 {
     private bool _isPressed = false;
-    
+
     public bool IsPressed => _isPressed;
     
     public void OnPointerDown(PointerEventData eventData)
@@ -15,7 +16,5 @@ public class ButtonHoldChecker : MonoBehaviour, IPointerUpHandler, IPointerDownH
     public void OnPointerUp(PointerEventData eventData)
     {
         _isPressed = false;
-    }
-    
- 
+    } 
 }
