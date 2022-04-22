@@ -43,7 +43,8 @@ public class UIStartGame : MonoBehaviour
                     _spawners[i].ActivateCars();
                 }
 
-                if (Device.Type == DeviceType.Mobile)
+               // if (Device.Type == DeviceType.Mobile)
+               if(true)
                 {
                     _phoneButtons.SetActive(true);
                     _speedometerForPhone.SetActive(true);

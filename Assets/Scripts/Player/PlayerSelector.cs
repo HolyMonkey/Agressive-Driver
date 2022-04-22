@@ -122,7 +122,8 @@ public class PlayerSelector : MonoBehaviour
 
     private void SelectCar()
     {
-        if (CheckForCarPurchased())
+        // if (CheckForCarPurchased())
+        if(true)
         {
             PlayerPrefs.SetInt("CarIndex", _carIndex);
             PlayerPrefs.Save();
