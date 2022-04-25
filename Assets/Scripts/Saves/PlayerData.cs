@@ -13,6 +13,8 @@ using UnityEngine.Scripting;
         public UnlockedCars UnlockedCarsId;
         [field: Preserve] 
         public int CurrentCar;
+        [field: Preserve] 
+        public int CurrentLevel;
         
         [Serializable]
         public class UnlockedCars

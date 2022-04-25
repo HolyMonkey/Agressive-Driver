@@ -4,6 +4,7 @@
     <attachedFolders />
     <explicitIncludes>
       <Path>Library/PackageCache/com.agava.yandexgames@538910e94d</Path>
+      <Path>Library/PackageCache/com.unity.cinemachine@2.6.11</Path>
       <Path>Library/PackageCache/com.unity.collab-proxy@1.15.1</Path>
       <Path>Library/PackageCache/com.unity.ext.nunit@1.0.6</Path>
       <Path>Library/PackageCache/com.unity.ide.rider@3.0.7</Path>
@@ -27,7 +28,6 @@
       <Path>Key</Path>
       <Path>Logs</Path>
       <Path>Recordings</Path>
-      <Path>Temp</Path>
       <Path>UserSettings</Path>
       <Path>obj</Path>
     </explicitExcludes>

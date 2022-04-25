@@ -8,7 +8,6 @@ using DeviceType = Agava.YandexGames.DeviceType;
 public class UIStartGame : MonoBehaviour
 {
     [SerializeField] private List<CarSpawner> _spawners;
-    
     [SerializeField] private PlayerChanger _playerChanger;
     [SerializeField] private PlayerSelector _playerSelector;
     [SerializeField] private ButtonsAnimator _buttonsAnimator;
@@ -37,14 +36,13 @@ public class UIStartGame : MonoBehaviour
                 _isGameStarted = true;
                 GameStarted?.Invoke();
                 _rigidbodyPlayer.isKinematic = false;
-
-                for (int i = 0; i < _spawners.Count; i++)
-                { 
-                    _spawners[i].ActivateCars();
+                
+                foreach (var spawner in _spawners)
+                {
+                    spawner.ActivateCars();
                 }
-
-               // if (Device.Type == DeviceType.Mobile)
-               if(true)
+                
+                if (Device.Type == DeviceType.Mobile)
                 {
                     _phoneButtons.SetActive(true);
                     _speedometerForPhone.SetActive(true);

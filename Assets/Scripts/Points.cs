@@ -11,7 +11,7 @@ public class Points : MonoBehaviour
     [SerializeField] private Player _player;
     [SerializeField] private PlayerChanger _playerChanger;
     [SerializeField] private NearMissChecker _checker;
-    [SerializeField] private float _minSpeedForNearMiss;
+    [SerializeField] private float _minSpeedForNearMiss = 30;
 
     private List<Enemy> _boarding = new List<Enemy>();
     private List<Enemy> _nearMiss = new List<Enemy>();

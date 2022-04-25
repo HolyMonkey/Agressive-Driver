@@ -27,11 +27,12 @@ public class FinishLevel : MonoBehaviour
     private StringBuilder _x = new StringBuilder("x ");
     private bool _isFinished = false;
     private int _allScore = 0;
+    private int _nextLevelIndex;
 
     public bool IsFinished => _isFinished;
     
     public event Action Finished;
-    public event Action<int> PointsCounted;
+    public event Action<int,int> PointsCounted;
 
     private void OnEnable()
     {
@@ -68,17 +69,22 @@ public class FinishLevel : MonoBehaviour
                 _isFinished = true;
                 _allScore += score;
                 Finished?.Invoke();
-                PointsCounted?.Invoke(_allScore);
-                Debug.Log("scoreFinishLevel" +_allScore);
+                ChangeNextLevelIndex();
+                PointsCounted?.Invoke(_allScore,_nextLevelIndex);
+                ChangeNextLevelIndex();
             }
         }
     }
-    
+
+    private void ChangeNextLevelIndex()
+    {
+        _nextLevelIndex = SceneManager.GetActiveScene().buildIndex + 1;
+        if (_nextLevelIndex >= SceneManager.sceneCountInBuildSettings)
+            _nextLevelIndex = 0;
+    }
+
     private void OnClick()
     {
-        int nextLevelIndex = SceneManager.GetActiveScene().buildIndex + 1;
-        if (nextLevelIndex >= SceneManager.sceneCountInBuildSettings)
-            nextLevelIndex = 0;
-        SceneManager.LoadScene(nextLevelIndex);
+        SceneManager.LoadScene(_nextLevelIndex);
     }
 }

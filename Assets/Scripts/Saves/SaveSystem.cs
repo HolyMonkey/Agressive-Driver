@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Agava.YandexGames;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 
 public class SaveSystem : MonoBehaviour
@@ -15,6 +15,7 @@ public class SaveSystem : MonoBehaviour
 
    private PlayerData _playerData;
    private string _currentJsonData;
+   private bool _firstLoad = true;
    
    public int Money => _playerData.Money;
    public List<int> UnlockedCars => _playerData.UnlockedCarsId.UnlockedCarsIdArray;
@@ -67,18 +68,31 @@ public class SaveSystem : MonoBehaviour
          _playerData = JsonUtility.FromJson<PlayerData>(result);
          MoneyChanged?.Invoke(_playerData.Money);
          PlayerDataLoaded?.Invoke();
+         TryToLoadLevel();
       });
    }  
    
-   private void OnPointsCounted(int score)
+   private void OnPointsCounted(int score,int levelIndex)
    {
       _playerData.TotalScore += score;
+      _playerData.CurrentLevel = levelIndex;
       _playerData.Money += score;
       Agava.YandexGames.Leaderboard.SetScore(_leaderboardName, _playerData.TotalScore);
       MoneyChanged?.Invoke(_playerData.Money);
       Save();
    }
 
+   private void TryToLoadLevel()
+   {
+      if (_firstLoad)
+      {
+         if(_playerData.CurrentLevel != SceneManager.GetActiveScene().buildIndex)
+            SceneManager.LoadScene(_playerData.CurrentLevel);
+         
+         _firstLoad = false;
+      }  
+   }
+   
    private void OnCarPurchased(int carId, int carPrice)
    {
       _playerData.Money -= carPrice;
