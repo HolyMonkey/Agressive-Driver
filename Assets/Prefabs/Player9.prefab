@@ -11064,7 +11064,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00030e199cdd9934dbd15380a1bcabab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeControl: 1
+  activeControl: 0
   carWheels:
     wheels:
       frontWheelDrive: 1
@@ -11108,7 +11108,6 @@ MonoBehaviour:
     - 2
     - 1
     LimitForwardSpeed: 35
-  brake: 0
   curTorque: 100
   powerShift: 100
   Speed: 0

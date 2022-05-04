@@ -32,6 +32,11 @@ public class PlayerChanger : MonoBehaviour
         _playerSelector.CarSelected -= Change;
     }
 
+    public void SetActiveControl()
+    {
+       Invoke(nameof(Delay),0.01f);
+    }
+
     private void Change(Player playerPrefab)
     {
         Player newPlayer = Instantiate(playerPrefab, _currentPlayer.transform.position, _currentPlayer.transform.rotation);
@@ -56,5 +61,10 @@ public class PlayerChanger : MonoBehaviour
         PlayerRigidbodyChanged?.Invoke(playerRigidbody);
         NearMissCheckerChanged?.Invoke(nearMissChecker);
         _currentPlayerMover.SetPlayerInput(_playerInput);
+    }
+
+    private void Delay()
+    {
+        _currentPlayerMover.activeControl = true;
     }
 }

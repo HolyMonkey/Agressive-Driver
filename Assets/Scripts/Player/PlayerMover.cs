@@ -158,6 +158,10 @@ public class PlayerMover : MonoBehaviour
             carWheels.wheels.backLeft.position.y);
         if (carSetting.carSteer)
             _steerCurAngle = carSetting.carSteer.localEulerAngles;
+        carParticles.shiftParticle1.gameObject.SetActive(true);
+        carParticles.shiftParticle2.gameObject.SetActive(true);
+        carParticles.shiftParticle1.emissionRate = 0;
+        carParticles.shiftParticle2.emissionRate = 0;
 
         for (int i = 0; i < _wheels.Length; i++)
         {

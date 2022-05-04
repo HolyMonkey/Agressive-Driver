@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Agava.YandexGames;
+using Cinemachine;
 using DeviceType = Agava.YandexGames.DeviceType;
 
 public class FinishLevel : MonoBehaviour
@@ -23,6 +24,7 @@ public class FinishLevel : MonoBehaviour
     [SerializeField] private Button _button;
     [SerializeField] private Advertisement _ad;
     [SerializeField] private GameObject _phoneButtons;
+    [SerializeField] private CarSpawner[] _spawners;
 
     private StringBuilder _x = new StringBuilder("x ");
     private bool _isFinished = false;
@@ -53,8 +55,12 @@ public class FinishLevel : MonoBehaviour
                 if (Device.Type == DeviceType.Mobile)
                     _phoneButtons.SetActive(false);
                 
+                foreach (var spawner in _spawners)
+                {
+                    spawner.enabled = false;
+                }
                 _ad.EditIsTapedReviveButtonToFalse();
-                _camera.GetComponent<CameraFollow>().enabled = false;
+                _camera.GetComponent<CinemachineBrain>().enabled = false;
                 player.enabled = false;
                 _WinPanel.SetActive(true);
                 int near = _points.NearMissCount * 100;

@@ -33,9 +33,10 @@ public class UIStartGame : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0) && _canvasGroup.interactable)
             {
+                _rigidbodyPlayer.isKinematic = false;
                 _isGameStarted = true;
                 GameStarted?.Invoke();
-                _rigidbodyPlayer.isKinematic = false;
+                _playerChanger.SetActiveControl();
                 
                 foreach (var spawner in _spawners)
                 {
@@ -46,8 +47,8 @@ public class UIStartGame : MonoBehaviour
                 {
                     _phoneButtons.SetActive(true);
                     _speedometerForPhone.SetActive(true);
-                }
-                else
+                }           
+                else             
                 {
                     _speedometerForPC.SetActive(true);
                 }

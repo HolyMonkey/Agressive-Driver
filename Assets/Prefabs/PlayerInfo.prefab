@@ -67,9 +67,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 133389
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 43455b72a34afd8449989ea54562148b, type: 2}
-  m_sharedMaterial: {fileID: 2446023333081504451, guid: 43455b72a34afd8449989ea54562148b,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 971751c60b6487049ad25213106996b9, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 971751c60b6487049ad25213106996b9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -200,11 +199,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: nickbighdasdasdasdasdasdadsada1111111111111111111111111111111111111
+  m_text: "Jonny \n"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 43455b72a34afd8449989ea54562148b, type: 2}
-  m_sharedMaterial: {fileID: 2446023333081504451, guid: 43455b72a34afd8449989ea54562148b,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 971751c60b6487049ad25213106996b9, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 971751c60b6487049ad25213106996b9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -410,11 +408,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 111111111111111111111111111
+  m_text: "111111111111111111111111111 \n\n"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 43455b72a34afd8449989ea54562148b, type: 2}
-  m_sharedMaterial: {fileID: 2446023333081504451, guid: 43455b72a34afd8449989ea54562148b,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 971751c60b6487049ad25213106996b9, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 971751c60b6487049ad25213106996b9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
