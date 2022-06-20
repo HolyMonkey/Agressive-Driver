@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using Agava.YandexGames;
+using Agava.YandexGames.Utility;
 using UnityEngine.UIElements;
 
 public class Advertisement : MonoBehaviour
@@ -38,7 +39,6 @@ public class Advertisement : MonoBehaviour
        _adRewarded += OnAdRewarded;
        _adClosed += OnAdClosed;
        _adErrorOccured += OnAdErrorOccured;
-       
     }
 
     private IEnumerator Start()
@@ -49,8 +49,6 @@ public class Advertisement : MonoBehaviour
 
         yield return YandexGamesSdk.WaitForInitialization();
     }
-    
-    
     
     private void OnGetDeviceTypeButtonClick()
     {

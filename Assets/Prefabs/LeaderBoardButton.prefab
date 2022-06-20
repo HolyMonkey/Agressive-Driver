@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6452920801682792287}
   - component: {fileID: 6452920801682792286}
   m_Layer: 5
-  m_Name: LeaderBoardButton
+  m_Name: LeaderboardButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

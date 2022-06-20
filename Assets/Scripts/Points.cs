@@ -3,6 +3,7 @@ using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Agava.YandexGames;
 
 public class Points : MonoBehaviour
 {
@@ -43,6 +44,35 @@ public class Points : MonoBehaviour
         _checker.NearMissed -= NearMiss;
         _playerChanger.PlayerChanged -= OnPlayerChanged;
         _playerChanger.NearMissCheckerChanged -= OnNearMissCheckerChanged;
+    }
+
+    private IEnumerator Start()
+    {
+#if !UNITY_WEBGL || UNITY_EDITOR
+        yield break;
+#endif
+
+        // Always wait for it if invoking something immediately in the first scene.
+        yield return YandexGamesSdk.WaitForInitialization();
+            
+        Debug.Log("UiStartGame1");
+        Debug.Log(YandexGamesSdk.Environment.i18n.tld);
+        Debug.Log(YandexGamesSdk.Environment.i18n.lang);
+        if (YandexGamesSdk.Environment.i18n.tld == "com")
+        {
+            _brutalText = new StringBuilder("Brutal 50");
+            _nearMissText = new StringBuilder("Near miss 100");
+        }
+        else if(YandexGamesSdk.Environment.i18n.tld == "com.tr")
+        {
+            _brutalText = new StringBuilder("ACIMASIZ 50");
+            _nearMissText = new StringBuilder("YAKIN BAYAN 100");
+        }
+        else if(YandexGamesSdk.Environment.i18n.tld == "ru")
+        {
+            _brutalText = new StringBuilder("Брутально 50");
+            _nearMissText = new StringBuilder("Близкое столкновение 100");
+        }
     }
 
     private void OnNearMissCheckerChanged(NearMissChecker newNearMissChecker)

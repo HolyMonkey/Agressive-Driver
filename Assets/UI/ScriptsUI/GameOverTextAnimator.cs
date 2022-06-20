@@ -16,7 +16,7 @@ public class GameOverTextAnimator : MonoBehaviour
     {
         if (_crashText == null || _texts == null)
             throw new ArgumentNullException()
-;
+                ;
         _canvasGroup = GetComponent<CanvasGroup>();
 
         EnablePanel();

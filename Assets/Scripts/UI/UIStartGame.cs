@@ -1,8 +1,11 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Agava.YandexGames;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 using DeviceType = Agava.YandexGames.DeviceType;
 
 public class UIStartGame : MonoBehaviour
@@ -19,7 +22,7 @@ public class UIStartGame : MonoBehaviour
     private Rigidbody _rigidbodyPlayer;
     private bool _isCarSelected;
     private bool _isGameStarted;
-    
+
     public event UnityAction GameStarted;
 
     private void Start()

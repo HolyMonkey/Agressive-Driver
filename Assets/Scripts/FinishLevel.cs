@@ -30,7 +30,7 @@ public class FinishLevel : MonoBehaviour
     private bool _isFinished = false;
     private int _allScore = 0;
     private int _nextLevelIndex;
-
+    
     public bool IsFinished => _isFinished;
     
     public event Action Finished;

@@ -61,6 +61,7 @@ public class PlayerSelector : MonoBehaviour
 
     private IEnumerator Start()
     {
+        Application.targetFrameRate = 30;
 #if !UNITY_WEBGL || UNITY_EDITOR
         yield break;
 #endif
@@ -73,7 +74,7 @@ public class PlayerSelector : MonoBehaviour
             _carIndex = PlayerPrefs.GetInt("CarIndex");
         }
         
-        _instructionText.gameObject.SetActive(false);
+        _instructionPanel.SetActive(false);
         _leaderboardPanel.SetActive(false);
     }
 
@@ -122,7 +123,7 @@ public class PlayerSelector : MonoBehaviour
 
     private void SelectCar()
     { 
-        if (CheckForCarPurchased())     
+        if (CheckForCarPurchased())
         {
             PlayerPrefs.SetInt("CarIndex", _carIndex);
             PlayerPrefs.Save();
@@ -172,7 +173,6 @@ public class PlayerSelector : MonoBehaviour
     private void GetMovementInstructions()
     {
         _instructionPanel.SetActive(true);
-        _instructionText.gameObject.SetActive(true);
     }
 
     private void CloseLeaderboard()
@@ -182,7 +182,6 @@ public class PlayerSelector : MonoBehaviour
 
     private void CloseInstruction()
     {
-        _instructionText.gameObject.SetActive(false);
         _instructionPanel.SetActive(false);
     }
     
