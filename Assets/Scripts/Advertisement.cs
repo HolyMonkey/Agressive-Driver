@@ -49,7 +49,16 @@ public class Advertisement : MonoBehaviour
 
         yield return YandexGamesSdk.WaitForInitialization();
     }
-    
+
+    private void Update()
+    {
+        AudioListener.pause = WebApplication.InBackground;
+        if (AudioListener.pause)
+            Time.timeScale = 0;
+        else if (Time.timeScale == 0)
+            Time.timeScale = 1;
+    }
+
     private void OnGetDeviceTypeButtonClick()
     {
         Debug.Log($"DeviceType = {Device.Type}");
@@ -82,6 +91,7 @@ public class Advertisement : MonoBehaviour
         {
             VideoAd.Show(_adOpened, _adRewarded, _adClosed, _adErrorOccured);
             Time.timeScale = 0;
+            AudioListener.pause = true;
         }
     }
 
@@ -105,6 +115,7 @@ public class Advertisement : MonoBehaviour
     {
         Debug.Log("OnAdClosed");
         Time.timeScale = 1;
+        AudioListener.pause = false;
     }
 
     private void OnAdErrorOccured(string error)
