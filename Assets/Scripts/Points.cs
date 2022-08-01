@@ -54,10 +54,7 @@ public class Points : MonoBehaviour
 
         // Always wait for it if invoking something immediately in the first scene.
         yield return YandexGamesSdk.WaitForInitialization();
-            
-        Debug.Log("UiStartGame1");
-        Debug.Log(YandexGamesSdk.Environment.i18n.tld);
-        Debug.Log(YandexGamesSdk.Environment.i18n.lang);
+        
         if (YandexGamesSdk.Environment.i18n.tld == "com")
         {
             _brutalText = new StringBuilder("Brutal 50");

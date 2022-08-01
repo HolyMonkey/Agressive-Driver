@@ -40,11 +40,6 @@ public class PlayerSelector : MonoBehaviour
     public event Action<int,int> CarPurchased;
     public event Action<Button> ButtonSelected;
 
-    private void Awake()
-    {
-        YandexGamesSdk.CallbackLogging = true;
-    }
-
     private void OnEnable()
     {
         _buttonsAnimator = GetComponentInParent<ButtonsAnimator>();
@@ -61,13 +56,15 @@ public class PlayerSelector : MonoBehaviour
 
     private IEnumerator Start()
     {
-        Application.targetFrameRate = 30;
-#if !UNITY_WEBGL || UNITY_EDITOR
-        yield break;
-#endif
-
-        // Always wait for it if invoking something immediately in the first scene.
+#if UNITY_WEBGL && !UNITY_EDITOR
         yield return YandexGamesSdk.WaitForInitialization();
+        
+        YandexGamesSdk.CallbackLogging = true;
+#endif
+        
+#if UNITY_EDITOR
+        yield return null;
+#endif
         
         if (PlayerPrefs.HasKey("CarIndex"))
         {

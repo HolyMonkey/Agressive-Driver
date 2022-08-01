@@ -51,7 +51,6 @@ namespace Agava.YandexGames.Samples
 
         private void Update()
         {
-            // Mute sounds when app is running in the background.
             AudioListener.pause = WebApplication.InBackground;
         }
 

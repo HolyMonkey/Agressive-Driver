@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine.UIElements;
@@ -148,6 +149,10 @@ public class PlayerMover : MonoBehaviour
         if (carSetting.automaticGear) NeutralGear = false;
         _rigidbody = _transform.GetComponent<Rigidbody>();
         _wheels = new WheelComponent[4];
+    }
+
+    private void Start()
+    {
         _wheels[0] = SetWheelComponent(carWheels.wheels.frontRight, carSetting.maxSteerAngle,
             carWheels.wheels.frontWheelDrive, carWheels.wheels.frontRight.position.y);
         _wheels[1] = SetWheelComponent(carWheels.wheels.frontLeft, carSetting.maxSteerAngle,
@@ -160,7 +165,7 @@ public class PlayerMover : MonoBehaviour
             _steerCurAngle = carSetting.carSteer.localEulerAngles;
         carParticles.shiftParticle1.gameObject.SetActive(true);
         carParticles.shiftParticle2.gameObject.SetActive(true);
-        carParticles.shiftParticle1.emissionRate = 0;
+    carParticles.shiftParticle1.emissionRate = 0;
         carParticles.shiftParticle2.emissionRate = 0;
 
         for (int i = 0; i < _wheels.Length; i++)

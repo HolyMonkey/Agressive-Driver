@@ -24,7 +24,7 @@ public class UIStartGame : MonoBehaviour
     private bool _isGameStarted;
 
     public event UnityAction GameStarted;
-
+    
     private void Start()
     {
         _canvasGroup = GetComponent<CanvasGroup>();

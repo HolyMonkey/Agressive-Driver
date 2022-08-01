@@ -18,14 +18,12 @@ public class VehicleDamage : MonoBehaviour
 
     public void Start()
     {
-
         if (optionalMeshList.Length > 0)
             meshfilters = optionalMeshList;
         else
             meshfilters = GetComponentsInChildren<MeshFilter>();
 
         sqrDemRange = demolutionRange * demolutionRange;
-
     }
 
     private Vector3 colPointToMe;
@@ -33,7 +31,6 @@ public class VehicleDamage : MonoBehaviour
 
     public void OnCollisionEnter(Collision collision)
     {
-
         Vector3 colRelVel = collision.relativeVelocity;
         colRelVel.y *= YforceDamp;
 
@@ -59,9 +56,7 @@ public class VehicleDamage : MonoBehaviour
         }
 
     }
-
-
-
+    
     // if called by SendMessage(), we only have 1 param
     public void OnMeshForce(Vector4 originPosAndForce)
     {

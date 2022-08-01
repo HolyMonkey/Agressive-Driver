@@ -12,6 +12,7 @@ public class SaveSystem : MonoBehaviour
    [SerializeField] private FinishLevel _finishLevel;
    [SerializeField] private PlayerSelector _playerSelector;
    [SerializeField] private string _leaderboardName = "PlaytestBoard";
+   [SerializeField] private bool _isInitLevel;
 
    private PlayerData _playerData;
    private string _currentJsonData;
@@ -23,34 +24,39 @@ public class SaveSystem : MonoBehaviour
    public event Action<int> MoneyChanged;
    public event Action PlayerDataLoaded;
 
-   private void Awake()
-   {
-      YandexGamesSdk.CallbackLogging = true;
-   }
-
-   private void OnEnable()
-   {
-      _finishLevel.PointsCounted +=OnPointsCounted;
-      _playerSelector.CarPurchased += OnCarPurchased;
-   }
-
-   private void OnDisable()
-   {
-      _finishLevel.PointsCounted -= OnPointsCounted;
-      _playerSelector.CarPurchased -= OnCarPurchased;
-   }
-
    private IEnumerator Start()
    {
-#if !UNITY_WEBGL || UNITY_EDITOR
-      yield break;
+#if UNITY_WEBGL && !UNITY_EDITOR
+        yield return YandexGamesSdk.WaitForInitialization();
+        
+        YandexGamesSdk.CallbackLogging = true;
 #endif
-      // Always wait for it if invoking something immediately in the first scene.
-      yield return YandexGamesSdk.WaitForInitialization();
+        
+#if UNITY_EDITOR
+      yield return null;
+#endif
       
       Load();
    }
 
+   private void OnEnable()
+   {
+      if (_isInitLevel == false)
+      {
+         _finishLevel.PointsCounted += OnPointsCounted;
+         _playerSelector.CarPurchased += OnCarPurchased;
+      }
+   }
+
+   private void OnDisable()
+   {
+      if (_isInitLevel == false)
+      {
+         _finishLevel.PointsCounted -= OnPointsCounted;
+         _playerSelector.CarPurchased -= OnCarPurchased;
+      }
+   }
+   
    private void Save()
    {
       Agava.YandexGames.Leaderboard.SetScore(_leaderboardName, _playerData.TotalScore);
@@ -88,9 +94,16 @@ public class SaveSystem : MonoBehaviour
       {
          if(_playerData.CurrentLevel != SceneManager.GetActiveScene().buildIndex)
             SceneManager.LoadScene(_playerData.CurrentLevel);
-         
+
+         if (_playerData.CurrentLevel == 0)
+         {
+            _playerData.CurrentLevel = 1;
+            Save();
+            SceneManager.LoadScene(1);
+         }
+
          _firstLoad = false;
-      }  
+      }
    }
    
    private void OnCarPurchased(int carId, int carPrice)

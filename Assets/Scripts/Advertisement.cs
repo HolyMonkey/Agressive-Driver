@@ -8,6 +8,8 @@ using UnityEngine.UIElements;
 public class Advertisement : MonoBehaviour
 {
     [SerializeField] private GameObject _reviveFailedPanel;
+    [SerializeField] private FinishLevel _finishLevel;
+    
     private bool _isTapedReviveButton = false;
     private Player _player;
     private PlayerEffects _playerEffects;
@@ -20,9 +22,17 @@ public class Advertisement : MonoBehaviour
 
     public bool IsTapedReviveButton => _isTapedReviveButton;
     
-    private void Awake()
+    private IEnumerator Start()
     {
+#if UNITY_WEBGL && !UNITY_EDITOR
+        yield return YandexGamesSdk.WaitForInitialization();
+        
         YandexGamesSdk.CallbackLogging = true;
+#endif
+        
+#if UNITY_EDITOR
+        yield return null;
+#endif
     }
     
     private void OnEnable()
@@ -31,29 +41,33 @@ public class Advertisement : MonoBehaviour
         _adRewarded += OnAdRewarded;
         _adClosed += OnAdClosed;
         _adErrorOccured += OnAdErrorOccured;
+        _finishLevel.Finished += OnLevelFinished;
     }
 
     private void OnDisable()
     {
-       _adOpened += OnAdOpened;
-       _adRewarded += OnAdRewarded;
-       _adClosed += OnAdClosed;
-       _adErrorOccured += OnAdErrorOccured;
+       _adOpened -= OnAdOpened;
+       _adRewarded -= OnAdRewarded;
+       _adClosed -= OnAdClosed;
+       _adErrorOccured -= OnAdErrorOccured;
+       _finishLevel.Finished -= OnLevelFinished;
+    }
+    
+    private void OnApplicationFocus(bool hasFocus)
+    {
+        Silence(!hasFocus);
     }
 
-    private IEnumerator Start()
+    private void OnApplicationPause(bool isPaused)
     {
-#if !UNITY_WEBGL || UNITY_EDITOR
-        yield break;
-#endif
-
-        yield return YandexGamesSdk.WaitForInitialization();
+        Silence(isPaused);
     }
 
-    private void Update()
+    private void Silence(bool silence)
     {
-        AudioListener.pause = WebApplication.InBackground;
-        if (AudioListener.pause)
+        AudioListener.pause = silence;
+        
+        if (silence && Time.timeScale != 0)
             Time.timeScale = 0;
         else if (Time.timeScale == 0)
             Time.timeScale = 1;
@@ -123,5 +137,10 @@ public class Advertisement : MonoBehaviour
         Debug.Log("OnAdErrorOccured: " + error);
         _reviveFailedPanel.SetActive(true);
         Time.timeScale = 1;
+    }
+
+    private void OnLevelFinished()
+    {
+        InterestialAd.Show();
     }
 }
