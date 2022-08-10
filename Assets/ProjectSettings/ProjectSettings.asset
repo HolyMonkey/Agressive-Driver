@@ -777,7 +777,7 @@ PlayerSettings:
   webGLNameFilesAsHashes: 1
   webGLDataCaching: 1
   webGLDebugSymbols: 0
-  webGLEmscriptenArgs: 
+  webGLEmscriptenArgs: -s "BINARYEN_TRAP_MODE='clamp'"
   webGLModulesDirectory: 
   webGLTemplate: PROJECT:ResizeToFill
   webGLAnalyzeBuildSize: 0
